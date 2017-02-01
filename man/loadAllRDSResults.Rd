@@ -189,4 +189,3 @@ permutationResultsDir = filesDir, doingSites = TRUE, doingTiles = TRUE)
 \author{
 Astrid Deschenes, Pascal Belleau
 }
-

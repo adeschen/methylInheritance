@@ -87,4 +87,3 @@ formatedResults <- methylInheritance:::createDataStructure(obsResults)
 Astrid Deschenes, Pascal Belleau
 }
 \keyword{internal}
-

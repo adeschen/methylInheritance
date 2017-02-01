@@ -41,4 +41,3 @@ plotGraph(info)
 \author{
 Astrid Deschenes, Pascal Belleau
 }
-

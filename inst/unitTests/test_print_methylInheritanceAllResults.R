@@ -7,16 +7,6 @@
 ## Test the print.rjmcmcNucleosomesMerge.R function
 ###################################################
 
-
-### {{{ --- Test setup ---
-
-if(FALSE) {
-    library( "RUnit" )
-    library( "methylInheritance" )
-}
-
-### }}}
-
 data("methylInheritanceResults")
 
 ###########################################################

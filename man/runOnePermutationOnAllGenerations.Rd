@@ -181,4 +181,3 @@ tileSize = 1000, stepSize = 1000)}
 Astrid Deschenes, Pascal Belleau
 }
 \keyword{internal}
-

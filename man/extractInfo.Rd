@@ -69,4 +69,3 @@ type = "sites", inter="i2", 1)
 \author{
 Astrid Deschenes, Pascal Belleau
 }
-

@@ -180,4 +180,3 @@ vSeed = 2001)}
 \author{
 Astrid Deschenes, Pascal Belleau
 }
-

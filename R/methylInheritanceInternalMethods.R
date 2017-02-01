@@ -605,6 +605,8 @@ validateMergePermutationAndObservation <- function(permutationResults,
 #' @keywords internal
 getGRangesFromMethylDiff <- function(methDiff, pDiff, qvalue,
                                         type = c("all", "hyper", "hypo")) {
+    # Validate type value
+    type <- match.arg(type)
 
     ## Transform each methylDiff object present in the list to a
     ## GRanges object
@@ -675,7 +677,7 @@ getGRangesFromMethylDiff <- function(methDiff, pDiff, qvalue,
 #' @importFrom GenomicRanges intersect GRanges
 #' @importFrom S4Vectors DataFrame values<- values
 #' @keywords internal
-interGeneration <- function(resultAllGenGR){
+interGeneration <- function(resultAllGenGR) {
 
     lInter <- list("i2" = list(), "iAll" = list())
 
@@ -946,6 +948,9 @@ runOnePermutationOnAllGenerations <- function(methylInfoForAllGenerations,
                         qvalue = 0.01, maxPercReads = 99.9,
                         destrand = FALSE, minCovBasesForTiles = 0,
                         tileSize = 1000, stepSize = 1000) {
+
+    # Validate type value
+    type <- match.arg(type)
 
     doTiles <- any(type %in% c("tiles", "both"))
     doSites <- any(type %in% c("sites", "both"))

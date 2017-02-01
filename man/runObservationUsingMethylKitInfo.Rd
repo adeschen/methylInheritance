@@ -179,4 +179,3 @@ samplesForTransgenerationalAnalysis, type = "sites", vSeed = 221)}
 \author{
 Astrid Deschenes, Pascal Belleau
 }
-

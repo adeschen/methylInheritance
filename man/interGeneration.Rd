@@ -61,4 +61,3 @@ conservedSitesGR <- methylInheritance:::interGeneration(resultsGR)
 Pascal Belleau, Astrid Deschenes
 }
 \keyword{internal}
-

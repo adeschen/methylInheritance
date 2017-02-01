@@ -2,8 +2,8 @@
 % Please edit documentation in R/methylInheritance.R
 \docType{package}
 \name{methylInheritance-package}
-\alias{methylInheritance}
 \alias{methylInheritance-package}
+\alias{methylInheritance}
 \title{methylInheritance: Permutation-Based Analysis associating Conserved
 Differentially Methylated Elements from One Generation to the Next to
 a Treatment Effect}
@@ -13,14 +13,6 @@ for testing the hypothesis that the number of conserved differentially
 methylated elements (sites or tiles), between
 several generations, is associated to an effect inherited from a treatment
 and that stochastic effect can be dismissed.
-}
-\author{
-Astrid Deschênes,
-Pascal Belleau and
-Arnaud Droit
-
-Maintainer:
-Astrid Deschenes <adeschen@hotmail.com>
 }
 \seealso{
 \itemize{
@@ -36,5 +28,12 @@ Astrid Deschenes <adeschen@hotmail.com>
     observation analysis using a methylKit info object as input}
 }
 }
-\keyword{package}
+\author{
+Astrid Deschênes,
+Pascal Belleau and
+Arnaud Droit
 
+Maintainer:
+Astrid Deschenes <adeschen@hotmail.com>
+}
+\keyword{package}

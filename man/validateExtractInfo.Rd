@@ -56,4 +56,3 @@ inter = "i2", 12)}
 Astrid Deschenes
 }
 \keyword{internal}
-

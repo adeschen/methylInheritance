@@ -114,4 +114,3 @@ tileSize = 1000, stepSize = 500, vSeed = 12)}
 Astrid Deschenes
 }
 \keyword{internal}
-

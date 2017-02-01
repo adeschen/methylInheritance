@@ -267,6 +267,9 @@ runPermutationUsingRDSFile <- function(methylKitRDSFile,
                                     stepSize=1000,
                                     vSeed=-1) {
 
+    # Validate type value
+    type <- match.arg(type)
+
     ## Validate that methylKitRDSFile is an existing file
     if (!file.exists(methylKitRDSFile)) {
         stop(paste0("The file \"", methylKitRDSFile, "\" does not exist."))
@@ -552,6 +555,9 @@ runPermutationUsingMethylKitInfo <- function(methylKitInfo,
                             tileSize=1000,
                             stepSize=1000,
                             vSeed=-1) {
+
+    # Validate type value
+    type <- match.arg(type)
 
     ## Parameters validation
     validateRunPermutationUsingMethylKitInfo(methylKitInfo = methylKitInfo,
@@ -855,6 +861,9 @@ runObservationUsingMethylKitInfo <- function(methylKitInfo,
                                             stepSize=1000,
                                             vSeed=-1) {
 
+    # Validate type value
+    type <- match.arg(type)
+
     ## Parameters validation
     validateRunObservationUsingMethylKitInfo(methylKitInfo = methylKitInfo,
                             type = type, outputDir = outputDir,
@@ -1090,6 +1099,9 @@ runObservationUsingRDSFile <- function(methylKitRDSFile,
                                             tileSize=1000,
                                             stepSize=1000,
                                             vSeed=-1) {
+
+    # Validate type value
+    type <- match.arg(type)
 
     ## Validate that methylKitRDSFile is an existing file
     if (!file.exists(methylKitRDSFile)) {
@@ -1514,6 +1526,12 @@ mergePermutationAndObservation <- function(permutationResults,
 #' @export
 extractInfo <- function(allResults, type=c("sites", "tiles"),
                             inter=c("i2", "iAll"), position) {
+
+    # Validate type value
+    type <- match.arg(type)
+
+    # Validate type value
+    inter <- match.arg(inter)
 
     validateExtractInfo(allResults = allResults, type, inter, position)
 

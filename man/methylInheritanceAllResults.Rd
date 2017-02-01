@@ -31,4 +31,3 @@ data("methylInheritanceResults")
 print(methylInheritanceResults)
 
 }
-

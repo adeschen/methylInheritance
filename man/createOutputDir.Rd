@@ -37,4 +37,3 @@ doingTiles = FALSE)}
 Astrid Deschenes
 }
 \keyword{internal}
-

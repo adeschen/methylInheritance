@@ -266,4 +266,3 @@ type = "sites", nbrPermutations = 10, vSeed = 2001)}
 \author{
 Astrid Deschenes, Pascal Belleau
 }
-

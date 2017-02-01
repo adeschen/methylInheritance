@@ -62,4 +62,3 @@ permutationResults = permutated, observationResults = NULL)}
 Astrid Deschenes
 }
 \keyword{internal}
-

@@ -66,4 +66,3 @@ observationResults = observed)
 \author{
 Astrid Deschenes, Pascal Belleau
 }
-

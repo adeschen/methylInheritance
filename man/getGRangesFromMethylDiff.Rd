@@ -58,4 +58,3 @@ permutationResults, pDiff = 10, qvalue = 0.01, type = "hyper")
 Pascal Belleau
 }
 \keyword{internal}
-
