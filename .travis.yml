@@ -9,6 +9,7 @@ r: devel
 
 # Packages from Bioconductor needed
 bioc_packages:
+   - Rhtslib
    - methylKit
    - BiocParallel
    - GenomicRanges
@@ -35,6 +36,7 @@ r_binary_packages:
 #r_github_packages:
 #   - Bioconductor-mirror/rtracklayer@release-3.3
 #   - al2na/methylKit
+
 
 # To send info to codecov
 after_success:
