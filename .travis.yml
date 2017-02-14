@@ -31,7 +31,6 @@ r_binary_packages:
    - rmarkdown
    - ggplot2
    - gridExtra
-   - methods
 
 #r_github_packages:
 #   - Bioconductor-mirror/rtracklayer@release-3.3
