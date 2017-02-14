@@ -5,10 +5,11 @@ sudo: required
 r: bioc-devel
 
 # Package caching only makes sense for the release versions.
-cache: packages
+#cache: packages
 
 # Packages from Bioconductor needed
 #bioc_packages:
+#   - methylKit
 #   - BiocParallel
 #   - GenomicRanges
 #   - IRanges
