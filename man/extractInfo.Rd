@@ -52,8 +52,7 @@ group of generations.
 \examples{
 
 ## Get the name of the directory where files are stored
-filesDir <- dir(system.file("extdata", package = "methylInheritance"),
-    pattern = "TEST", full.names = TRUE)
+filesDir <- system.file("extdata", "TEST", package="methylInheritance")
 
 ## Load information from files
 results <- loadAllRDSResults(analysisResultsDir = filesDir,

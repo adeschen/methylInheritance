@@ -241,8 +241,8 @@
 #' @examples
 #'
 #' ## Path to a methylKit RDS file
-#' methylFile <- dir(system.file("extdata", package = "methylInheritance"),
-#'     pattern = "methylObj_001.RDS", full.names = TRUE)
+#' methylFile <- system.file("extdata", "methylObj_001.RDS",
+#'      package="methylInheritance")
 #'
 #' ## Run a permutation analysis
 #' \dontrun{runPermutationUsingRDSFile(methylKitRDSFile = methylFile,
@@ -1075,8 +1075,8 @@ runObservationUsingMethylKitInfo <- function(methylKitInfo,
 #' @examples
 #'
 #' ## Path to a methylKit RDS file
-#' methylFile <- dir(system.file("extdata", package = "methylInheritance"),
-#'     pattern = "methylObj_001.RDS", full.names = TRUE)
+#' methylFile <- system.file("extdata", "methylObj_001.RDS",
+#'      package="methylInheritance")
 #'
 #' ## Run a permutation analysis
 #' \dontrun{runObservationUsingRDSFile(methylKitRDSFile = methylFile,
@@ -1300,8 +1300,7 @@ runObservationUsingRDSFile <- function(methylKitRDSFile,
 #' @examples
 #'
 #' ## Get the name of the directory where files are stored
-#' filesDir <- dir(system.file("extdata", package = "methylInheritance"),
-#'     pattern = "TEST", full.names = TRUE)
+#' filesDir <- system.file("extdata", "TEST", package="methylInheritance")
 #'
 #' ## Load information from files
 #' results <- loadAllRDSResults(analysisResultsDir = filesDir,
@@ -1509,8 +1508,7 @@ mergePermutationAndObservation <- function(permutationResults,
 #' @examples
 #'
 #' ## Get the name of the directory where files are stored
-#' filesDir <- dir(system.file("extdata", package = "methylInheritance"),
-#'     pattern = "TEST", full.names = TRUE)
+#' filesDir <- system.file("extdata", "TEST", package="methylInheritance")
 #'
 #' ## Load information from files
 #' results <- loadAllRDSResults(analysisResultsDir = filesDir,

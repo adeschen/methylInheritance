@@ -50,9 +50,9 @@ Each permutation is saved using its identifiant in the file name.
 \examples{
 
 ## Load permutation results on sites
-permutationResultsFile <- dir(system.file("extdata",
-    package = "methylInheritance"),
-    pattern = "permutationResultsForSites.RDS", full.names = TRUE)
+
+permutationResultsFile <- system.file("extdata",
+    "permutationResultsForSites.RDS", package="methylInheritance")
 permutationResults <- readRDS(permutationResultsFile)
 
 ## Transform result to GRanges

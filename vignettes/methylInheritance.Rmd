@@ -283,10 +283,10 @@ those permutations will be used to generate the significant levels and
 the visual representations.
 
 ```{r caseStudyLoad, warning=FALSE, message=FALSE, cache=TRUE,  echo = FALSE, cache=TRUE}
-demoResults <- readRDS(dir(system.file("extdata", 
-                        package = "methylInheritance"),
-                        pattern = "resultsForTransgenerationalAnalysis.RDS", 
-                        full.names = TRUE))
+demoFile <- system.file("extdata", "resultsForTransgenerationalAnalysis.RDS",
+                package="methylInheritance")
+
+demoResults <- readRDS(demoFile)
 ```
 
 ```{r caseStudy06, warning=FALSE, message=FALSE, collapse=TRUE, cache=TRUE}

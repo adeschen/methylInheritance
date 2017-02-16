@@ -589,9 +589,8 @@ validateMergePermutationAndObservation <- function(permutationResults,
 #' @examples
 #'
 #' ## Load permutation results on sites
-#' permutationResultsFile <- dir(system.file("extdata",
-#'     package = "methylInheritance"),
-#'     pattern = "permutationResultsForSites.RDS", full.names = TRUE)
+#' permutationResultsFile <- system.file("extdata",
+#'     "permutationResultsForSites.RDS", package="methylInheritance")
 #' permutationResults <- readRDS(permutationResultsFile)
 #'
 #' ## Transform result to GRanges
@@ -661,9 +660,8 @@ getGRangesFromMethylDiff <- function(methDiff, pDiff, qvalue,
 #' @examples
 #'
 #' ## Load permutation results on sites
-#' permutationResultsFile <- dir(system.file("extdata",
-#'     package = "methylInheritance"),
-#'     pattern = "permutationResultsForSites.RDS", full.names = TRUE)
+#' permutationResultsFile <- system.file("extdata",
+#'     "permutationResultsForSites.RDS", package="methylInheritance")
 #' permutationResults <- readRDS(permutationResultsFile)
 #'
 #' ## Transform result to GRanges
@@ -1148,9 +1146,9 @@ runOnePermutationOnAllGenerations <- function(methylInfoForAllGenerations,
 #' @examples
 #'
 #' ## Load permutation results on sites
-#' permutationResultsFile <- dir(system.file("extdata",
-#'     package = "methylInheritance"),
-#'     pattern = "permutationResultsForSites.RDS", full.names = TRUE)
+#'
+#' permutationResultsFile <- system.file("extdata",
+#'     "permutationResultsForSites.RDS", package="methylInheritance")
 #' permutationResults <- readRDS(permutationResultsFile)
 #'
 #' ## Transform result to GRanges
@@ -1252,8 +1250,7 @@ saveInterGenerationResults <- function(outputDir, permutationID,
 #' @examples
 #'
 #' ## Get the name of the directory where the file is stored
-#' filesDir <- dir(system.file("extdata", package = "methylInheritance"),
-#'     pattern = "TEST", full.names = TRUE)
+#' filesDir <- system.file("extdata", "TEST", package="methylInheritance")
 #'
 #' ## Load file containing results from a observation analysis
 #' obsResults <- readRDS(file = paste0(filesDir,

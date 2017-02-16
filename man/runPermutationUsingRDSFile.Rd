@@ -255,8 +255,8 @@ results can also be saved in RDS files (optional).
 \examples{
 
 ## Path to a methylKit RDS file
-methylFile <- dir(system.file("extdata", package = "methylInheritance"),
-    pattern = "methylObj_001.RDS", full.names = TRUE)
+methylFile <- system.file("extdata", "methylObj_001.RDS",
+     package="methylInheritance")
 
 ## Run a permutation analysis
 \dontrun{runPermutationUsingRDSFile(methylKitRDSFile = methylFile,

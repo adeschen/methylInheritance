@@ -7,15 +7,12 @@
 ## Test the methylInheritanceMethods functions
 ###################################################
 
-DIRECTORY <- system.file("extdata", package = "methylInheritance")
-
-METHYL_OBJ_FILE_01 <- dir(system.file("extdata", package = "methylInheritance"),
-                          pattern = "methylObj_001.RDS", full.names = TRUE)
+METHYL_OBJ_FILE_01 <- system.file("extdata", "methylObj_001.RDS",
+                                    package = "methylInheritance")
 
 METHYL_OBJ_01 <- readRDS(METHYL_OBJ_FILE_01)
 
-TEST_DIR <- dir(system.file("extdata", package = "methylInheritance"),
-                        pattern = "TEST", full.names = TRUE)
+TEST_DIR <- system.file("extdata", "TEST", package = "methylInheritance")
 
 data("methylInheritanceResults")
 
