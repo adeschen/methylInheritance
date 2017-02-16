@@ -179,11 +179,11 @@ all the pertinent information.
 
 ## Get the name of the directory where files are stored
 filesDir <- dir(system.file("extdata", package = "methylInheritance"),
-pattern = "TEST", full.names = TRUE)
+    pattern = "TEST", full.names = TRUE)
 
 ## Load information from files
 results <- loadAllRDSResults(analysisResultsDir = filesDir,
-permutationResultsDir = filesDir, doingSites = TRUE, doingTiles = TRUE)
+    permutationResultsDir = filesDir, doingSites = TRUE, doingTiles = TRUE)
 
 }
 \author{

@@ -40,8 +40,8 @@ data(demoForTransgenerationalAnalysis)
 
 ## Run a permutation analysis
 \dontrun{(runObservationUsingMethylKitInfo(methylKitInfo =
-demoForTransgenerationalAnalysis, type = "tiles", nbrPermutations = 3,
-vSeed = 2001)}
+    demoForTransgenerationalAnalysis, type = "tiles", nbrPermutations = 3,
+    vSeed = 2001)}
 
 }
 \seealso{

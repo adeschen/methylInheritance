@@ -30,7 +30,7 @@ permutations in RDS format.
 
 ## Create an output directory for SITES only
 \dontrun{createOutputDir(outputDir = "testSites", doingSites = TRUE,
-doingTiles = FALSE)}
+    doingTiles = FALSE)}
 
 }
 \author{

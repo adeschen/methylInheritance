@@ -283,7 +283,7 @@ data(methylInheritanceResults)
 ## methylated sites (type = sites) between the intersection of 2
 ## generations (inter = i2): F1 and F2 (position = 1)
 extractInfo(allResults = methylInheritanceResults,
-type = "sites", inter="i2", 1)
+    type = "sites", inter="i2", 1)
 
 }
 \seealso{

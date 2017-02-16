@@ -43,9 +43,9 @@ observed <- list()
 observed[["OBSERVATION"]] <- list()
 observed[["OBSERVATION"]][["SITES"]] <- list()
 observed[["OBSERVATION"]][["SITES"]][["i2"]] <- list(HYPER = list(11, 10),
-HYPO = list(13, 12))
+    HYPO = list(13, 12))
 observed[["OBSERVATION"]][["SITES"]][["iAll"]] <- list(HYPER = list(1),
-HYPO = list(3))
+    HYPO = list(3))
 
 ## Create a permutation result containing only 1 permutation result
 ## Real perumtations results would have more entries
@@ -54,13 +54,13 @@ permutated[["PERMUTATION"]] <- list()
 permutated[["PERMUTATION"]][[1]] <- list()
 permutated[["PERMUTATION"]][[1]][["SITES"]] <- list()
 permutated[["PERMUTATION"]][[1]][["SITES"]][["i2"]] <- list(HYPER =
-list(11, 12), HYPO = list(8, 11))
+    list(11, 12), HYPO = list(8, 11))
 permutated[["PERMUTATION"]][[1]][["SITES"]][["iAll"]] <- list(HYPER =
-list(0), HYPO = list(1))
+    list(0), HYPO = list(1))
 
 ## Merge permutation and observation results
 mergePermutationAndObservation(permutationResults = permutated,
-observationResults = observed)
+    observationResults = observed)
 
 }
 \author{

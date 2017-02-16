@@ -2,21 +2,21 @@ language: r
 sudo: required
 
 # R version
-r: devel
+r: bioc-devel
 
 # Package caching only makes sense for the release versions.
 #cache: packages
 
 # Packages from Bioconductor needed
-bioc_packages:
-   - Rhtslib
-   - methylKit
-   - BiocParallel
-   - GenomicRanges
-   - IRanges
-   - S4Vectors
-   - BiocStyle
-   - BiocGenerics
+#bioc_packages:
+#   - Rhtslib
+#   - methylKit
+#   - BiocParallel
+#   - GenomicRanges
+#   - IRanges
+#   - S4Vectors
+#   - BiocStyle
+#   - BiocGenerics
 
 # Be strict when checking package
 warnings_are_errors: true
@@ -27,11 +27,11 @@ r_check_args: "--no-build-vignettes --no-manual --timings"
 # Package dependencies from CRAN not in DESCRIPTION file
 r_binary_packages:
    - covr
-   - RUnit
-   - knitr
-   - rmarkdown
-   - ggplot2
-   - gridExtra
+#   - RUnit
+#   - knitr
+#   - rmarkdown
+#   - ggplot2
+#   - gridExtra
 
 #r_github_packages:
 #   - Bioconductor-mirror/rtracklayer@release-3.3

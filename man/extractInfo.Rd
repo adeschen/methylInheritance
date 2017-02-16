@@ -53,17 +53,16 @@ group of generations.
 
 ## Get the name of the directory where files are stored
 filesDir <- dir(system.file("extdata", package = "methylInheritance"),
-pattern = "TEST", full.names = TRUE)
+    pattern = "TEST", full.names = TRUE)
 
 ## Load information from files
 results <- loadAllRDSResults(analysisResultsDir = filesDir,
-permutationResultsDir = filesDir, doingSites = TRUE, doingTiles = TRUE)
+    permutationResultsDir = filesDir, doingSites = TRUE, doingTiles = TRUE)
 
 ## Extract information for the intersection between conserved differentially
 ## methylated sites (type = sites) between the intersection of 2
 ## generations (inter = i2): F1 and F2 (position = 1)
-info <- extractInfo(allResults = results,
-type = "sites", inter="i2", 1)
+info <- extractInfo(allResults = results, type = "sites", inter="i2", 1)
 
 }
 \author{

@@ -242,11 +242,11 @@
 #'
 #' ## Path to a methylKit RDS file
 #' methylFile <- dir(system.file("extdata", package = "methylInheritance"),
-#' pattern = "methylObj_001.RDS", full.names = TRUE)
+#'     pattern = "methylObj_001.RDS", full.names = TRUE)
 #'
 #' ## Run a permutation analysis
 #' \dontrun{runPermutationUsingRDSFile(methylKitRDSFile = methylFile,
-#' type = "sites", nbrPermutations = 10, vSeed = 2001)}
+#'     type = "sites", nbrPermutations = 10, vSeed = 2001)}
 #'
 #' @author Astrid Deschenes, Pascal Belleau
 #' @export
@@ -532,8 +532,8 @@ runPermutationUsingRDSFile <- function(methylKitRDSFile,
 #'
 #' ## Run a permutation analysis
 #' \dontrun{runPermutationUsingMethylKitInfo(methylKitInfo =
-#' samplesForTransgenerationalAnalysis, type = "sites",
-#' nbrPermutations = 3, vSeed = 221)}
+#'     samplesForTransgenerationalAnalysis, type = "sites",
+#'     nbrPermutations = 3, vSeed = 221)}
 #'
 #' @author Astrid Deschenes, Pascal Belleau
 #' @importFrom BiocParallel bplapply MulticoreParam SnowParam bptry bpok
@@ -842,7 +842,7 @@ runPermutationUsingMethylKitInfo <- function(methylKitInfo,
 #'
 #' ## Run a permutation analysis
 #' \dontrun{runObservationUsingMethylKitInfo(methylKitInfo =
-#' samplesForTransgenerationalAnalysis, type = "sites", vSeed = 221)}
+#'     samplesForTransgenerationalAnalysis, type = "sites", vSeed = 221)}
 #'
 #' @author Astrid Deschenes, Pascal Belleau
 #' @export
@@ -1076,12 +1076,12 @@ runObservationUsingMethylKitInfo <- function(methylKitInfo,
 #'
 #' ## Path to a methylKit RDS file
 #' methylFile <- dir(system.file("extdata", package = "methylInheritance"),
-#' pattern = "methylObj_001.RDS", full.names = TRUE)
+#'     pattern = "methylObj_001.RDS", full.names = TRUE)
 #'
 #' ## Run a permutation analysis
 #' \dontrun{runObservationUsingRDSFile(methylKitRDSFile = methylFile,
-#' type = "sites", minReads = 8, minMethDiff = 5,
-#' vSeed = 2001)}
+#'     type = "sites", minReads = 8, minMethDiff = 5,
+#'     vSeed = 2001)}
 #'
 #' @author Astrid Deschenes, Pascal Belleau
 #' @export
@@ -1301,11 +1301,11 @@ runObservationUsingRDSFile <- function(methylKitRDSFile,
 #'
 #' ## Get the name of the directory where files are stored
 #' filesDir <- dir(system.file("extdata", package = "methylInheritance"),
-#' pattern = "TEST", full.names = TRUE)
+#'     pattern = "TEST", full.names = TRUE)
 #'
 #' ## Load information from files
 #' results <- loadAllRDSResults(analysisResultsDir = filesDir,
-#' permutationResultsDir = filesDir, doingSites = TRUE, doingTiles = TRUE)
+#'     permutationResultsDir = filesDir, doingSites = TRUE, doingTiles = TRUE)
 #'
 #' @author Astrid Deschenes, Pascal Belleau
 #' @export
@@ -1427,9 +1427,9 @@ loadAllRDSResults <- function(analysisResultsDir,
 #' observed[["OBSERVATION"]] <- list()
 #' observed[["OBSERVATION"]][["SITES"]] <- list()
 #' observed[["OBSERVATION"]][["SITES"]][["i2"]] <- list(HYPER = list(11, 10),
-#' HYPO = list(13, 12))
+#'     HYPO = list(13, 12))
 #' observed[["OBSERVATION"]][["SITES"]][["iAll"]] <- list(HYPER = list(1),
-#' HYPO = list(3))
+#'     HYPO = list(3))
 #'
 #' ## Create a permutation result containing only 1 permutation result
 #' ## Real perumtations results would have more entries
@@ -1438,13 +1438,13 @@ loadAllRDSResults <- function(analysisResultsDir,
 #' permutated[["PERMUTATION"]][[1]] <- list()
 #' permutated[["PERMUTATION"]][[1]][["SITES"]] <- list()
 #' permutated[["PERMUTATION"]][[1]][["SITES"]][["i2"]] <- list(HYPER =
-#' list(11, 12), HYPO = list(8, 11))
+#'     list(11, 12), HYPO = list(8, 11))
 #' permutated[["PERMUTATION"]][[1]][["SITES"]][["iAll"]] <- list(HYPER =
-#' list(0), HYPO = list(1))
+#'     list(0), HYPO = list(1))
 #'
 #' ## Merge permutation and observation results
 #' mergePermutationAndObservation(permutationResults = permutated,
-#' observationResults = observed)
+#'     observationResults = observed)
 #'
 #' @author Astrid Deschenes, Pascal Belleau
 #' @export
@@ -1510,17 +1510,16 @@ mergePermutationAndObservation <- function(permutationResults,
 #'
 #' ## Get the name of the directory where files are stored
 #' filesDir <- dir(system.file("extdata", package = "methylInheritance"),
-#' pattern = "TEST", full.names = TRUE)
+#'     pattern = "TEST", full.names = TRUE)
 #'
 #' ## Load information from files
 #' results <- loadAllRDSResults(analysisResultsDir = filesDir,
-#' permutationResultsDir = filesDir, doingSites = TRUE, doingTiles = TRUE)
+#'     permutationResultsDir = filesDir, doingSites = TRUE, doingTiles = TRUE)
 #'
 #' ## Extract information for the intersection between conserved differentially
 #' ## methylated sites (type = sites) between the intersection of 2
 #' ## generations (inter = i2): F1 and F2 (position = 1)
-#' info <- extractInfo(allResults = results,
-#' type = "sites", inter="i2", 1)
+#' info <- extractInfo(allResults = results, type = "sites", inter="i2", 1)
 #'
 #' @author Astrid Deschenes, Pascal Belleau
 #' @export
@@ -1582,7 +1581,7 @@ extractInfo <- function(allResults, type=c("sites", "tiles"),
 #' ## methylated sites (type = sites) between the intersection of 2
 #' ## generations (inter = i2): F2 and F3 (position = 2)
 #' info <- extractInfo(allResults = methylInheritanceResults,
-#' type = "sites", inter="i2", 2)
+#'     type = "sites", inter="i2", 2)
 #'
 #' ## Create graph
 #' plotGraph(info)

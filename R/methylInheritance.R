@@ -85,8 +85,8 @@ NULL
 #'
 #' ## Run a permutation analysis
 #' \dontrun{runPermutationUsingMethylKitInfo(methylKitInfo =
-#' samplesForTransgenerationalAnalysis, type = "sites", nbrPermutations = 3,
-#' vSeed = 2001)}
+#'     samplesForTransgenerationalAnalysis, type = "sites",
+#'     nbrPermutations = 3, vSeed = 2001)}
 #'
 NULL
 
@@ -141,8 +141,8 @@ NULL
 #'
 #' ## Run a permutation analysis
 #' \dontrun{(runObservationUsingMethylKitInfo(methylKitInfo =
-#' demoForTransgenerationalAnalysis, type = "tiles", nbrPermutations = 3,
-#' vSeed = 2001)}
+#'     demoForTransgenerationalAnalysis, type = "tiles", nbrPermutations = 3,
+#'     vSeed = 2001)}
 #'
 NULL
 
@@ -439,6 +439,6 @@ NULL
 #' ## methylated sites (type = sites) between the intersection of 2
 #' ## generations (inter = i2): F1 and F2 (position = 1)
 #' extractInfo(allResults = methylInheritanceResults,
-#' type = "sites", inter="i2", 1)
+#'     type = "sites", inter="i2", 1)
 #'
 NULL

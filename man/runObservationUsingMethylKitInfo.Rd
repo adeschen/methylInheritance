@@ -173,7 +173,7 @@ data(samplesForTransgenerationalAnalysis)
 
 ## Run a permutation analysis
 \dontrun{runObservationUsingMethylKitInfo(methylKitInfo =
-samplesForTransgenerationalAnalysis, type = "sites", vSeed = 221)}
+    samplesForTransgenerationalAnalysis, type = "sites", vSeed = 221)}
 
 }
 \author{

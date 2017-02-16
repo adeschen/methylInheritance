@@ -32,7 +32,7 @@ data(methylInheritanceResults)
 ## methylated sites (type = sites) between the intersection of 2
 ## generations (inter = i2): F2 and F3 (position = 2)
 info <- extractInfo(allResults = methylInheritanceResults,
-type = "sites", inter="i2", 2)
+    type = "sites", inter="i2", 2)
 
 ## Create graph
 plotGraph(info)

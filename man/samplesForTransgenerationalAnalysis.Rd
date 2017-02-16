@@ -38,8 +38,8 @@ data(samplesForTransgenerationalAnalysis)
 
 ## Run a permutation analysis
 \dontrun{runPermutationUsingMethylKitInfo(methylKitInfo =
-samplesForTransgenerationalAnalysis, type = "sites", nbrPermutations = 3,
-vSeed = 2001)}
+    samplesForTransgenerationalAnalysis, type = "sites",
+    nbrPermutations = 3, vSeed = 2001)}
 
 }
 \seealso{

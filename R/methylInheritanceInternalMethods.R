@@ -90,20 +90,20 @@
 #'
 #' ## The function returns 0 when all paramaters are valid
 #' methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-#' methylKitInfo = samplesForTransgenerationalAnalysis, type = "sites",
-#' outputDir = NULL, runObservedAnalysis = TRUE,
-#' nbrPermutations = 10000, nbrCores = 1,
-#' nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 25, qvalue = 0.01,
-#' maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-#' tileSize = 1000, stepSize = 500, vSeed = 12)
+#'     methylKitInfo = samplesForTransgenerationalAnalysis, type = "sites",
+#'     outputDir = NULL, runObservedAnalysis = TRUE,
+#'     nbrPermutations = 10000, nbrCores = 1,
+#'     nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 25, qvalue = 0.01,
+#'     maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
+#'     tileSize = 1000, stepSize = 500, vSeed = 12)
 #'
 #' ## The function raises an error when at least one paramater is not valid
 #' \dontrun{methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-#' methylKitInfo = "HI",type = "tiles", outputDir = NULL,
-#' runObservedAnalysis = FALSE, nbrPermutations = 10000, nbrCores = 1,
-#' nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 25, qvalue = 0.01,
-#' maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-#' tileSize = 1000, stepSize = 500, vSeed = 12)}
+#'     methylKitInfo = "HI",type = "tiles", outputDir = NULL,
+#'     runObservedAnalysis = FALSE, nbrPermutations = 10000, nbrCores = 1,
+#'     nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 25, qvalue = 0.01,
+#'     maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
+#'     tileSize = 1000, stepSize = 500, vSeed = 12)}
 #'
 #' @author Astrid Deschenes
 #' @importFrom S4Vectors isSingleInteger isSingleNumber
@@ -248,19 +248,19 @@ validateRunPermutationUsingMethylKitInfo <- function(methylKitInfo,
 #'
 #' ## The function returns 0 when all paramaters are valid
 #' methylInheritance:::validateRunObservationUsingMethylKitInfo(
-#' methylKitInfo = samplesForTransgenerationalAnalysis, type = "sites",
-#' outputDir = NULL, nbrCores = 1,
-#' nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 25, qvalue = 0.01,
-#' maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-#' tileSize = 1000, stepSize = 500, vSeed = 12)
+#'     methylKitInfo = samplesForTransgenerationalAnalysis, type = "sites",
+#'     outputDir = NULL, nbrCores = 1,
+#'     nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 25, qvalue = 0.01,
+#'     maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
+#'     tileSize = 1000, stepSize = 500, vSeed = 12)
 #'
 #' ## The function raises an error when at least one paramater is not valid
 #' \dontrun{methylInheritance:::validateRunObservationUsingMethylKitInfo(
-#' methylKitInfo = samplesForTransgenerationalAnalysis,
-#' type = "tiles", outputDir = NULL, nbrCores = 1,
-#' nbrCoresDiffMeth = 1, minReads = "HI", minMethDiff = 25, qvalue = 0.01,
-#' maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-#' tileSize = 1000, stepSize = 500, vSeed = 12)}
+#'     methylKitInfo = samplesForTransgenerationalAnalysis,
+#'     type = "tiles", outputDir = NULL, nbrCores = 1,
+#'     nbrCoresDiffMeth = 1, minReads = "HI", minMethDiff = 25, qvalue = 0.01,
+#'     maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
+#'     tileSize = 1000, stepSize = 500, vSeed = 12)}
 #'
 #' @author Astrid Deschenes
 #' @importFrom S4Vectors isSingleInteger isSingleNumber
@@ -405,13 +405,13 @@ validateRunObservationUsingMethylKitInfo <- function(methylKitInfo,
 #'
 #' ## The function returns 0 when all paramaters are valid
 #' methylInheritance:::validateExtractInfo(
-#' allResults = methylInheritanceResults, type = "sites",
-#' inter = "i2", 2)
+#'     allResults = methylInheritanceResults, type = "sites",
+#'     inter = "i2", 2)
 #'
 #' ## The function raises an error when at least one paramater is not valid
 #' \dontrun{methylInheritance:::validateExtractInfo(
-#' allResults = methylInheritanceResults, type = "sites",
-#' inter = "i2", 12)}
+#'     allResults = methylInheritanceResults, type = "sites",
+#'     inter = "i2", 12)}
 #'
 #' @author Astrid Deschenes
 #' @importFrom S4Vectors isSingleInteger isSingleNumber
@@ -505,9 +505,9 @@ validateExtractInfo <- function(allResults, type, inter, position) {
 #' observed[["OBSERVATION"]] <- list()
 #' observed[["OBSERVATION"]][["SITES"]] <- list()
 #' observed[["OBSERVATION"]][["SITES"]][["i2"]] <- list(HYPER = list(11, 10),
-#' HYPO = list(13, 12))
+#'     HYPO = list(13, 12))
 #' observed[["OBSERVATION"]][["SITES"]][["iAll"]] <- list(HYPER = list(1),
-#' HYPO = list(3))
+#'     HYPO = list(3))
 #'
 #' ## Create a permutation result containing only 1 permutation result
 #' ## Real perumtations results would have more entries
@@ -516,17 +516,17 @@ validateExtractInfo <- function(allResults, type, inter, position) {
 #' permutated[["PERMUTATION"]][[1]] <- list()
 #' permutated[["PERMUTATION"]][[1]][["SITES"]] <- list()
 #' permutated[["PERMUTATION"]][[1]][["SITES"]][["i2"]] <- list(HYPER =
-#' list(11, 12), HYPO = list(8, 11))
+#'     list(11, 12), HYPO = list(8, 11))
 #' permutated[["PERMUTATION"]][[1]][["SITES"]][["iAll"]] <- list(HYPER =
-#' list(0), HYPO = list(1))
+#'     list(0), HYPO = list(1))
 #'
 #' ## Merge permutation and observation results
 #' methylInheritance:::validateMergePermutationAndObservation(
-#' permutationResults = permutated, observationResults = observed)
+#'     permutationResults = permutated, observationResults = observed)
 #'
 #' ## The function raises an error when at least one paramater is not valid
 #' \dontrun{methylInheritance:::validateMergePermutationAndObservation(
-#' permutationResults = permutated, observationResults = NULL)}
+#'     permutationResults = permutated, observationResults = NULL)}
 #'
 #' @author Astrid Deschenes
 #' @keywords internal
@@ -590,13 +590,13 @@ validateMergePermutationAndObservation <- function(permutationResults,
 #'
 #' ## Load permutation results on sites
 #' permutationResultsFile <- dir(system.file("extdata",
-#' package = "methylInheritance"), pattern = "permutationResultsForSites.RDS",
-#' full.names = TRUE)
+#'     package = "methylInheritance"),
+#'     pattern = "permutationResultsForSites.RDS", full.names = TRUE)
 #' permutationResults <- readRDS(permutationResultsFile)
 #'
 #' ## Transform result to GRanges
 #' resultsGR <- methylInheritance:::getGRangesFromMethylDiff(methDiff =
-#' permutationResults, pDiff = 10, qvalue = 0.01, type = "hyper")
+#'     permutationResults, pDiff = 10, qvalue = 0.01, type = "hyper")
 #'
 #' @author Pascal Belleau
 #' @importFrom methylKit getMethylDiff
@@ -662,13 +662,13 @@ getGRangesFromMethylDiff <- function(methDiff, pDiff, qvalue,
 #'
 #' ## Load permutation results on sites
 #' permutationResultsFile <- dir(system.file("extdata",
-#' package = "methylInheritance"), pattern = "permutationResultsForSites.RDS",
-#' full.names = TRUE)
+#'     package = "methylInheritance"),
+#'     pattern = "permutationResultsForSites.RDS", full.names = TRUE)
 #' permutationResults <- readRDS(permutationResultsFile)
 #'
 #' ## Transform result to GRanges
 #' resultsGR <- methylInheritance:::getGRangesFromMethylDiff(methDiff =
-#' permutationResults, pDiff = 10, qvalue = 0.01, type = "hyper")
+#'     permutationResults, pDiff = 10, qvalue = 0.01, type = "hyper")
 #'
 #' ## Extract inter generational conserved sites
 #' conservedSitesGR <- methylInheritance:::interGeneration(resultsGR)
@@ -738,7 +738,7 @@ interGeneration <- function(resultAllGenGR) {
 #'
 #' ## Create an output directory for SITES only
 #' \dontrun{createOutputDir(outputDir = "testSites", doingSites = TRUE,
-#' doingTiles = FALSE)}
+#'     doingTiles = FALSE)}
 #'
 #' @author Astrid Deschenes
 #' @keywords internal
@@ -930,10 +930,10 @@ createOutputDir <- function(outputDir, doingSites = TRUE,
 #'
 #' ## Run a permutation analysis
 #' \dontrun{methylInheritance:::runOnePermutationOnAllGenerations(
-#' methylInfoForAllGenerations = info, type = "sites", outputDir = NULL,
-#' nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 10, qvalue = 0.01,
-#' maxPercReads = 99.9, destrand = FALSE, minCovBasesForTiles = 0,
-#' tileSize = 1000, stepSize = 1000)}
+#'     methylInfoForAllGenerations = info, type = "sites", outputDir = NULL,
+#'     nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 10, qvalue = 0.01,
+#'     maxPercReads = 99.9, destrand = FALSE, minCovBasesForTiles = 0,
+#'     tileSize = 1000, stepSize = 1000)}
 #'
 #' @author Astrid Deschenes, Pascal Belleau
 #' @importFrom methylKit filterByCoverage normalizeCoverage unite
@@ -1149,21 +1149,21 @@ runOnePermutationOnAllGenerations <- function(methylInfoForAllGenerations,
 #'
 #' ## Load permutation results on sites
 #' permutationResultsFile <- dir(system.file("extdata",
-#' package = "methylInheritance"), pattern = "permutationResultsForSites.RDS",
-#' full.names = TRUE)
+#'     package = "methylInheritance"),
+#'     pattern = "permutationResultsForSites.RDS", full.names = TRUE)
 #' permutationResults <- readRDS(permutationResultsFile)
 #'
 #' ## Transform result to GRanges
 #' resultsGR <- methylInheritance:::getGRangesFromMethylDiff(methDiff =
-#' permutationResults, pDiff = 10, qvalue = 0.01, type = "hyper")
+#'     permutationResults, pDiff = 10, qvalue = 0.01, type = "hyper")
 #'
 #' ## Extract inter-generationally conserved sites
 #' interGenerationResult <- methylInheritance:::interGeneration(resultsGR)
 #'
 #' ## Save results
 #' \dontrun{methylInheritance:::saveInterGenerationResults(
-#' outputDir = "TEST", permutationID=100, type = "sites",
-#' interGenerationResult = interGenerationResult)}
+#'     outputDir = "TEST", permutationID=100, type = "sites",
+#'     interGenerationResult = interGenerationResult)}
 #'
 #' @author Astrid Deschenes, Pascal Belleau
 #' @keywords internal
@@ -1253,11 +1253,11 @@ saveInterGenerationResults <- function(outputDir, permutationID,
 #'
 #' ## Get the name of the directory where the file is stored
 #' filesDir <- dir(system.file("extdata", package = "methylInheritance"),
-#' pattern = "TEST", full.names = TRUE)
+#'     pattern = "TEST", full.names = TRUE)
 #'
 #' ## Load file containing results from a observation analysis
 #' obsResults <- readRDS(file = paste0(filesDir,
-#' "/SITES/SITES_observed_results.RDS"))
+#'     "/SITES/SITES_observed_results.RDS"))
 #'
 #' ## Create data structure using information form the observation analysis
 #' formatedResults <- methylInheritance:::createDataStructure(obsResults)

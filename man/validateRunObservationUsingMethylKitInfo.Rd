@@ -95,19 +95,19 @@ data(samplesForTransgenerationalAnalysis)
 
 ## The function returns 0 when all paramaters are valid
 methylInheritance:::validateRunObservationUsingMethylKitInfo(
-methylKitInfo = samplesForTransgenerationalAnalysis, type = "sites",
-outputDir = NULL, nbrCores = 1,
-nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 25, qvalue = 0.01,
-maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-tileSize = 1000, stepSize = 500, vSeed = 12)
+    methylKitInfo = samplesForTransgenerationalAnalysis, type = "sites",
+    outputDir = NULL, nbrCores = 1,
+    nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 25, qvalue = 0.01,
+    maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
+    tileSize = 1000, stepSize = 500, vSeed = 12)
 
 ## The function raises an error when at least one paramater is not valid
 \dontrun{methylInheritance:::validateRunObservationUsingMethylKitInfo(
-methylKitInfo = samplesForTransgenerationalAnalysis,
-type = "tiles", outputDir = NULL, nbrCores = 1,
-nbrCoresDiffMeth = 1, minReads = "HI", minMethDiff = 25, qvalue = 0.01,
-maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-tileSize = 1000, stepSize = 500, vSeed = 12)}
+    methylKitInfo = samplesForTransgenerationalAnalysis,
+    type = "tiles", outputDir = NULL, nbrCores = 1,
+    nbrCoresDiffMeth = 1, minReads = "HI", minMethDiff = 25, qvalue = 0.01,
+    maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
+    tileSize = 1000, stepSize = 500, vSeed = 12)}
 
 }
 \author{

@@ -169,12 +169,12 @@ elements.
 
 ## Path to a methylKit RDS file
 methylFile <- dir(system.file("extdata", package = "methylInheritance"),
-pattern = "methylObj_001.RDS", full.names = TRUE)
+    pattern = "methylObj_001.RDS", full.names = TRUE)
 
 ## Run a permutation analysis
 \dontrun{runObservationUsingRDSFile(methylKitRDSFile = methylFile,
-type = "sites", minReads = 8, minMethDiff = 5,
-vSeed = 2001)}
+    type = "sites", minReads = 8, minMethDiff = 5,
+    vSeed = 2001)}
 
 }
 \author{

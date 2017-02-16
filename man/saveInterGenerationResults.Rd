@@ -51,21 +51,21 @@ Each permutation is saved using its identifiant in the file name.
 
 ## Load permutation results on sites
 permutationResultsFile <- dir(system.file("extdata",
-package = "methylInheritance"), pattern = "permutationResultsForSites.RDS",
-full.names = TRUE)
+    package = "methylInheritance"),
+    pattern = "permutationResultsForSites.RDS", full.names = TRUE)
 permutationResults <- readRDS(permutationResultsFile)
 
 ## Transform result to GRanges
 resultsGR <- methylInheritance:::getGRangesFromMethylDiff(methDiff =
-permutationResults, pDiff = 10, qvalue = 0.01, type = "hyper")
+    permutationResults, pDiff = 10, qvalue = 0.01, type = "hyper")
 
 ## Extract inter-generationally conserved sites
 interGenerationResult <- methylInheritance:::interGeneration(resultsGR)
 
 ## Save results
 \dontrun{methylInheritance:::saveInterGenerationResults(
-outputDir = "TEST", permutationID=100, type = "sites",
-interGenerationResult = interGenerationResult)}
+    outputDir = "TEST", permutationID=100, type = "sites",
+    interGenerationResult = interGenerationResult)}
 
 }
 \author{
