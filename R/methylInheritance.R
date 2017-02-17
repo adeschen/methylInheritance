@@ -23,11 +23,8 @@
 #'
 #' @seealso
 #' \itemize{
-#'     \item \code{\link{runPermutationUsingRDSFile}} {for running a
-#'     permutation analysis on the specified multi-generational dataset in
-#'     RDS format}
-#'     \item \code{\link{runPermutationUsingMethylKitInfo}} {for running a
-#'     permutation analysis using a methylKit info object as input}
+#'     \item \code{\link{runPermutation}} {for running a
+#'     permutation analysis on the specified multi-generational dataset}
 #'     \item \code{\link{runObservationUsingRDSFile}} {for running a
 #'     observation analysis on the specified multi-generational dataset in
 #'     RDS format}
@@ -48,7 +45,7 @@ NULL
 #' sample information is stored in a \code{methylRaw} object.
 #'
 #' This dataset can be
-#' used to test the \code{runPermutationUsingMethylKitInfo} function.
+#' used to test the \code{runPermutation} function.
 #'
 #' @name samplesForTransgenerationalAnalysis
 #'
@@ -70,8 +67,8 @@ NULL
 #'
 #' @seealso
 #' \itemize{
-#'     \item \code{\link{runPermutationUsingMethylKitInfo}} {for running a
-#'     permutation analysis using methylKit info entry}
+#'     \item \code{\link{runPermutation}} {for running a
+#'     permutation analysis using multi-generational dataset}
 #' }
 #'
 #' @usage data(samplesForTransgenerationalAnalysis)
@@ -84,9 +81,8 @@ NULL
 #' data(samplesForTransgenerationalAnalysis)
 #'
 #' ## Run a permutation analysis
-#' \dontrun{runPermutationUsingMethylKitInfo(methylKitInfo =
-#'     samplesForTransgenerationalAnalysis, type = "sites",
-#'     nbrPermutations = 3, vSeed = 2001)}
+#' runPermutation(methylKitData = samplesForTransgenerationalAnalysis,
+#'     type = "sites", nbrPermutations = 3, vSeed = 2001)
 #'
 NULL
 
@@ -101,7 +97,7 @@ NULL
 #' sample information is stored in a \code{methylRaw} object.
 #'
 #' This dataset can be
-#' used to test \code{runPermutationUsingMethylKitInfo} and
+#' used to test \code{runPermutation} and
 #' {runObservationUsingMethylKitInfo} functions.
 #'
 #' @name demoForTransgenerationalAnalysis
@@ -124,8 +120,8 @@ NULL
 #'
 #' @seealso
 #' \itemize{
-#'     \item \code{\link{runPermutationUsingMethylKitInfo}} {for running a
-#'     permutation analysis using methylKit info entry}
+#'     \item \code{\link{runPermutation}} {for running a
+#'     permutation analysis using multi-generational dataset}
 #'     \item \code{\link{runObservationUsingMethylKitInfo}} {for running a
 #'     observation analysis using methylKit info entry}
 #' }
@@ -140,7 +136,7 @@ NULL
 #' data(demoForTransgenerationalAnalysis)
 #'
 #' ## Run a permutation analysis
-#' \dontrun{(runObservationUsingMethylKitInfo(methylKitInfo =
+#' \dontrun{(runObservationUsingMethylKitInfo(methylKitData =
 #'     demoForTransgenerationalAnalysis, type = "tiles", nbrPermutations = 3,
 #'     vSeed = 2001)}
 #'

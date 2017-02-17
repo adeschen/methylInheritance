@@ -29,7 +29,7 @@ sample information is stored in a \code{methylRaw} object.
 }
 \details{
 This dataset can be
-used to test the \code{runPermutationUsingMethylKitInfo} function.
+used to test the \code{runPermutation} function.
 }
 \examples{
 
@@ -37,15 +37,14 @@ used to test the \code{runPermutationUsingMethylKitInfo} function.
 data(samplesForTransgenerationalAnalysis)
 
 ## Run a permutation analysis
-\dontrun{runPermutationUsingMethylKitInfo(methylKitInfo =
-    samplesForTransgenerationalAnalysis, type = "sites",
-    nbrPermutations = 3, vSeed = 2001)}
+runPermutation(methylKitData = samplesForTransgenerationalAnalysis,
+    type = "sites", nbrPermutations = 3, vSeed = 2001)
 
 }
 \seealso{
 \itemize{
-    \item \code{\link{runPermutationUsingMethylKitInfo}} {for running a
-    permutation analysis using methylKit info entry}
+    \item \code{\link{runPermutation}} {for running a
+    permutation analysis using multi-generational dataset}
 }
 }
 \keyword{datasets}

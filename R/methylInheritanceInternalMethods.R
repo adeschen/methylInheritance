@@ -1,15 +1,17 @@
-#' @title Parameters validation for the
-#' \code{\link{runPermutationUsingMethylKitInfo}} function
+#' @title Parameters validation for the \code{\link{runPermutation}} function
 #'
 #' @description Validation of all parameters needed by the public
-#' \code{\link{runPermutationUsingMethylKitInfo}} function.
+#' \code{\link{runPermutation}} function.
 #'
-#' @param methylKitInfo a \code{list} of \code{methylRawList} entries. Each
-#' \code{methylRawList} contains all the \code{methylRaw} entries related to
-#' one generation. The number of generations must correspond to the number
-#' of entries in the \code{methylKitInfo}.At least 2 generations
+#' @param methylKitData a \code{list} of \code{methylRawList} entries or the
+#' name of the RDS file containing the \code{list}. Each
+#' \code{methylRawList} entry must contain all the \code{methylRaw} entries
+#' related to one generation (first entry = first generation, second
+#' entry = second generation, etc..). The number of generations must
+#' correspond to the number
+#' of entries in the \code{methylKitData}.At least 2 generations
 #' must be present to do a permutation analysis. More information can be found
-#' in the Bioconductor methylKit package.
+#' in the methylKit package.
 #'
 #' @param type One of the "sites","tiles" or "both" strings. Specifies the type
 #' of differentially methylated elements should be returned. For
@@ -89,8 +91,8 @@
 #' data(samplesForTransgenerationalAnalysis)
 #'
 #' ## The function returns 0 when all paramaters are valid
-#' methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-#'     methylKitInfo = samplesForTransgenerationalAnalysis, type = "sites",
+#' methylInheritance:::validateRunPermutation(
+#'     methylKitData = samplesForTransgenerationalAnalysis, type = "sites",
 #'     outputDir = NULL, runObservedAnalysis = TRUE,
 #'     nbrPermutations = 10000, nbrCores = 1,
 #'     nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 25, qvalue = 0.01,
@@ -98,8 +100,8 @@
 #'     tileSize = 1000, stepSize = 500, vSeed = 12)
 #'
 #' ## The function raises an error when at least one paramater is not valid
-#' \dontrun{methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-#'     methylKitInfo = "HI",type = "tiles", outputDir = NULL,
+#' \dontrun{methylInheritance:::validateRunPermutation(
+#'     methylKitData = "HI",type = "tiles", outputDir = NULL,
 #'     runObservedAnalysis = FALSE, nbrPermutations = 10000, nbrCores = 1,
 #'     nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 25, qvalue = 0.01,
 #'     maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
@@ -108,7 +110,7 @@
 #' @author Astrid Deschenes
 #' @importFrom S4Vectors isSingleInteger isSingleNumber
 #' @keywords internal
-validateRunPermutationUsingMethylKitInfo <- function(methylKitInfo,
+validateRunPermutation <- function(methylKitData,
                                     type, outputDir, runObservedAnalysis,
                                     nbrPermutations, nbrCores,
                                     nbrCoresDiffMeth,
@@ -117,10 +119,19 @@ validateRunPermutationUsingMethylKitInfo <- function(methylKitInfo,
                                     minCovBasesForTiles, tileSize,
                                     stepSize, vSeed) {
 
-    ## Validate that methylKitInfo is a list of methylRawList
-    if (class(methylKitInfo) != "list" ||
-            !all(sapply(methylKitInfo, class) == "methylRawList")) {
-        stop(paste0("methylKitInfo must be a list containing ",
+    ## Validate that methylKitData is a valid RDS file when string is passed
+    if (is.character(methylKitData)) {
+        if (!file.exists(methylKitData)) {
+            stop(paste0("The file \"", methylKitData, "\" does not exist."))
+        } else {
+            methylKitData <- readRDS(methylKitData)
+        }
+    }
+
+    ## Validate that methylKitData is a list of methylRawList
+    if (class(methylKitData) != "list" ||
+            !all(sapply(methylKitData, class) == "methylRawList")) {
+        stop(paste0("methylKitData must be a list containing ",
                     "\"methylRawList\" entries; each entry must contain ",
                     "all \"methylRaw\" objects related to one generation"))
     }
@@ -149,7 +160,7 @@ validateRunPermutationUsingMethylKitInfo <- function(methylKitInfo,
     }
 
     ## Validate all the other parameters
-    validateRunObservationUsingMethylKitInfo(methylKitInfo = methylKitInfo,
+    validateRunObservationUsingMethylKitInfo(methylKitInfo = methylKitData,
                             type = type, outputDir = outputDir,
                             nbrCores = nbrCores,
                             nbrCoresDiffMeth = nbrCoresDiffMeth,

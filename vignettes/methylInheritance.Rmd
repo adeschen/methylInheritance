@@ -15,6 +15,7 @@ vignette: >
 ```{r style, echo = FALSE, results = 'asis', warning=FALSE, message=FALSE}
 BiocStyle::markdown()
 library(knitr)
+library(methylKit)
 ```
 
 <br />
@@ -138,9 +139,10 @@ head(demoForTransgenerationalAnalysis[[2]][[1]])
 ## The treatment vector for each generation
 ## The number of treatments and controls is the same in each generation
 ## However, it could also be different.
-demoForTransgenerationalAnalysis[[1]]@treatment
-demoForTransgenerationalAnalysis[[2]]@treatment
-demoForTransgenerationalAnalysis[[3]]@treatment
+## Beware that getTreatment() is a function from the methylKit package.
+getTreatment(demoForTransgenerationalAnalysis[[1]])
+getTreatment(demoForTransgenerationalAnalysis[[2]])
+getTreatment(demoForTransgenerationalAnalysis[[3]])
 ```
 
 
@@ -175,25 +177,23 @@ observationResult$OBSERVATION$SITES
 ## Permutation analysis 
 
 The permutation analysis can be run on all generations using the
-*runPermutationUsingMethylKitInfo()* function.
+*runPermutation()* function.
 
 The observation and the permutation analysis can be run together by 
 setting the *runObservationAnalysis = TRUE* in the
-*runPermutationUsingMethylKitInfo()* function.
+*runPermutation()* function.
 
 All permutations can also be, optionally, saved in RDS files. To store the
 results into RDS files, the *outputDir* parameter must be given a directory
 path.
 
-At last, the *runPermutationUsingRDSFile()* function also executes a
-permutation analysis but instead of passing a methylKit object to it, the
-path to a RDS file that contains the methylKit object must be used.
+At last, the name of the RDS file that contains the methylKit object can also
+be used as argument to the *runPermutation()* function.
 
 ```{r caseStudy03, warning=FALSE, message=FALSE, collapse=TRUE, cache=TRUE}
-
 ## The permutation analysis is only done on differentially methylated sites
-permutationResult <- runPermutationUsingMethylKitInfo(methylKitInfo = 
-                                        demoForTransgenerationalAnalysis, 
+permutationResult <- runPermutation(
+                        methylKitData = demoForTransgenerationalAnalysis, # multi-generational dataset
                         type = "sites",     # Only sites
                         outputDir = NULL,   # RDS files only created when a 
                                             # path is given

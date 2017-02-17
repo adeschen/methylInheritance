@@ -17,13 +17,13 @@ TEST_DIR <- system.file("extdata", "TEST", package = "methylInheritance")
 data("methylInheritanceResults")
 
 ###########################################################
-## runPermutationUsingRDSFile() function
+## runPermutation() function
 ###########################################################
 
 ## Test when methylKitRDSFile is not a valid RDS file name
-test.runPermutationUsingRDSFile_methylKitRDSFile_not_valid <- function() {
-    obs <- tryCatch(runPermutationUsingRDSFile(
-        methylKitRDSFile = "HI",  outputDir = NULL,
+test.runPermutation_methylKitData_not_valid_RDS <- function() {
+    obs <- tryCatch(runPermutation(
+        methylKitData = "HI",  outputDir = NULL,
         nbrPermutations = 2, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = FALSE, minCovBasesForTiles = 2,
@@ -32,15 +32,15 @@ test.runPermutationUsingRDSFile_methylKitRDSFile_not_valid <- function() {
 
     exp <- "The file \"HI\" does not exist."
 
-    message <- paste0(" test.runPermutationUsingRDSFile_methylKitRDSFile_not_valid() ",
-                      "- Not valid file for methylKitRDSFile did not generated expected message.")
+    message <- paste0(" test.runPermutation_methylKitData_not_valid_RDS() ",
+                      "- Not valid file for methylKitData did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when all parameters valid
-test.runPermutationUsingRDSFile_good_001 <- function() {
-    obs <- runPermutationUsingRDSFile(methylKitRDSFile = METHYL_OBJ_FILE_01, runObservationAnalysis = FALSE,
+test.runPermutation_good_001 <- function() {
+    obs <- runPermutation(methylKitData = METHYL_OBJ_FILE_01, runObservationAnalysis = FALSE,
                     type = "both", nbrPermutations = 2, minReads = 5, minMethDiff = 5,
                     vSeed = 2021)
     exp <- list()
@@ -76,7 +76,7 @@ test.runPermutationUsingRDSFile_good_001 <- function() {
     exp[["PERMUTATION"]][[2]][["TILES"]][["iAll"]][["HYPER"]] <- list(0)
     exp[["PERMUTATION"]][[2]][["TILES"]][["iAll"]][["HYPO"]] <- list(0)
 
-    message <- paste0(" test.runPermutationUsingRDSFile_good_001() ",
+    message <- paste0(" test.runPermutation_good_001() ",
                       "- Valid parameters did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
