@@ -128,22 +128,19 @@ length(demoForTransgenerationalAnalysis)
 ## The methylRawList object contains two Slots:
 ## 1- treatment: a numeric vector denoting controls and cases.
 ## 2- .Data: a list of methylRaw objects. Each object stores the raw 
-## mehylation data of one sample.
+##           mehylation data of one sample.
 
 
 ## A section of the methylRaw object containing the information of the 
 ## first sample from the second generation 
 head(demoForTransgenerationalAnalysis[[2]][[1]]) 
 
-## The same information could also be obtained using the .Data slot
-## head(demoForTransgenerationalAnalysis[[2]]@.Data[[1]]) 
-
 ## The treatment vector for each generation
 ## The number of treatments and controls is the same in each generation
 ## However, it could also be different.
-slot(demoForTransgenerationalAnalysis[[1]], "treatment")
-slot(demoForTransgenerationalAnalysis[[2]], "treatment")
-slot(demoForTransgenerationalAnalysis[[3]], "treatment")
+demoForTransgenerationalAnalysis[[1]]@treatment
+demoForTransgenerationalAnalysis[[2]]@treatment
+demoForTransgenerationalAnalysis[[3]]@treatment
 ```
 
 
