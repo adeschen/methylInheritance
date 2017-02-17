@@ -1,4 +1,5 @@
 language: r
+dist: trusty
 sudo: required
 
 # R version
@@ -37,21 +38,21 @@ r_binary_packages:
 #   - Bioconductor-mirror/rtracklayer@release-3.3
 #   - al2na/methylKit
 
-addons:
-  apt:
-     sources:
-     - ubuntu-toolchain-r-test
-     packages:
-     - gcc-4.8
-     - g++-4.8
+#addons:
+#  apt:
+#     sources:
+#     - ubuntu-toolchain-r-test
+#     packages:
+#     - gcc-4.8
+#     - g++-4.8
 
-env:
-  global:
-    - R_CHECK_TIME="TRUE"
-    - R_CHECK_TESTS="TRUE"
-    - _R_CHECK_TIMINGS_="0"
-    - CXX="g++-4.8"
-    - CC="gcc-4.8"
+#env:
+#  global:
+#    - R_CHECK_TIME="TRUE"
+#    - R_CHECK_TESTS="TRUE"
+#    - _R_CHECK_TIMINGS_="0"
+#    - CXX="g++-4.8"
+#    - CC="gcc-4.8"
 
 # To send info to codecov
 after_success:
