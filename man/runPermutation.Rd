@@ -262,6 +262,16 @@ data(samplesForTransgenerationalAnalysis)
 runPermutation(methylKitData = samplesForTransgenerationalAnalysis,
     type = "sites", nbrPermutations = 2, vSeed = 221)
 
+## Path to a methylKit RDS file
+methylFile <- system.file("extdata", "methylObj_001.RDS",
+    package = "methylInheritance")
+
+## Run a permutation analysis using RDS file name
+## A real analysis would require a much higher number of permutations
+runPermutation(methylKitData = methylFile, type = "sites",
+    nbrPermutations = 2, vSeed = 2001)
+
+
 }
 \author{
 Astrid Deschenes, Pascal Belleau
