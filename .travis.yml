@@ -8,51 +8,12 @@ r: bioc-devel
 # Package caching only makes sense for the release versions.
 #cache: packages
 
-# Packages from Bioconductor needed
-#bioc_packages:
-#   - Rhtslib
-#   - methylKit
-#   - BiocParallel
-#   - GenomicRanges
-#   - IRanges
-#   - S4Vectors
-#   - BiocStyle
-#   - BiocGenerics
-
 # Be strict when checking package
 warnings_are_errors: true
-
-#r_build_args: "--no-build-vignettes --no-manual --no-resave-data --keep-empty-dirs"
-#r_check_args: "--no-build-vignettes --no-manual --timings"
 
 # Package dependencies from CRAN not in DESCRIPTION file
 r_binary_packages:
    - covr
-#   - RUnit
-#   - knitr
-#   - rmarkdown
-#   - ggplot2
-#   - gridExtra
-
-#r_github_packages:
-#   - Bioconductor-mirror/rtracklayer@release-3.3
-#   - al2na/methylKit
-
-#addons:
-#  apt:
-#     sources:
-#     - ubuntu-toolchain-r-test
-#     packages:
-#     - gcc-4.8
-#     - g++-4.8
-
-#env:
-#  global:
-#    - R_CHECK_TIME="TRUE"
-#    - R_CHECK_TESTS="TRUE"
-#    - _R_CHECK_TIMINGS_="0"
-#    - CXX="g++-4.8"
-#    - CC="gcc-4.8"
 
 # To send info to codecov
 after_success:
