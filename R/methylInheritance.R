@@ -24,12 +24,9 @@
 #' @seealso
 #' \itemize{
 #'     \item \code{\link{runPermutation}} {for running a
-#'     permutation analysis on the specified multi-generational dataset}
-#'     \item \code{\link{runObservationUsingRDSFile}} {for running a
-#'     observation analysis on the specified multi-generational dataset in
-#'     RDS format}
-#'     \item \code{\link{runObservationUsingMethylKitInfo}} {for running a
-#'     observation analysis using a methylKit info object as input}
+#'     permutation analysis on a specified multi-generational dataset}
+#'     \item \code{\link{runObservation}} {for running a
+#'     observation analysis on a specified multi-generational dataset}
 #' }
 #'
 #' @keywords package
@@ -96,9 +93,8 @@ NULL
 #' There is 12 samples (6 controls and 6 cases) for each generation. Each
 #' sample information is stored in a \code{methylRaw} object.
 #'
-#' This dataset can be
-#' used to test \code{runPermutation} and
-#' {runObservationUsingMethylKitInfo} functions.
+#' This dataset can be used to test \code{runPermutation} and
+#' \code{runObservation} functions.
 #'
 #' @name demoForTransgenerationalAnalysis
 #'
@@ -122,7 +118,7 @@ NULL
 #' \itemize{
 #'     \item \code{\link{runPermutation}} {for running a
 #'     permutation analysis using multi-generational dataset}
-#'     \item \code{\link{runObservationUsingMethylKitInfo}} {for running a
+#'     \item \code{\link{runObservation}} {for running a
 #'     observation analysis using methylKit info entry}
 #' }
 #'
@@ -136,9 +132,8 @@ NULL
 #' data(demoForTransgenerationalAnalysis)
 #'
 #' ## Run a permutation analysis
-#' \dontrun{(runObservationUsingMethylKitInfo(methylKitData =
-#'     demoForTransgenerationalAnalysis, type = "tiles", nbrPermutations = 3,
-#'     vSeed = 2001)}
+#' runObservation(methylKitData = demoForTransgenerationalAnalysis,
+#'     type = "tiles", vSeed = 2001)
 #'
 NULL
 

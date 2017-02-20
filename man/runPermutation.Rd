@@ -17,7 +17,7 @@ name of the RDS file containing the \code{list}. Each
 related to one generation (first entry = first generation, second
 entry = second generation, etc..). The number of generations must
 correspond to the number
-of entries in the \code{methylKitInfo}.At least 2 generations
+of entries in the \code{methylKitData}.At least 2 generations
 must be present to do a permutation analysis. More information can be found
 in the methylKit package.}
 

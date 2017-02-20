@@ -18,7 +18,7 @@
 #' related to one generation (first entry = first generation, second
 #' entry = second generation, etc..). The number of generations must
 #' correspond to the number
-#' of entries in the \code{methylKitInfo}.At least 2 generations
+#' of entries in the \code{methylKitData}.At least 2 generations
 #' must be present to do a permutation analysis. More information can be found
 #' in the methylKit package.
 #'
@@ -346,8 +346,7 @@ runPermutation <- function(methylKitData,
         finalList[[i]] <- list(sample = permutationList, id = i)
     }
 
-    rm(permutationSamples)
-
+    # Fix the BiocParallel parameter
     if (nbrCores == 1) {
         bpParam <- SnowParam()
     } else {
@@ -364,11 +363,9 @@ runPermutation <- function(methylKitData,
 
     ## Call observation analysis
     if (runObservationAnalysis) {
-        result <- runObservationUsingMethylKitInfo(methylKitInfo =
-                                                            methylKitData,
+        result <- runObservation(methylKitData = methylKitData,
                                     type = type,
                                     outputDir = outputDir,
-                                    nbrCores = nbrCores,
                                     nbrCoresDiffMeth = nbrCoresDiffMeth,
                                     minReads = minReads,
                                     minMethDiff = minMethDiff,
@@ -410,20 +407,27 @@ runPermutation <- function(methylKitData,
 }
 
 
-#' @title Run a differentially methylation analysis on each generation
-#' present in a dataset
+#' @title Run a differentially methylation analysis on multi-generational
+#' dataset
 #'
 #' @description Run a differentially methylation analysis on each generation
 #' present in a dataset. The number of conserved differentially
-#' methylated elements (sites, tile or both) is them calculated. The
+#' methylated elements (sites, tile or both) between generations is
+#' them calculated. The
 #' methylKit package is used to identify the differentially methylated
 #' elements.
 #'
-#' @param methylKitInfo a \code{list} of \code{methylRawList} entries, each
+#' The multi-genrational dataset or the name of the RDS file that contains the
+#' dataset can be used as input.
+#'
+#' The results can also be saved in RDS file (optional).
+#'
+#' @param methylKitData a \code{list} of \code{methylRawList} entries or the
+#' name of the RDS file containing the list. Each
 #' \code{methylRawList} contains all the \code{methylRaw} entries related to
 #' one generation (first entry = first generation, second entry = second
 #' generation, etc..). The number of generations must correspond to the number
-#' of entries in the \code{methylKitInfo}.At least 2 generations
+#' of entries in the \code{methylKitData}.At least 2 generations
 #' must be present to calculate the conserved elements. More information can
 #' be found in the methylKit package.
 #'
@@ -436,9 +440,6 @@ runPermutation <- function(methylKitData,
 #' the results of the permutation or \code{NULL}. If the directory does not
 #' exist, it will be created. When \code{NULL}, the results of the permutation
 #' are not saved. Default: \code{NULL}.
-#'
-#' @param nbrCores a positive \code{integer}, the number of cores to use when
-#' processing the analysis. Default: \code{1} and always \code{1} for Windows.
 #'
 #' @param nbrCoresDiffMeth a positive \code{integer}, the number of cores
 #' to use for parallel differential methylation calculations.Parameter
@@ -571,33 +572,31 @@ runPermutation <- function(methylKitData,
 #' data(samplesForTransgenerationalAnalysis)
 #'
 #' ## Run a permutation analysis
-#' \dontrun{runObservationUsingMethylKitInfo(methylKitInfo =
-#'     samplesForTransgenerationalAnalysis, type = "sites", vSeed = 221)}
+#' runObservation(methylKitData = samplesForTransgenerationalAnalysis,
+#'     type = "sites", vSeed = 221)
 #'
 #' @author Astrid Deschenes, Pascal Belleau
 #' @export
-runObservationUsingMethylKitInfo <- function(methylKitInfo,
-                                            type=c("both", "sites", "tiles"),
-                                            outputDir=NULL,
-                                            nbrCores=1,
-                                            nbrCoresDiffMeth=1,
-                                            minReads=10,
-                                            minMethDiff=10,
-                                            qvalue=0.01,
-                                            maxPercReads=99.9,
-                                            destrand=FALSE,
-                                            minCovBasesForTiles=0,
-                                            tileSize=1000,
-                                            stepSize=1000,
-                                            vSeed=-1) {
+runObservation <- function(methylKitData,
+                                    type=c("both", "sites", "tiles"),
+                                    outputDir=NULL,
+                                    nbrCoresDiffMeth=1,
+                                    minReads=10,
+                                    minMethDiff=10,
+                                    qvalue=0.01,
+                                    maxPercReads=99.9,
+                                    destrand=FALSE,
+                                    minCovBasesForTiles=0,
+                                    tileSize=1000,
+                                    stepSize=1000,
+                                    vSeed=-1) {
 
     # Validate type value
     type <- match.arg(type)
 
     ## Parameters validation
-    validateRunObservationUsingMethylKitInfo(methylKitInfo = methylKitInfo,
+    validateRunObservation(methylKitData = methylKitData,
                             type = type, outputDir = outputDir,
-                            nbrCores = nbrCores,
                             nbrCoresDiffMeth = nbrCoresDiffMeth,
                             minReads = minReads, minMethDiff = minMethDiff,
                             qvalue = qvalue,
@@ -612,6 +611,12 @@ runObservationUsingMethylKitInfo <- function(methylKitInfo,
         outputDir <- paste0(outputDir, "/")
     }
 
+    ## Load methylKit dataset when needed
+    if (is.character(methylKitData)) {
+        ## Extract information from RDS file
+        methylKitData <- readRDS(methylKitData)
+    }
+
     ## Set vSeed value when negative seed is given
     if (vSeed <= -1) {
         tSeed <- as.numeric(Sys.time())
@@ -619,7 +624,7 @@ runObservationUsingMethylKitInfo <- function(methylKitInfo,
     }
     set.seed(vSeed)
 
-    methylInfo <- list(sample = methylKitInfo, id = 0)
+    methylInfo <- list(sample = methylKitData, id = 0)
 
     if (!is.null(outputDir)) {
         doTiles <- any(type %in% c("tiles", "both"))
@@ -644,217 +649,6 @@ runObservationUsingMethylKitInfo <- function(methylKitInfo,
     ## Create final returned list
     result <- list()
     result[["OBSERVATION"]] <- observed
-
-    return(result)
-}
-
-#' @title Run a differentially methylation analysis on each generation
-#' present in a dataset
-#'
-#' @description Run a differentially methylation analysis on each generation
-#' present in a dataset. The number of conserved differentially
-#' methylated elements (sites, tile or both) is them calculated. The
-#' methylKit package is used to identify the differentially methylated
-#' elements.
-#'
-#' @param methylKitRDSFile a string, the name of the RDS file containing the
-#' methylKit objet used for the permutation analysis. The RDS file must
-#' hold a \code{list} of \code{methylRawList} entries, each
-#' \code{methylRawList} contains all the \code{methylRaw} entries related to
-#' one generation (first entry = first generation, second entry = second
-#' generation, etc..). The number of generations must correspond to the number
-#' of entries in the \code{methylKitInfo}.At least 2 generations
-#' must be present to do a permutation analysis. More information can be found
-#' in the methylKit package.
-#'
-#' @param type One of the "sites","tiles" or "both" strings. Specifies the type
-#' of differentially methylated elements should be returned. For
-#' retrieving differentially methylated bases type="sites"; for
-#' differentially methylated regions type="tiles". Default: "both".
-#'
-#' @param outputDir a string, the name of the directory that will contain
-#' the results of the permutation or \code{NULL}. If the directory does not
-#' exist, it will be created. When \code{NULL}, the results of the permutation
-#' are not saved. Default: \code{NULL}.
-#'
-#' @param nbrCores a positive \code{integer}, the number of cores to use when
-#' processing the analysis. Default: \code{1} and always \code{1} for Windows.
-#'
-#' @param nbrCoresDiffMeth a positive \code{integer}, the number of cores
-#' to use for parallel differential methylation calculations.Parameter
-#' used for both sites and tiles analysis. The parameter
-#' corresponds to the \code{num.cores} parameter in the package
-#' \code{methylKit}.
-#' Default: \code{1} and always \code{1} for Windows.
-#'
-#' @param minReads a positive \code{integer} Bases and regions having lower
-#' coverage than this count are discarded. The parameter
-#' correspond to the \code{lo.count} parameter in the package \code{methylKit}.
-#'
-#' @param minMethDiff a positive \code{double} betwwen [0,100], the absolute
-#' value of methylation percentage change between cases and controls. The
-#' parameter correspond to the \code{difference} parameter in
-#' the methylKit package. Default: \code{10}.
-#'
-#' @param qvalue a positive \code{double} betwwen [0,1], the cutoff
-#' for qvalue of differential methylation statistic. Default: \code{0.01}.
-#'
-#' @param maxPercReads a \code{double} between [0,100], the percentile of read
-#' counts that is going to be used as upper cutoff. Bases ore regions
-#' having higher
-#' coverage than this percentile are discarded. Parameter used for both CpG
-#' sites and tiles analysis. The parameter
-#' correspond to the \code{hi.perc} parameter in the package \code{methylKit}.
-#' Default: \code{99.9}.
-#'
-#' @param destrand a \code{logical}, when \code{TRUE} will merge reads on both
-#' strands of a CpG dinucleotide to provide better coverage. Only advised
-#' when looking at CpG methylation. Parameter used for both CpG
-#' sites and tiles analysis.
-#' Default: \code{FALSE}.
-#'
-#' @param minCovBasesForTiles a non-negative \code{integer}, the minimum
-#' number of bases to be covered in a given tiling window. The parameter
-#' corresponds to the \code{cov.bases} parameter in the package
-#' \code{methylKit}.
-#' Only used when \code{doingTiles} =
-#' \code{TRUE}. Default: \code{0}.
-#'
-#' @param tileSize a positive \code{integer}, the size of the tiling window.
-#' The parameter corresponds to the \code{win.size} parameter in
-#' the package \code{methylKit}. Only
-#' used when \code{doingTiles} = \code{TRUE}. Default: \code{1000}.
-#'
-#' @param stepSize a positive \code{integer}, the step size of tiling windows.
-#' The parameter corresponds to the \code{stepSize} parameter in
-#' the package \code{methylKit}. Only
-#' used when \code{doingTiles} = \code{TRUE}. Default: \code{1000}.
-#'
-#' @param vSeed a \code{integer}, a seed used when reproducible results are
-#' needed. When a value inferior or equal to zero is given, a random integer
-#' is used. Default: \code{-1}.
-#'
-#' @return @return a \code{list} containing the following elements:
-#' \itemize{
-#' \item \code{SITES} Only present when \code{type} = \code{"sites"} or
-#' \code{"both"}, a \code{list} containing:
-#' \itemize{
-#' \item\code{i2} a \code{list} containing:
-#' \itemize{
-#' \item \code{HYPER} a \code{list} of \code{integer}, the number of conserved
-#' hyper differentially methylated sites between two consecutive generations.
-#' The first element represents the intersection of the first and second
-#' generations; the second element, the intersection of the second and third
-#' generations; etc..
-#' \item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
-#' hypo differentially methylated sites between two consecutive generations.The
-#' first element represents the intersection of the first and second
-#' generations; the second element, the intersection of the second and third
-#' generations; etc..
-#' }
-#' \item\code{iAll} a \code{list} containing:
-#' \itemize{
-#'\item \code{HYPER} a \code{list} of \code{integer}, the number of conserved
-#' hyper differentially methylated sites between three or more consecutive
-#' generations. The first element represents the intersection of the first
-#' three generations; the second element, the intersection of the first fourth
-#' generations; etc..The number of entries depends of the number
-#' of generations.
-#' \item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
-#' hypo differentially methylated sites between three or more consecutive
-#' generations. The first element represents the intersection of the first
-#' three generations; the second element, the intersection of the first fourth
-#' generations; etc..The number of entries depends of the number of
-#' generations.
-#' }
-#' }
-#' \item \code{TILES} Only present when \code{type} = \code{"tiles"} or
-#' \code{"both"}, a \code{list} containing:
-#' \itemize{
-#' \item\code{i2} a \code{list} containing:
-#' \itemize{
-#' \item \code{HYPER} a \code{list} of \code{integer}, the number of conserved
-#' hyper differentially methylated positions between two consecutive
-#' generations. The first element represents the intersection of the
-#' first and second generations; the second element, the intersection of
-#' the second and third generations; etc..
-#' \item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
-#' hypo differentially methylated positions between two consecutive
-#' generations.The first element represents the intersection of the first and
-#' second generations; the second element, the intersection of the second
-#' and third generations; etc..
-#' }
-#' \item\code{iAll} a \code{list} containing:
-#' \itemize{
-#'\item \code{HYPER} a \code{list} of \code{integer}, the number of conserved
-#' hyper differentially methylated positions between three or more consecutive
-#' generations. The first element represents the intersection of the first
-#' three generations; the second element, the intersection of the first fourth
-#' generations; etc..The number of entries depends of the number
-#' of generations.
-#' \item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
-#' hypo differentially methylated positions between three or more consecutive
-#' generations. The first element represents the intersection of the first
-#' three generations; the second element, the intersection of the first fourth
-#' generations; etc..The number of entries depends of the number of
-#' generations.
-#' }
-#' }
-#' }
-#'
-#' @examples
-#'
-#' ## Path to a methylKit RDS file
-#' methylFile <- system.file("extdata", "methylObj_001.RDS",
-#'      package="methylInheritance")
-#'
-#' ## Run a permutation analysis
-#' \dontrun{runObservationUsingRDSFile(methylKitRDSFile = methylFile,
-#'     type = "sites", minReads = 8, minMethDiff = 5,
-#'     vSeed = 2001)}
-#'
-#' @author Astrid Deschenes, Pascal Belleau
-#' @export
-runObservationUsingRDSFile <- function(methylKitRDSFile,
-                                            type=c("both", "sites", "tiles"),
-                                            outputDir=NULL,
-                                            nbrCores=1,
-                                            nbrCoresDiffMeth=1,
-                                            minReads=10,
-                                            minMethDiff=10,
-                                            qvalue=0.01,
-                                            maxPercReads=99.9,
-                                            destrand=FALSE,
-                                            minCovBasesForTiles=0,
-                                            tileSize=1000,
-                                            stepSize=1000,
-                                            vSeed=-1) {
-
-    # Validate type value
-    type <- match.arg(type)
-
-    ## Validate that methylKitRDSFile is an existing file
-    if (!file.exists(methylKitRDSFile)) {
-        stop(paste0("The file \"", methylKitRDSFile, "\" does not exist."))
-    }
-
-    ## Extract information from RDS file
-    methylInfo <- readRDS(methylKitRDSFile)
-
-    ## Call permutation analysis with the methylInfo object as an parameter
-    result <- runObservationUsingMethylKitInfo(methylKitInfo = methylInfo,
-                                    type = type,
-                                    outputDir = outputDir,
-                                    nbrCores = nbrCores,
-                                    nbrCoresDiffMeth = nbrCoresDiffMeth ,
-                                    minReads = minReads,
-                                    minMethDiff = minMethDiff,
-                                    qvalue = qvalue,
-                                    maxPercReads = maxPercReads,
-                                    destrand = destrand,
-                                    minCovBasesForTiles = minCovBasesForTiles,
-                                    tileSize = tileSize, stepSize = stepSize,
-                                    vSeed = vSeed)
 
     return(result)
 }
@@ -1205,8 +999,7 @@ mergePermutationAndObservation <- function(permutationResults,
 #'
 #' @param allResults a \code{list} of class \code{methylInheritanceAllResults}
 #' as created by the
-#' \code{runPermutationUsingMethylKitInfo} or the
-#' \code{runPermutationUsingRDSFile} functions. The \code{list} must contain
+#' \code{runPermutation} function. The \code{list} must contain
 #' two entries : \code{"PERMUTATION"} and \code{"OBSERVATION"}. The
 #' \code{"PERMUTATION"} \code{list} must contain all results from all
 #' permutations while

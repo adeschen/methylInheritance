@@ -119,22 +119,18 @@ validateRunPermutation <- function(methylKitData,
                                     minCovBasesForTiles, tileSize,
                                     stepSize, vSeed) {
 
-    ## Validate that methylKitData is a valid RDS file when string is passed
-    if (is.character(methylKitData)) {
-        if (!file.exists(methylKitData)) {
-            stop(paste0("The file \"", methylKitData, "\" does not exist."))
-        } else {
-            methylKitData <- readRDS(methylKitData)
-        }
-    }
-
-    ## Validate that methylKitData is a list of methylRawList
-    if (class(methylKitData) != "list" ||
-            !all(sapply(methylKitData, class) == "methylRawList")) {
-        stop(paste0("methylKitData must be a list containing ",
-                    "\"methylRawList\" entries; each entry must contain ",
-                    "all \"methylRaw\" objects related to one generation"))
-    }
+    ## Validate methylKitData, outputDir, nbrCoresDiffMeth
+    ## minReads, minMethDiff, qvalue, maxPercReads, destrand,
+    ## minCovBasesForTiles, tileSize, stepSize, vSeed
+    validateRunObservation(methylKitData = methylKitData,
+                           type = type, outputDir = outputDir,
+                           nbrCoresDiffMeth = nbrCoresDiffMeth,
+                           minReads = minReads, minMethDiff = minMethDiff,
+                           qvalue = qvalue,
+                           maxPercReads = maxPercReads, destrand = destrand,
+                           minCovBasesForTiles = minCovBasesForTiles,
+                           tileSize = tileSize,
+                           stepSize = stepSize, vSeed = vSeed)
 
     ## Validate that the runObservedAnalysis is a logical
     if (!is.logical(runObservedAnalysis)) {
@@ -159,32 +155,24 @@ validateRunPermutation <- function(methylKitData,
         stop("nbrPermutations must be a positive integer or numeric")
     }
 
-    ## Validate all the other parameters
-    validateRunObservationUsingMethylKitInfo(methylKitInfo = methylKitData,
-                            type = type, outputDir = outputDir,
-                            nbrCores = nbrCores,
-                            nbrCoresDiffMeth = nbrCoresDiffMeth,
-                            minReads = minReads, minMethDiff = minMethDiff,
-                            qvalue = qvalue,
-                            maxPercReads = maxPercReads, destrand = destrand,
-                            minCovBasesForTiles = minCovBasesForTiles,
-                            tileSize = tileSize,
-                            stepSize = stepSize, vSeed = vSeed)
+    return(0)
 }
 
 
 #' @title Validation of some parameters of the
-#' \code{\link{runObservationUsingMethylKitInfo}} function
+#' \code{\link{runObservation}} function
 #'
 #' @description Validation of some parameters needed by the public
-#' \code{\link{runObservationUsingMethylKitInfo}} function.
+#' \code{\link{runObservation}} function.
 #'
-#' @param methylKitInfo a \code{list} of \code{methylRawList} entries. Each
+#' @param methylKitData a \code{list} of \code{methylRawList} entries or the
+#' name of the RDS file containing the list. Each
 #' \code{methylRawList} contains all the \code{methylRaw} entries related to
-#' one generation. The number of generations must correspond to the number
-#' of entries in the \code{methylKitInfo}. At least 2 generations
-#' must be present to do a permutation analysis. More information can be found
-#' in the Bioconductor methylKit package.
+#' one generation (first entry = first generation, second entry = second
+#' generation, etc..). The number of generations must correspond to the number
+#' of entries in the \code{methylKitData}.At least 2 generations
+#' must be present to calculate the conserved elements. More information can
+#' be found in the methylKit package.
 #'
 #' @param type One of the "sites","tiles" or "both" strings. Specifies the type
 #' of differentially methylated elements should be returned. For
@@ -194,9 +182,6 @@ validateRunPermutation <- function(methylKitData,
 #' @param outputDir a string, the name of the directory that will contain
 #' the results of the permutation. If the directory does not exist, it will
 #' be created.
-#'
-#' @param nbrCores a positive \code{integer}, the number of cores to use when
-#' processing the analysis.
 #'
 #' @param nbrCoresDiffMeth a positive \code{integer}, the number of cores
 #' to use for parallel differential methylation calculations.Parameter
@@ -258,36 +243,45 @@ validateRunPermutation <- function(methylKitData,
 #' data(samplesForTransgenerationalAnalysis)
 #'
 #' ## The function returns 0 when all paramaters are valid
-#' methylInheritance:::validateRunObservationUsingMethylKitInfo(
-#'     methylKitInfo = samplesForTransgenerationalAnalysis, type = "sites",
-#'     outputDir = NULL, nbrCores = 1,
-#'     nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 25, qvalue = 0.01,
+#' methylInheritance:::validateRunObservation(
+#'     methylKitData = samplesForTransgenerationalAnalysis, type = "sites",
+#'     outputDir = NULL, nbrCoresDiffMeth = 1, minReads = 10,
+#'     minMethDiff = 25, qvalue = 0.01,
 #'     maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
 #'     tileSize = 1000, stepSize = 500, vSeed = 12)
 #'
 #' ## The function raises an error when at least one paramater is not valid
-#' \dontrun{methylInheritance:::validateRunObservationUsingMethylKitInfo(
-#'     methylKitInfo = samplesForTransgenerationalAnalysis,
-#'     type = "tiles", outputDir = NULL, nbrCores = 1,
-#'     nbrCoresDiffMeth = 1, minReads = "HI", minMethDiff = 25, qvalue = 0.01,
+#' \dontrun{methylInheritance:::validateRunObservation(
+#'     methylKitData = samplesForTransgenerationalAnalysis,
+#'     type = "tiles", outputDir = NULL, nbrCoresDiffMeth = 1, minReads = "HI",
+#'     minMethDiff = 25, qvalue = 0.01,
 #'     maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
 #'     tileSize = 1000, stepSize = 500, vSeed = 12)}
 #'
 #' @author Astrid Deschenes
 #' @importFrom S4Vectors isSingleInteger isSingleNumber
 #' @keywords internal
-validateRunObservationUsingMethylKitInfo <- function(methylKitInfo,
-                                    type, outputDir, nbrCores,
+validateRunObservation <- function(methylKitData,
+                                    type, outputDir,
                                     nbrCoresDiffMeth,
                                     minReads, minMethDiff, qvalue,
                                     maxPercReads, destrand,
                                     minCovBasesForTiles, tileSize,
                                     stepSize, vSeed) {
 
-    ## Validate that methylKitInfo is a list of methylRawList
-    if (class(methylKitInfo) != "list" ||
-            !all(sapply(methylKitInfo, class) == "methylRawList")) {
-        stop(paste0("methylKitInfo must be a list containing ",
+    ## Validate that methylKitData is a valid RDS file when string is passed
+    if (is.character(methylKitData)) {
+        if (!file.exists(methylKitData)) {
+            stop(paste0("The file \"", methylKitData, "\" does not exist."))
+        } else {
+            methylKitData <- readRDS(methylKitData)
+        }
+    }
+
+    ## Validate that methylKitData is a list of methylRawList
+    if (class(methylKitData) != "list" ||
+            !all(sapply(methylKitData, class) == "methylRawList")) {
+        stop(paste0("methylKitData must be a list containing ",
                     "\"methylRawList\" entries; each entry must contain ",
                     "all \"methylRaw\" objects related to one generation"))
     }
@@ -295,17 +289,6 @@ validateRunObservationUsingMethylKitInfo <- function(methylKitInfo,
     ## Validate that the output_dir is an not empty string
     if (!is.null(outputDir) && !is.character(outputDir)) {
         stop("output_dir must be a character string or NULL")
-    }
-
-    ## Validate that nbrCores is an positive integer
-    if (!(isSingleInteger(nbrCores) || isSingleNumber(nbrCores)) ||
-        as.integer(nbrCores) < 1) {
-        stop("nbrCores must be a positive integer or numeric")
-    }
-
-    ## Validate that nbrCores is set to 1 on Windows system
-    if (Sys.info()["sysname"] == "Windows" && as.integer(nbrCores) != 1) {
-        stop("nbrCores must be 1 on a Windows system.")
     }
 
     ## Validate that nbrCoresDiffMeth is an positive integer
@@ -387,8 +370,7 @@ validateRunObservationUsingMethylKitInfo <- function(methylKitInfo,
 #' \code{\link{extractInfo}} function.
 #'
 #' @param allResults a \code{list} as created by the
-#' \code{runPermutationUsingMethylKitInfo}, the
-#' \code{runPermutationUsingRDSFile} or the \code{loadAllRDSResults} functions.
+#' \code{runPermutation} or the \code{loadAllRDSResults} functions.
 #'
 #' @param type One of the \code{"sites"} or \code{"tiles"} strings.
 #' Specifies the type
@@ -795,7 +777,7 @@ createOutputDir <- function(outputDir, doingSites = TRUE,
 #' \item \code{sample} a \code{list} of \code{methylRawList} entries, each
 #' \code{methylRawList} contains all the \code{methylRaw} entries related to
 #' one generation. The number of generations must correspond to the number
-#' of entries in the \code{methylKitInfo}. At least 2 generations
+#' of entries in the \code{sample}. At least 2 generations
 #' must be present to do a permutation analysis.
 #' \item \code{id} an integer, the permutation id.
 #' }

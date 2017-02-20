@@ -79,7 +79,8 @@ test.validateRunPermutation_outputDir_as_number <- function() {
 ## Test when runObservedAnalysis is a string
 test.validateRunPermutation_runObservedAnalysis_string <- function() {
     obs <- tryCatch(methylInheritance:::validateRunPermutation(
-        methylKitData = METHYL_OBJ,  outputDir = NULL, runObservedAnalysis = "allo",
+        methylKitData = METHYL_OBJ, type="both", outputDir = NULL,
+        runObservedAnalysis = "allo",
         nbrPermutations = 2, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 2,

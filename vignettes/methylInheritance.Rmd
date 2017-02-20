@@ -149,7 +149,7 @@ getTreatment(demoForTransgenerationalAnalysis[[3]])
 ## Observation analysis 
 
 The observation analysis can be run on all generations using the
-*runObservationUsingMethylKitInfo()* function.
+*runObservation()* function.
 
 The observation results can optionally be stored in a RDS file. To store the
 results into a RDS file, the *outputDir* parameter must be given a directory
@@ -157,7 +157,7 @@ path.
 
 ```{r caseStudy02, warning=FALSE, message=FALSE, collapse=TRUE, cache=TRUE}
 ## The observation analysis is only done on differentially methylated sites
-observationResult <- runObservationUsingMethylKitInfo(methylKitInfo = 
+observationResult <- runObservation(methylKitData = 
                                         demoForTransgenerationalAnalysis, 
                         type = "sites",     # Only sites
                         outputDir = NULL,   # RDS files only created when a 
@@ -241,11 +241,11 @@ When observation and permutation analysis have been run together using the
 
 ## Extract a specific analysis
 
-The *runPermutationUsingMethylKitInfo()* and 
-*runObservationUsingMethylKitInfo()* functions 
+The *runPermutation()* and 
+*runObservation()* functions 
 calculate the number of conserved differentially methylated elements 
-between two consecutive generations (F1 and F2, F2 and F3, etc..).  They also 
-calculate the number of conserved differentially methylated elements is also 
+between two consecutive generations (F1 and F2, F2 and F3, etc..).  The 
+number of conserved differentially methylated elements is also 
 calculated for three or more consecutive generations, always starting with the 
 first generation (F1 and F2 and F3, F1 and F2 and F3 and F4, etc..).
 

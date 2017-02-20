@@ -11,8 +11,7 @@ extractInfo(allResults, type = c("sites", "tiles"), inter = c("i2", "iAll"),
 \arguments{
 \item{allResults}{a \code{list} of class \code{methylInheritanceAllResults}
 as created by the
-\code{runPermutationUsingMethylKitInfo} or the
-\code{runPermutationUsingRDSFile} functions. The \code{list} must contain
+\code{runPermutation} function. The \code{list} must contain
 two entries : \code{"PERMUTATION"} and \code{"OBSERVATION"}. The
 \code{"PERMUTATION"} \code{list} must contain all results from all
 permutations while

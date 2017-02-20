@@ -17,12 +17,9 @@ and that stochastic effect can be dismissed.
 \seealso{
 \itemize{
     \item \code{\link{runPermutation}} {for running a
-    permutation analysis on the specified multi-generational dataset}
-    \item \code{\link{runObservationUsingRDSFile}} {for running a
-    observation analysis on the specified multi-generational dataset in
-    RDS format}
-    \item \code{\link{runObservationUsingMethylKitInfo}} {for running a
-    observation analysis using a methylKit info object as input}
+    permutation analysis on a specified multi-generational dataset}
+    \item \code{\link{runObservation}} {for running a
+    observation analysis on a specified multi-generational dataset}
 }
 }
 \author{

@@ -18,7 +18,7 @@ following elements:
 \item \code{sample} a \code{list} of \code{methylRawList} entries, each
 \code{methylRawList} contains all the \code{methylRaw} entries related to
 one generation. The number of generations must correspond to the number
-of entries in the \code{methylKitInfo}. At least 2 generations
+of entries in the \code{sample}. At least 2 generations
 must be present to do a permutation analysis.
 \item \code{id} an integer, the permutation id.
 }}

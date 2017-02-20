@@ -29,9 +29,8 @@ There is 12 samples (6 controls and 6 cases) for each generation. Each
 sample information is stored in a \code{methylRaw} object.
 }
 \details{
-This dataset can be
-used to test \code{runPermutation} and
-{runObservationUsingMethylKitInfo} functions.
+This dataset can be used to test \code{runPermutation} and
+\code{runObservation} functions.
 }
 \examples{
 
@@ -39,16 +38,15 @@ used to test \code{runPermutation} and
 data(demoForTransgenerationalAnalysis)
 
 ## Run a permutation analysis
-\dontrun{(runObservationUsingMethylKitInfo(methylKitData =
-    demoForTransgenerationalAnalysis, type = "tiles", nbrPermutations = 3,
-    vSeed = 2001)}
+runObservation(methylKitData = demoForTransgenerationalAnalysis,
+    type = "tiles", vSeed = 2001)
 
 }
 \seealso{
 \itemize{
     \item \code{\link{runPermutation}} {for running a
     permutation analysis using multi-generational dataset}
-    \item \code{\link{runObservationUsingMethylKitInfo}} {for running a
+    \item \code{\link{runObservation}} {for running a
     observation analysis using methylKit info entry}
 }
 }
