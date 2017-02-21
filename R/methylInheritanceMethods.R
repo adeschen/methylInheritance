@@ -247,7 +247,8 @@
 #' ## Run a permutation analysis using the methylKit dataset
 #' ## A real analysis would require a much higher number of permutations
 #' runPermutation(methylKitData = samplesForTransgenerationalAnalysis,
-#'     type = "sites", nbrPermutations = 2, vSeed = 221)
+#'     runObservationAnalysis = FALSE, type = "sites", nbrPermutations = 2,
+#'     vSeed = 221)
 #'
 #' ## Path to a methylKit RDS file
 #' methylFile <- system.file("extdata", "methylObj_001.RDS",

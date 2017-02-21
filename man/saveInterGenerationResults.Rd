@@ -63,9 +63,9 @@ resultsGR <- methylInheritance:::getGRangesFromMethylDiff(methDiff =
 interGenerationResult <- methylInheritance:::interGeneration(resultsGR)
 
 ## Save results
-\dontrun{methylInheritance:::saveInterGenerationResults(
+methylInheritance:::saveInterGenerationResults(
     outputDir = "TEST", permutationID=100, type = "sites",
-    interGenerationResult = interGenerationResult)}
+    interGenerationResult = interGenerationResult)
 
 }
 \author{

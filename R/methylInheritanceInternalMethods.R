@@ -728,8 +728,8 @@ interGeneration <- function(resultAllGenGR) {
 #' @examples
 #'
 #' ## Create an output directory for SITES only
-#' \dontrun{createOutputDir(outputDir = "testSites", doingSites = TRUE,
-#'     doingTiles = FALSE)}
+#' methylInheritance:::createOutputDir(outputDir = "testSites",
+#'     doingSites = TRUE, doingTiles = FALSE)
 #'
 #' @author Astrid Deschenes
 #' @keywords internal
@@ -1152,9 +1152,9 @@ runOnePermutationOnAllGenerations <- function(methylInfoForAllGenerations,
 #' interGenerationResult <- methylInheritance:::interGeneration(resultsGR)
 #'
 #' ## Save results
-#' \dontrun{methylInheritance:::saveInterGenerationResults(
+#' methylInheritance:::saveInterGenerationResults(
 #'     outputDir = "TEST", permutationID=100, type = "sites",
-#'     interGenerationResult = interGenerationResult)}
+#'     interGenerationResult = interGenerationResult)
 #'
 #' @author Astrid Deschenes, Pascal Belleau
 #' @keywords internal

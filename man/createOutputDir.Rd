@@ -29,8 +29,8 @@ permutations in RDS format.
 \examples{
 
 ## Create an output directory for SITES only
-\dontrun{createOutputDir(outputDir = "testSites", doingSites = TRUE,
-    doingTiles = FALSE)}
+methylInheritance:::createOutputDir(outputDir = "testSites",
+    doingSites = TRUE, doingTiles = FALSE)
 
 }
 \author{
