@@ -170,11 +170,11 @@ data(samplesForTransgenerationalAnalysis)
 info <- list(sample = samplesForTransgenerationalAnalysis, id = 100)
 
 ## Run a permutation analysis
-\dontrun{methylInheritance:::runOnePermutationOnAllGenerations(
-    methylInfoForAllGenerations = info, type = "sites", outputDir = NULL,
+methylInheritance:::runOnePermutationOnAllGenerations(
+    methylInfoForAllGenerations = info, type = "tiles", outputDir = NULL,
     nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 10, qvalue = 0.01,
     maxPercReads = 99.9, destrand = FALSE, minCovBasesForTiles = 0,
-    tileSize = 1000, stepSize = 1000)}
+    tileSize = 1000, stepSize = 1000)
 
 }
 \author{

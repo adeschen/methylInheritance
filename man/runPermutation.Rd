@@ -268,8 +268,8 @@ methylFile <- system.file("extdata", "methylObj_001.RDS",
 
 ## Run a permutation analysis using RDS file name
 ## A real analysis would require a much higher number of permutations
-runPermutation(methylKitData = methylFile, type = "sites",
-    nbrPermutations = 2, vSeed = 2001)
+runPermutation(methylKitData = methylFile, type = "tiles",
+    nbrPermutations = 2, minCovBasesForTiles = 10, vSeed = 2001)
 
 
 }

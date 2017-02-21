@@ -79,7 +79,7 @@ NULL
 #'
 #' ## Run a permutation analysis
 #' runPermutation(methylKitData = samplesForTransgenerationalAnalysis,
-#'     type = "sites", nbrPermutations = 3, vSeed = 2001)
+#'     type = "tiles", nbrPermutations = 2, vSeed = 2332)
 #'
 NULL
 
