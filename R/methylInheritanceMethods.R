@@ -96,8 +96,9 @@
 #' needed. When a value inferior or equal to zero is given, a random integer
 #' is used. Default: \code{-1}.
 #'
-#' @return a \code{list} of class \code{} when a \code{runObservationAnalysis}
-#' = \code{TRUE}; otherwise a \code{list}. The returned \code{list}
+#' @return a \code{list} of class \code{methylInheritanceAllResults} when
+#' \code{runObservationAnalysis} = \code{TRUE}; otherwise a \code{list}.
+#' The returned \code{list}
 #' containing the following elements:
 #' \itemize{
 #' \item \code{OBSERVATION} Only present when \code{runObservationAnalysis} =
@@ -534,7 +535,7 @@ runPermutation <- function(methylKitData,
 #' }
 #' \item \code{TILES} Only present when \code{type} = \code{"tiles"} or
 #' \code{"both"}, a \code{list} containing:
-#' itemize{
+#' \itemize{
 #' \item\code{i2} a \code{list} containing:
 #' \itemize{
 #' \item \code{HYPER} a \code{list} of \code{integer}, the number of conserved
@@ -679,7 +680,7 @@ runObservation <- function(methylKitData,
 #' methylated tiles are loaded when
 #' \code{doingTiles} = \code{TRUE}. Default: \code{TRUE}.
 #'
-#' @return a \code{list} of \code{class} "methylInheritanceAllResults"
+#' @return a \code{list} of class \code{methylInheritanceAllResults}
 #' containing the following elements:
 #' \itemize{
 #' \item \code{OBSERVATION}, a \code{list} that contains one or two entries.

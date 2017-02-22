@@ -96,8 +96,9 @@ needed. When a value inferior or equal to zero is given, a random integer
 is used. Default: \code{-1}.}
 }
 \value{
-a \code{list} of class \code{} when a \code{runObservationAnalysis}
-= \code{TRUE}; otherwise a \code{list}. The returned \code{list}
+a \code{list} of class \code{methylInheritanceAllResults} when
+\code{runObservationAnalysis} = \code{TRUE}; otherwise a \code{list}.
+The returned \code{list}
 containing the following elements:
 \itemize{
 \item \code{OBSERVATION} Only present when \code{runObservationAnalysis} =

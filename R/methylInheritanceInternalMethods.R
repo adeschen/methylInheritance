@@ -1151,9 +1151,13 @@ runOnePermutationOnAllGenerations <- function(methylInfoForAllGenerations,
 #' ## Extract inter-generationally conserved sites
 #' interGenerationResult <- methylInheritance:::interGeneration(resultsGR)
 #'
+#' ## Create directories
+#' dir.create("TEST", showWarnings = TRUE)
+#' dir.create("TEST/SITES", showWarnings = TRUE)
+#'
 #' ## Save results
 #' methylInheritance:::saveInterGenerationResults(
-#'     outputDir = "TEST", permutationID=100, type = "sites",
+#'     outputDir = "TEST/", permutationID=100, type = "sites",
 #'     interGenerationResult = interGenerationResult)
 #'
 #' @author Astrid Deschenes, Pascal Belleau

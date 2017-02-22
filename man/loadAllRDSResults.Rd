@@ -26,7 +26,7 @@ methylated tiles are loaded when
 \code{doingTiles} = \code{TRUE}. Default: \code{TRUE}.}
 }
 \value{
-a \code{list} of \code{class} "methylInheritanceAllResults"
+a \code{list} of class \code{methylInheritanceAllResults}
 containing the following elements:
 \itemize{
 \item \code{OBSERVATION}, a \code{list} that contains one or two entries.
