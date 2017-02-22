@@ -21,10 +21,10 @@ stored in a \code{methylRaw} object. There is \code{methylRaw} objects
 (6 controls and 6 cases) in each generation.
 }
 \description{
-The object is a \code{list} with 3 entries. Each entry correspond to the
+The object is a \code{list} with 3 entries. Each entry corresponds to the
 information for one generation (first entry = first generation, etc..)
 stored in a \code{methylRawList}.
-There is 12 samples (6 controls and 6 cases) for each generation. Each
+There are 12 samples (6 controls and 6 cases) for each generation. Each
 sample information is stored in a \code{methylRaw} object.
 }
 \details{
@@ -44,7 +44,8 @@ runPermutation(methylKitData = samplesForTransgenerationalAnalysis,
 \seealso{
 \itemize{
     \item \code{\link{runPermutation}} {for running a
-    permutation analysis using multi-generational dataset}
+    permutation analysis, and optionally an observation analysis, using
+    multi-generational dataset}
 }
 }
 \keyword{datasets}

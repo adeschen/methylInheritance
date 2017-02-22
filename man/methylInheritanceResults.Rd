@@ -4,7 +4,7 @@
 \name{methylInheritanceResults}
 \alias{methylInheritanceResults}
 \title{All observed and permutation results formatted in a
-\code{methylInheritanceResults} class object (for demo purpose).}
+\code{methylInheritanceResults} class (for demo purpose).}
 \format{a \code{list} of class \code{methylInheritanceAllResults}
 containing the following elements:
 \itemize{
@@ -271,8 +271,8 @@ The object is a \code{list} with 2 entries: "OBSERVATION" and
 }
 \details{
 This dataset can be
-used to test the \code{extractInfo} function.The extracted info can be
-used to calculate the significant level or to create a graph.
+used to test the \code{extractInfo} function.The extracted information can
+be used to calculate the significant level or to create a graph.
 }
 \examples{
 
