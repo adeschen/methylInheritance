@@ -3,7 +3,7 @@
 \name{saveInterGenerationResults}
 \alias{saveInterGenerationResults}
 \title{Save the result of on CpG site or tile analysis on all generations.
-The anaysis can come from observed or permutated dataset. Each case is
+The anaysis can come from observed or shuffled dataset. Each case is
 saved with a different extension.}
 \usage{
 saveInterGenerationResults(outputDir, permutationID, type = c("sites",
@@ -44,7 +44,7 @@ successful.
 \description{
 Save the result of on CpG site or tile analysis on all
 generations. The results are saved in a RDS file. The anaysis can have been
-done on the observed or permutated dataset.
+done on the observed or shuffled dataset.
 Each permutation is saved using its identifiant in the file name.
 }
 \examples{

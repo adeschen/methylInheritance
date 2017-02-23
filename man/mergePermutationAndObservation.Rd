@@ -16,7 +16,7 @@ the result of one permutation.}
 \item{observationResults}{a \code{list} with 1 entry called
 \code{OBSERVATION}. The \code{OBSERVATION} entry is a \code{list} containing
 the result obtained
-with the observed dataset (not permutated).}
+with the observed dataset (not shuffled).}
 }
 \value{
 a \code{list} of class \code{methylInheritanceAllResults} with
@@ -26,13 +26,13 @@ a \code{list} of class \code{methylInheritanceAllResults} with
 to the number of permutations that have been processed. Each entry contains
 the result of one permutation.
 \item \code{OBSERVATION} a \code{list} containing the result obtained
-with the observed dataset (not permutated).
+with the observed dataset (not shuffled).
 }
 }
 \description{
 Merge the permutation results with the observation results.
 The merging is only needed when permutation and observation have been
-processed separatly. The returned value is a
+processed separately. The returned value is a
 \code{methylInheritanceAllResults} object that can be used by
 the \code{extractInfo} function.
 }

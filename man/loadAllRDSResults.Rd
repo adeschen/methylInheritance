@@ -10,12 +10,12 @@ loadAllRDSResults(analysisResultsDir, permutationResultsDir,
 }
 \arguments{
 \item{analysisResultsDir}{a \code{character} string, the path to the
-directory that contains the analysis results. The path can be the same that
+directory that contains the analysis results. The path can be the same as
 for the \code{permutatioNResultsDir} parameter.}
 
 \item{permutationResultsDir}{a \code{character} string, the path to the
 directory that contains the permutation results. The path can be the same
-that for the \code{analysisResultsDir} parameter.}
+as for the \code{analysisResultsDir} parameter.}
 
 \item{doingSites}{a \code{logical}, the data related to differentially
 methylated sites are loaded when
@@ -64,7 +64,7 @@ generations; etc. The number of entries depends on the number of
 generations.
 }
 }
-\item \code{TILES} The results of an ananlysis by tiles, a
+\item \code{TILES} The results of an analysis by tiles, a
 \code{list} containing:
 \itemize{
 \item\code{i2} a \code{list} containing:

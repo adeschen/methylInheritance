@@ -11,7 +11,7 @@ validateMergePermutationAndObservation(permutationResults, observationResults)
 \item{observationResults}{a \code{list} with 1 entry called
 \code{OBSERVATION}. The \code{OBSERVATION} entry is a \code{list} containing
 the result obtained
-with the observed dataset (not permutated).}
+with the observed dataset (not shuffled).}
 
 \item{@param}{permutationResults a \code{list} with 1 entry called
 \code{PERMUTATION}. The  \code{PERMUTATION} entry is a \code{list} with

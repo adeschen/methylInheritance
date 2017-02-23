@@ -486,7 +486,7 @@ validateExtractInfo <- function(allResults, type, inter, position) {
 #' @param observationResults a \code{list} with 1 entry called
 #' \code{OBSERVATION}. The \code{OBSERVATION} entry is a \code{list} containing
 #' the result obtained
-#' with the observed dataset (not permutated).
+#' with the observed dataset (not shuffled).
 #'
 #' @return \code{0} indicating that all parameters validations have been
 #' successful.
@@ -1098,12 +1098,12 @@ runOnePermutationOnAllGenerations <- function(methylInfoForAllGenerations,
 
 
 #' @title Save the result of on CpG site or tile analysis on all generations.
-#' The anaysis can come from observed or permutated dataset. Each case is
+#' The anaysis can come from observed or shuffled dataset. Each case is
 #' saved with a different extension.
 #'
 #' @description Save the result of on CpG site or tile analysis on all
 #' generations. The results are saved in a RDS file. The anaysis can have been
-#' done on the observed or permutated dataset.
+#' done on the observed or shuffled dataset.
 #' Each permutation is saved using its identifiant in the file name.
 #'
 #' @param outputDir a string of \code{character}, the name of the directory

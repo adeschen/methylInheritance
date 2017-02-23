@@ -666,12 +666,12 @@ runObservation <- function(methylKitData,
 #' all the pertinent information.
 #'
 #' @param analysisResultsDir a \code{character} string, the path to the
-#' directory that contains the analysis results. The path can be the same that
+#' directory that contains the analysis results. The path can be the same as
 #' for the \code{permutatioNResultsDir} parameter.
 #'
 #' @param permutationResultsDir a \code{character} string, the path to the
 #' directory that contains the permutation results. The path can be the same
-#' that for the \code{analysisResultsDir} parameter.
+#' as for the \code{analysisResultsDir} parameter.
 #'
 #' @param doingSites a \code{logical}, the data related to differentially
 #' methylated sites are loaded when
@@ -719,7 +719,7 @@ runObservation <- function(methylKitData,
 #' generations.
 #' }
 #' }
-#' \item \code{TILES} The results of an ananlysis by tiles, a
+#' \item \code{TILES} The results of an analysis by tiles, a
 #' \code{list} containing:
 #' \itemize{
 #' \item\code{i2} a \code{list} containing:
@@ -921,7 +921,7 @@ loadAllRDSResults <- function(analysisResultsDir,
 #'
 #' @description  Merge the permutation results with the observation results.
 #' The merging is only needed when permutation and observation have been
-#' processed separatly. The returned value is a
+#' processed separately. The returned value is a
 #' \code{methylInheritanceAllResults} object that can be used by
 #' the \code{extractInfo} function.
 #'
@@ -934,7 +934,7 @@ loadAllRDSResults <- function(analysisResultsDir,
 #' @param observationResults a \code{list} with 1 entry called
 #' \code{OBSERVATION}. The \code{OBSERVATION} entry is a \code{list} containing
 #' the result obtained
-#' with the observed dataset (not permutated).
+#' with the observed dataset (not shuffled).
 #'
 #' @return a \code{list} of class \code{methylInheritanceAllResults} with
 #' 2 entries. The 2 entries are:
@@ -943,7 +943,7 @@ loadAllRDSResults <- function(analysisResultsDir,
 #' to the number of permutations that have been processed. Each entry contains
 #' the result of one permutation.
 #' \item \code{OBSERVATION} a \code{list} containing the result obtained
-#' with the observed dataset (not permutated).
+#' with the observed dataset (not shuffled).
 #' }
 #'
 #' @examples
@@ -1007,7 +1007,7 @@ mergePermutationAndObservation <- function(permutationResults,
 #' \code{"PERMUTATION"} \code{list} must contain all results from all
 #' permutations while
 #' the \code{"OBSERVATION"} \code{list} must contain the result obtained with
-#' the observed dataset (not permutated).
+#' the observed dataset (not shuffled).
 #'
 #' @param type One of the \code{"sites"} or \code{"tiles"} strings.
 #' Specifies the type
@@ -1028,7 +1028,7 @@ mergePermutationAndObservation <- function(permutationResults,
 #'
 #' @return a \code{data.frame}
 #' containing the observation results (using real
-#' data) and the permutation results (using permutated data). Both hyper and
+#' data) and the permutation results (using shuffled data). Both hyper and
 #' hypo differentially conserved methylation results are present.
 #'
 #' @examples
@@ -1083,11 +1083,11 @@ extractInfo <- function(allResults, type=c("sites", "tiles"),
 #' @title Generate a graph for a permutation analysis
 #'
 #' @description  Generate a graph for a permutation analysis using observed
-#' and permutated results.
+#' and shuffled results.
 #'
 #' @param formatForGraphDataFrame a \code{data.frame} containing the
 #' observation results (using real
-#' data) and the permutation results (using permutated data). Both hyper and
+#' data) and the permutation results (using shuffled data). Both hyper and
 #' hypo differentially conserved methylation results must be present. The
 #' \code{data.frame} must have 3 columns : "TYPE", "RESULT" and "SOURCE".
 #' The "TYPE" can be either "HYPER" or "HYPO". The "RESULT" is the number

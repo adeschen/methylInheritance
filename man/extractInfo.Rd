@@ -16,7 +16,7 @@ two entries : \code{"PERMUTATION"} and \code{"OBSERVATION"}. The
 \code{"PERMUTATION"} \code{list} must contain all results from all
 permutations while
 the \code{"OBSERVATION"} \code{list} must contain the result obtained with
-the observed dataset (not permutated).}
+the observed dataset (not shuffled).}
 
 \item{type}{One of the \code{"sites"} or \code{"tiles"} strings.
 Specifies the type
@@ -38,7 +38,7 @@ where the information will be extracted.}
 \value{
 a \code{data.frame}
 containing the observation results (using real
-data) and the permutation results (using permutated data). Both hyper and
+data) and the permutation results (using shuffled data). Both hyper and
 hypo differentially conserved methylation results are present.
 }
 \description{
