@@ -44,7 +44,7 @@ hypo differentially conserved methylation results are present.
 \description{
 Extract the information specific to a subsection of the
 permutation analysis. The extracted information will be specific to one
-type of differentially methylation analysis (tiles or sites), to one type
+type of differential methylation analysis (tiles or sites), to one type
 of intersection (two consecutive generation or more) and to one specific
 group of generations.
 }
