@@ -41,12 +41,12 @@ a \code{list} containing:
 hyper differentially methylated sites between two consecutive generations.
 The first element represents the intersection of the first and second
 generations; the second element, the intersection of the second and third
-generations; etc..
+generations; etc.
 \item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
 hypo differentially methylated sites between two consecutive generations.The
 first element represents the intersection of the first and second
 generations; the second element, the intersection of the second and third
-generations; etc..
+generations; etc.
 }
 \item\code{iAll} a \code{list} containing:
 \itemize{
@@ -54,13 +54,13 @@ generations; etc..
 hyper differentially methylated sites between three or more consecutive
 generations. The first element represents the intersection of the first
 three generations; the second element, the intersection of the first fourth
-generations; etc..The number of entries depends of the number
+generations; etc. The number of entries depends on the number
 of generations.
 \item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
 hypo differentially methylated sites between three or more consecutive
 generations. The first element represents the intersection of the first
 three generations; the second element, the intersection of the first fourth
-generations; etc..The number of entries depends of the number of
+generations; etc. The number of entries depends on the number of
 generations.
 }
 }
@@ -73,12 +73,12 @@ generations.
 hyper differentially methylated positions between two consecutive
 generations. The first element represents the intersection of the
 first and second generations; the second element, the intersection of
-the second and third generations; etc..
+the second and third generations; etc.
 \item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
 hypo differentially methylated positions between two consecutive
 generations.The first element represents the intersection of the first and
 second generations; the second element, the intersection of the second
-and third generations; etc..
+and third generations; etc.
 }
 \item\code{iAll} a \code{list} containing:
 \itemize{
@@ -86,13 +86,13 @@ and third generations; etc..
 hyper differentially methylated positions between three or more consecutive
 generations. The first element represents the intersection of the first
 three generations; the second element, the intersection of the first fourth
-generations; etc..The number of entries depends of the number
+generations; etc. The number of entries depends on the number
 of generations.
 \item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
 hypo differentially methylated positions between three or more consecutive
 generations. The first element represents the intersection of the first
 three generations; the second element, the intersection of the first fourth
-generations; etc..The number of entries depends of the number of
+generations; etc.The number of entries depends on the number of
 generations.
 }
 }
@@ -111,12 +111,12 @@ a \code{list} with one or two entries. The possible entries are:
 hyper differentially methylated sites between two consecutive generations.
 The first element represents the intersection of the first and second
 generations; the second element, the intersection of the second and third
-generations; etc..
+generations; etc.
 \item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
 hypo differentially methylated sites between two consecutive generations.The
 first element represents the intersection of the first and second
 generations; the second element, the intersection of the second and third
-generations; etc..
+generations; etc.
 }
 \item\code{iAll} a \code{list} containing:
 \itemize{
@@ -124,13 +124,13 @@ generations; etc..
 hyper differentially methylated sites between three or more consecutive
 generations. The first element represents the intersection of the first
 three generations; the second element, the intersection of the first fourth
-generations; etc..The number of entries depends of the number
+generations; etc. The number of entries depends on the number
 of generations.
 \item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
 hypo differentially methylated sites between three or more consecutive
 generations. The first element represents the intersection of the first
 three generations; the second element, the intersection of the first fourth
-generations; etc..The number of entries depends of the number of
+generations; etc. The number of entries depends on the number of
 generations.
 }
 }
@@ -143,12 +143,12 @@ a \code{list} containing:
 hyper differentially methylated positions between two consecutive
 generations. The first element represents the intersection of the
 first and second generations; the second element, the intersection of
-the second and third generations; etc..
+the second and third generations; etc.
 \item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
 hypo differentially methylated positions between two consecutive
 generations.The first element represents the intersection of the first and
 second generations; the second element, the intersection of the second
-and third generations; etc..
+and third generations; etc.
 }
 \item\code{iAll} a \code{list} containing:
 \itemize{
@@ -156,13 +156,13 @@ and third generations; etc..
 hyper differentially methylated positions between three or more consecutive
 generations. The first element represents the intersection of the first
 three generations; the second element, the intersection of the first fourth
-generations; etc..The number of entries depends of the number
+generations; etc.The number of entries depends on the number
 of generations.
 \item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
 hypo differentially methylated positions between three or more consecutive
 generations. The first element represents the intersection of the first
 three generations; the second element, the intersection of the first fourth
-generations; etc..The number of entries depends of the number of
+generations; etc.The number of entries depends on the number of
 generations.
 }
 }
