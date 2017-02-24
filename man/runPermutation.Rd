@@ -139,7 +139,7 @@ runPermutation(methylKitData = methylFile, type = "tiles",
 
 }
 \seealso{
-\code{\link{mergePermutationAndObservation}}  for detail
+\code{\link{mergePermutationAndObservation}} for detail
 description, in the Value section, of the
 \code{methylInheritanceAllResults} object as
 well as its \code{PERMUTATION} section.
