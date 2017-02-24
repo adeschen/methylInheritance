@@ -16,16 +16,11 @@ and that stochastic effect can be dismissed.
 }
 \seealso{
 \itemize{
-    \item \code{\link{runPermutationUsingRDSFile}} {for running a
-    permutation analysis on the specified multi-generational dataset in
-    RDS format}
-    \item \code{\link{runPermutationUsingMethylKitInfo}} {for running a
-    permutation analysis using a methylKit info object as input}
-    \item \code{\link{runObservationUsingRDSFile}} {for running a
-    observation analysis on the specified multi-generational dataset in
-    RDS format}
-    \item \code{\link{runObservationUsingMethylKitInfo}} {for running a
-    observation analysis using a methylKit info object as input}
+    \item \code{\link{runPermutation}} {for running a
+    permutation analysis, and optionally an observation analysis, on a
+    specified multi-generational dataset}
+    \item \code{\link{runObservation}} {for running an
+    observation analysis on a specified multi-generational dataset}
 }
 }
 \author{

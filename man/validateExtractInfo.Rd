@@ -9,8 +9,7 @@ validateExtractInfo(allResults, type, inter, position)
 }
 \arguments{
 \item{allResults}{a \code{list} as created by the
-\code{runPermutationUsingMethylKitInfo}, the
-\code{runPermutationUsingRDSFile} or the \code{loadAllRDSResults} functions.}
+\code{runPermutation} or the \code{loadAllRDSResults} functions.}
 
 \item{type}{One of the \code{"sites"} or \code{"tiles"} strings.
 Specifies the type
@@ -43,13 +42,13 @@ data(methylInheritanceResults)
 
 ## The function returns 0 when all paramaters are valid
 methylInheritance:::validateExtractInfo(
-allResults = methylInheritanceResults, type = "sites",
-inter = "i2", 2)
+    allResults = methylInheritanceResults, type = "sites",
+    inter = "i2", 2)
 
 ## The function raises an error when at least one paramater is not valid
 \dontrun{methylInheritance:::validateExtractInfo(
-allResults = methylInheritanceResults, type = "sites",
-inter = "i2", 12)}
+    allResults = methylInheritanceResults, type = "sites",
+    inter = "i2", 12)}
 
 }
 \author{

@@ -44,14 +44,13 @@ represent a CpG site or region analysis done on one generation.
 \examples{
 
 ## Load permutation results on sites
-permutationResultsFile <- dir(system.file("extdata",
-package = "methylInheritance"), pattern = "permutationResultsForSites.RDS",
-full.names = TRUE)
+permutationResultsFile <- system.file("extdata",
+    "permutationResultsForSites.RDS", package="methylInheritance")
 permutationResults <- readRDS(permutationResultsFile)
 
 ## Transform result to GRanges
 resultsGR <- methylInheritance:::getGRangesFromMethylDiff(methDiff =
-permutationResults, pDiff = 10, qvalue = 0.01, type = "hyper")
+    permutationResults, pDiff = 10, qvalue = 0.01, type = "hyper")
 
 }
 \author{

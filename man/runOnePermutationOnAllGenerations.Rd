@@ -18,7 +18,7 @@ following elements:
 \item \code{sample} a \code{list} of \code{methylRawList} entries, each
 \code{methylRawList} contains all the \code{methylRaw} entries related to
 one generation. The number of generations must correspond to the number
-of entries in the \code{methylKitInfo}. At least 2 generations
+of entries in the \code{sample}. At least 2 generations
 must be present to do a permutation analysis.
 \item \code{id} an integer, the permutation id.
 }}
@@ -170,11 +170,11 @@ data(samplesForTransgenerationalAnalysis)
 info <- list(sample = samplesForTransgenerationalAnalysis, id = 100)
 
 ## Run a permutation analysis
-\dontrun{methylInheritance:::runOnePermutationOnAllGenerations(
-methylInfoForAllGenerations = info, type = "sites", outputDir = NULL,
-nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 10, qvalue = 0.01,
-maxPercReads = 99.9, destrand = FALSE, minCovBasesForTiles = 0,
-tileSize = 1000, stepSize = 1000)}
+methylInheritance:::runOnePermutationOnAllGenerations(
+    methylInfoForAllGenerations = info, type = "tiles", outputDir = NULL,
+    nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 10, qvalue = 0.01,
+    maxPercReads = 99.9, destrand = FALSE, minCovBasesForTiles = 0,
+    tileSize = 1000, stepSize = 1000)
 
 }
 \author{

@@ -15,6 +15,7 @@ vignette: >
 ```{r style, echo = FALSE, results = 'asis', warning=FALSE, message=FALSE}
 BiocStyle::markdown()
 library(knitr)
+library(methylKit)
 ```
 
 <br />
@@ -72,8 +73,8 @@ library(methylInheritance)
 
 The permutation analysis is a statistical significance test in which 
 the distribution of the test statistic under the null hypothesis is obtained 
-by calculating the values of the test statistic under rearrangements of 
-the labels on the observed data points. The rearrangements of the labels is 
+by calculating the values of the test statistic under rearrangement of 
+the labels on the observed data points. The rearrangement of the labels is 
 done through repeated random sampling [@Legendre1998, pp. 142-157]. 
 
 **Null Hypothesis**: The number of conserved DME correspond to a number that 
@@ -85,21 +86,21 @@ number that can be obtained through a randomness analysis.
 A typical **methylInheritance** analysis consists of the following steps:
 
 1. Process to a differentially methylation analysis on each generation 
-separatly using real dataset with `r Rpackage("methylKit")`.
+separately using real dataset with `r Rpackage("methylKit")`.
 2. Calculate the number of conserved differentially methylated elements 
 between two consecutive generations (F1 and F2, F2 and F3, etc..).  The number
 of conserved differentially methylated elements is also calculated for three
-or more consercutive generations, always starting with the first generation 
+or more consecutive generations, always starting with the first generation 
 (F1 and F2 and F3, F1 and F2 and F3 and F4, etc..).
 Those results are considered the reference values.
 3. Fix a threshold (conventionally 0.05) that is used as a cutoff between the 
 null and alternative hypothesis. 
-4. Process to a differentially methylation analysis on each permutated dataset.
-Each generation is analysed separatly using `r Rpackage("methylKit")` package.
+4. Process to a differential methylation analysis on each shuffled dataset.
+Each generation is analysed separately using `r Rpackage("methylKit")` package.
 5. Calculate the significant level for each consecutive subset of generations. 
 The significant level is defined as the percentage of results equal or higher 
 than the reference values. The reference values are added to the analysis so 
-that it becomes impossible for the test to conclude that no value are 
+that it becomes impossible for the test to conclude that no value is 
 as extreme as, or more extreme than the reference values.
 
 All those steps have been encoded in the 
@@ -128,29 +129,27 @@ length(demoForTransgenerationalAnalysis)
 ## The methylRawList object contains two Slots:
 ## 1- treatment: a numeric vector denoting controls and cases.
 ## 2- .Data: a list of methylRaw objects. Each object stores the raw 
-## mehylation data of one sample.
+##           mehylation data of one sample.
 
 
 ## A section of the methylRaw object containing the information of the 
 ## first sample from the second generation 
 head(demoForTransgenerationalAnalysis[[2]][[1]]) 
 
-## The same information could also be obtained using the .Data slot
-## head(demoForTransgenerationalAnalysis[[2]]@.Data[[1]]) 
-
 ## The treatment vector for each generation
 ## The number of treatments and controls is the same in each generation
 ## However, it could also be different.
-slot(demoForTransgenerationalAnalysis[[1]], "treatment")
-slot(demoForTransgenerationalAnalysis[[2]], "treatment")
-slot(demoForTransgenerationalAnalysis[[3]], "treatment")
+## Beware that getTreatment() is a function from the methylKit package.
+getTreatment(demoForTransgenerationalAnalysis[[1]])
+getTreatment(demoForTransgenerationalAnalysis[[2]])
+getTreatment(demoForTransgenerationalAnalysis[[3]])
 ```
 
 
 ## Observation analysis 
 
 The observation analysis can be run on all generations using the
-*runObservationUsingMehtylKitInfo()* function.
+*runObservation()* function.
 
 The observation results can optionally be stored in a RDS file. To store the
 results into a RDS file, the *outputDir* parameter must be given a directory
@@ -158,7 +157,7 @@ path.
 
 ```{r caseStudy02, warning=FALSE, message=FALSE, collapse=TRUE, cache=TRUE}
 ## The observation analysis is only done on differentially methylated sites
-observationResult <- runObservationUsingMethylKitInfo(methylKitInfo = 
+observationResult <- runObservation(methylKitData = 
                                         demoForTransgenerationalAnalysis, 
                         type = "sites",     # Only sites
                         outputDir = NULL,   # RDS files only created when a 
@@ -178,25 +177,23 @@ observationResult$OBSERVATION$SITES
 ## Permutation analysis 
 
 The permutation analysis can be run on all generations using the
-*runPermutationUsingMehtylKitInfo()* function.
+*runPermutation()* function.
 
 The observation and the permutation analysis can be run together by 
 setting the *runObservationAnalysis = TRUE* in the
-*runPermutationUsingMehtylKitInfo()* function.
+*runPermutation()* function.
 
 All permutations can also be, optionally, saved in RDS files. To store the
 results into RDS files, the *outputDir* parameter must be given a directory
 path.
 
-At last, the *runPermutationUsingRDSFile()* function also executes a
-permutation analysis but instead of passing a methylKit object to it, the
-path to a RDS file that contains the methylKit object must be used.
+At last, the name of the RDS file that contains the methylKit object can also
+be used as an argument to the *runPermutation()* function.
 
 ```{r caseStudy03, warning=FALSE, message=FALSE, collapse=TRUE, cache=TRUE}
-
 ## The permutation analysis is only done on differentially methylated sites
-permutationResult <- runPermutationUsingMethylKitInfo(methylKitInfo = 
-                                        demoForTransgenerationalAnalysis, 
+permutationResult <- runPermutation(
+                        methylKitData = demoForTransgenerationalAnalysis, # multi-generational dataset
                         type = "sites",     # Only sites
                         outputDir = NULL,   # RDS files only created when a 
                                             # path is given
@@ -239,16 +236,16 @@ rm(observationResult)
 ```
 
 When observation and permutation analysis have been run together using the
-*runPermutationUsingMehtylKitInfo()* function, this step can be skipped.
+*runPermutation()* function, this step can be skipped.
 
 
 ## Extract a specific analysis
 
-The *runPermutationUsingMehtylKitInfo()* and 
-*runObservationUsingMehtylKitInfo()* functions 
+The *runPermutation()* and 
+*runObservation()* functions 
 calculate the number of conserved differentially methylated elements 
-between two consecutive generations (F1 and F2, F2 and F3, etc..).  They also 
-calculate the number of conserved differentially methylated elements is also 
+between two consecutive generations (F1 and F2, F2 and F3, etc..).  The 
+number of conserved differentially methylated elements is also 
 calculated for three or more consecutive generations, always starting with the 
 first generation (F1 and F2 and F3, F1 and F2 and F3 and F4, etc..).
 
@@ -268,7 +265,7 @@ F3, etc..)
 F1 and F2 and F3 and F4, etc..)
 
 ```{r caseStudy05, warning=FALSE, message=FALSE, collapse=TRUE, cache=FALSE}
-## Differentially conserved sites between F1 and F2 generations
+## Conserved differentially methylated sites between F1 and F2 generations
 F1_and_F2_results <- extractInfo(allResults = allResults, type = "sites", 
                                     inter = "i2", position = 1)
 
@@ -283,10 +280,10 @@ those permutations will be used to generate the significant levels and
 the visual representations.
 
 ```{r caseStudyLoad, warning=FALSE, message=FALSE, cache=TRUE,  echo = FALSE, cache=TRUE}
-demoResults <- readRDS(dir(system.file("extdata", 
-                        package = "methylInheritance"),
-                        pattern = "resultsForTransgenerationalAnalysis.RDS", 
-                        full.names = TRUE))
+demoFile <- system.file("extdata", "resultsForTransgenerationalAnalysis.RDS",
+                package="methylInheritance")
+
+demoResults <- readRDS(demoFile)
 ```
 
 ```{r caseStudy06, warning=FALSE, message=FALSE, collapse=TRUE, cache=TRUE}

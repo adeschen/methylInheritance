@@ -9,7 +9,7 @@ plotGraph(formatForGraphDataFrame)
 \arguments{
 \item{formatForGraphDataFrame}{a \code{data.frame} containing the
 observation results (using real
-data) and the permutation results (using permutated data). Both hyper and
+data) and the permutation results (using shuffled data). Both hyper and
 hypo differentially conserved methylation results must be present. The
 \code{data.frame} must have 3 columns : "TYPE", "RESULT" and "SOURCE".
 The "TYPE" can be either "HYPER" or "HYPO". The "RESULT" is the number
@@ -21,7 +21,7 @@ a graph showing the permutation analysis results
 }
 \description{
 Generate a graph for a permutation analysis using observed
-and permutated results.
+and shuffled results.
 }
 \examples{
 
@@ -32,7 +32,7 @@ data(methylInheritanceResults)
 ## methylated sites (type = sites) between the intersection of 2
 ## generations (inter = i2): F2 and F3 (position = 2)
 info <- extractInfo(allResults = methylInheritanceResults,
-type = "sites", inter="i2", 2)
+    type = "sites", inter="i2", 2)
 
 ## Create graph
 plotGraph(info)

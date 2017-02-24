@@ -11,13 +11,12 @@ extractInfo(allResults, type = c("sites", "tiles"), inter = c("i2", "iAll"),
 \arguments{
 \item{allResults}{a \code{list} of class \code{methylInheritanceAllResults}
 as created by the
-\code{runPermutationUsingMethylKitInfo} or the
-\code{runPermutationUsingRDSFile} functions. The \code{list} must contain
+\code{runPermutation} function. The \code{list} must contain
 two entries : \code{"PERMUTATION"} and \code{"OBSERVATION"}. The
 \code{"PERMUTATION"} \code{list} must contain all results from all
 permutations while
 the \code{"OBSERVATION"} \code{list} must contain the result obtained with
-the observed dataset (not permutated).}
+the observed dataset (not shuffled).}
 
 \item{type}{One of the \code{"sites"} or \code{"tiles"} strings.
 Specifies the type
@@ -39,31 +38,29 @@ where the information will be extracted.}
 \value{
 a \code{data.frame}
 containing the observation results (using real
-data) and the permutation results (using permutated data). Both hyper and
+data) and the permutation results (using shuffled data). Both hyper and
 hypo differentially conserved methylation results are present.
 }
 \description{
 Extract the information specific to a subsection of the
 permutation analysis. The extracted information will be specific to one
-type of differentially methylation analysis (tiles or sites), to one type
+type of differential methylation analysis (tiles or sites), to one type
 of intersection (two consecutive generation or more) and to one specific
 group of generations.
 }
 \examples{
 
 ## Get the name of the directory where files are stored
-filesDir <- dir(system.file("extdata", package = "methylInheritance"),
-pattern = "TEST", full.names = TRUE)
+filesDir <- system.file("extdata", "TEST", package="methylInheritance")
 
 ## Load information from files
 results <- loadAllRDSResults(analysisResultsDir = filesDir,
-permutationResultsDir = filesDir, doingSites = TRUE, doingTiles = TRUE)
+    permutationResultsDir = filesDir, doingSites = TRUE, doingTiles = TRUE)
 
 ## Extract information for the intersection between conserved differentially
 ## methylated sites (type = sites) between the intersection of 2
 ## generations (inter = i2): F1 and F2 (position = 1)
-info <- extractInfo(allResults = results,
-type = "sites", inter="i2", 1)
+info <- extractInfo(allResults = results, type = "sites", inter="i2", 1)
 
 }
 \author{

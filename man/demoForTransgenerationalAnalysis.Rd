@@ -3,7 +3,7 @@
 \docType{data}
 \name{demoForTransgenerationalAnalysis}
 \alias{demoForTransgenerationalAnalysis}
-\title{Methylation information from samples over three generations. Information
+\title{The methylation information from samples over three generations. Information
 for each generation is stored in a
 \code{methylRawList} format (for demo purpose).}
 \format{A \code{list} containing three \code{methylRawList} objects. Each
@@ -22,16 +22,15 @@ stored in a \code{methylRaw} object. There is \code{methylRaw} objects
 (6 controls and 6 cases) in each generation.
 }
 \description{
-The object is a \code{list} with 3 entries. Each entry correspond to the
+The object is a \code{list} with 3 entries. Each entry corresponds to the
 information for one generation (first entry = first generation, etc..)
-stored in a \code{methylRawList} ojbect.
-There is 12 samples (6 controls and 6 cases) for each generation. Each
+stored in a \code{methylRawList} object.
+There are 12 samples (6 controls and 6 cases) for each generation. Each
 sample information is stored in a \code{methylRaw} object.
 }
 \details{
-This dataset can be
-used to test \code{runPermutationUsingMethylKitInfo} and
-{runObservationUsingMethylKitInfo} functions.
+This dataset can be used to test \code{runPermutation} and
+\code{runObservation} functions.
 }
 \examples{
 
@@ -39,16 +38,16 @@ used to test \code{runPermutationUsingMethylKitInfo} and
 data(demoForTransgenerationalAnalysis)
 
 ## Run a permutation analysis
-\dontrun{(runObservationUsingMethylKitInfo(methylKitInfo =
-demoForTransgenerationalAnalysis, type = "tiles", nbrPermutations = 3,
-vSeed = 2001)}
+runObservation(methylKitData = demoForTransgenerationalAnalysis,
+    type = "tiles", vSeed = 2001)
 
 }
 \seealso{
 \itemize{
-    \item \code{\link{runPermutationUsingMethylKitInfo}} {for running a
-    permutation analysis using methylKit info entry}
-    \item \code{\link{runObservationUsingMethylKitInfo}} {for running a
+    \item \code{\link{runPermutation}} {for running a
+    permutation analysis, and optionally an observation analysis,
+    using multi-generational dataset}
+    \item \code{\link{runObservation}} {for running an
     observation analysis using methylKit info entry}
 }
 }

@@ -23,16 +23,11 @@
 #'
 #' @seealso
 #' \itemize{
-#'     \item \code{\link{runPermutationUsingRDSFile}} {for running a
-#'     permutation analysis on the specified multi-generational dataset in
-#'     RDS format}
-#'     \item \code{\link{runPermutationUsingMethylKitInfo}} {for running a
-#'     permutation analysis using a methylKit info object as input}
-#'     \item \code{\link{runObservationUsingRDSFile}} {for running a
-#'     observation analysis on the specified multi-generational dataset in
-#'     RDS format}
-#'     \item \code{\link{runObservationUsingMethylKitInfo}} {for running a
-#'     observation analysis using a methylKit info object as input}
+#'     \item \code{\link{runPermutation}} {for running a
+#'     permutation analysis, and optionally an observation analysis, on a
+#'     specified multi-generational dataset}
+#'     \item \code{\link{runObservation}} {for running an
+#'     observation analysis on a specified multi-generational dataset}
 #' }
 #'
 #' @keywords package
@@ -41,14 +36,14 @@ NULL
 #' All samples information, formated by \code{methylKit}, in a
 #' \code{methylRawList} format (for demo purpose).
 #'
-#' The object is a \code{list} with 3 entries. Each entry correspond to the
+#' The object is a \code{list} with 3 entries. Each entry corresponds to the
 #' information for one generation (first entry = first generation, etc..)
 #' stored in a \code{methylRawList}.
-#' There is 12 samples (6 controls and 6 cases) for each generation. Each
+#' There are 12 samples (6 controls and 6 cases) for each generation. Each
 #' sample information is stored in a \code{methylRaw} object.
 #'
 #' This dataset can be
-#' used to test the \code{runPermutationUsingMethylKitInfo} function.
+#' used to test the \code{runPermutation} function.
 #'
 #' @name samplesForTransgenerationalAnalysis
 #'
@@ -70,8 +65,9 @@ NULL
 #'
 #' @seealso
 #' \itemize{
-#'     \item \code{\link{runPermutationUsingMethylKitInfo}} {for running a
-#'     permutation analysis using methylKit info entry}
+#'     \item \code{\link{runPermutation}} {for running a
+#'     permutation analysis, and optionally an observation analysis, using
+#'     multi-generational dataset}
 #' }
 #'
 #' @usage data(samplesForTransgenerationalAnalysis)
@@ -84,25 +80,23 @@ NULL
 #' data(samplesForTransgenerationalAnalysis)
 #'
 #' ## Run a permutation analysis
-#' \dontrun{runPermutationUsingMethylKitInfo(methylKitInfo =
-#' samplesForTransgenerationalAnalysis, type = "sites", nbrPermutations = 3,
-#' vSeed = 2001)}
+#' runPermutation(methylKitData = samplesForTransgenerationalAnalysis,
+#'     type = "tiles", nbrPermutations = 2, vSeed = 2332)
 #'
 NULL
 
-#' Methylation information from samples over three generations. Information
+#' The methylation information from samples over three generations. Information
 #' for each generation is stored in a
 #' \code{methylRawList} format (for demo purpose).
 #'
-#' The object is a \code{list} with 3 entries. Each entry correspond to the
+#' The object is a \code{list} with 3 entries. Each entry corresponds to the
 #' information for one generation (first entry = first generation, etc..)
-#' stored in a \code{methylRawList} ojbect.
-#' There is 12 samples (6 controls and 6 cases) for each generation. Each
+#' stored in a \code{methylRawList} object.
+#' There are 12 samples (6 controls and 6 cases) for each generation. Each
 #' sample information is stored in a \code{methylRaw} object.
 #'
-#' This dataset can be
-#' used to test \code{runPermutationUsingMethylKitInfo} and
-#' {runObservationUsingMethylKitInfo} functions.
+#' This dataset can be used to test \code{runPermutation} and
+#' \code{runObservation} functions.
 #'
 #' @name demoForTransgenerationalAnalysis
 #'
@@ -124,9 +118,10 @@ NULL
 #'
 #' @seealso
 #' \itemize{
-#'     \item \code{\link{runPermutationUsingMethylKitInfo}} {for running a
-#'     permutation analysis using methylKit info entry}
-#'     \item \code{\link{runObservationUsingMethylKitInfo}} {for running a
+#'     \item \code{\link{runPermutation}} {for running a
+#'     permutation analysis, and optionally an observation analysis,
+#'     using multi-generational dataset}
+#'     \item \code{\link{runObservation}} {for running an
 #'     observation analysis using methylKit info entry}
 #' }
 #'
@@ -140,22 +135,21 @@ NULL
 #' data(demoForTransgenerationalAnalysis)
 #'
 #' ## Run a permutation analysis
-#' \dontrun{(runObservationUsingMethylKitInfo(methylKitInfo =
-#' demoForTransgenerationalAnalysis, type = "tiles", nbrPermutations = 3,
-#' vSeed = 2001)}
+#' runObservation(methylKitData = demoForTransgenerationalAnalysis,
+#'     type = "tiles", vSeed = 2001)
 #'
 NULL
 
 
 #' All observed and permutation results formatted in a
-#' \code{methylInheritanceResults} class object (for demo purpose).
+#' \code{methylInheritanceResults} class (for demo purpose).
 #'
 #' The object is a \code{list} with 2 entries: "OBSERVATION" and
 #' "PERMUTATION".
 #'
 #' This dataset can be
-#' used to test the \code{extractInfo} function.The extracted info can be
-#' used to calculate the significant level or to create a graph.
+#' used to test the \code{extractInfo} function.The extracted information can
+#' be used to calculate the significant level or to create a graph.
 #'
 #' @name methylInheritanceResults
 #'
@@ -439,6 +433,6 @@ NULL
 #' ## methylated sites (type = sites) between the intersection of 2
 #' ## generations (inter = i2): F1 and F2 (position = 1)
 #' extractInfo(allResults = methylInheritanceResults,
-#' type = "sites", inter="i2", 1)
+#'     type = "sites", inter="i2", 1)
 #'
 NULL

@@ -4,44 +4,42 @@
 ###################################################
 
 ###################################################
-## Test the validateRunPermutationUsingMethylKitInfo function
+## Test the validateRunPermutation function
 ###################################################
 
-DIRECTORY <- system.file("extdata", package = "methylInheritance")
-
-METHYL_OBJ_FILE <- dir(system.file("extdata", package = "methylInheritance"),
-                pattern = "methylObj_001.RDS", full.names = TRUE)
+METHYL_OBJ_FILE <- system.file("extdata", "methylObj_001.RDS",
+                                package = "methylInheritance")
 
 METHYL_OBJ <- readRDS(METHYL_OBJ_FILE)
 
 ###########################################################
-## validateRunPermutationUsingMethylKitInfo() function
+## validateRunPermutation() function
 ###########################################################
 
-## Test when methylKitInfo is a string
-test.validateRunPermutationUsingMethylKitInfo_methylKitInfo_string <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-            methylKitInfo = "HI", outputDir = NULL, runObservedAnalysis = TRUE,
+## Test when methylKitData is a string
+test.validateRunPermutation_methylKitData_number <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+            methylKitData = 33, outputDir = NULL, runObservedAnalysis = TRUE,
             nbrPermutations = 2, nbrCores = 1, nbrCoresDiffMeth = 1,
             minReads = 10, minMethDiff = 10, qvalue = 0.05,
             maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 2,
             tileSize = 1000, stepSize = 100, vSeed = 222),
             error=conditionMessage)
 
-    exp <- paste0("methylKitInfo must be a list containing \"methylRawList\" ",
+    exp <- paste0("methylKitData must be a list containing \"methylRawList\" ",
             "entries; each entry must contain all \"methylRaw\" objects ",
             "related to one generation")
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_methylKitInfo_string() ",
-                "- Not valid methylKitInfo did not generated expected message.")
+    message <- paste0(" test.validateRunPermutation_methylKitData_number() ",
+                "- Not valid methylKitData did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
-## Test when methylKitInfo is a list of integers
-test.validateRunPermutationUsingMethylKitInfo_methylKitInfo_list_of_int <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = list(a=c(1,2), b=c(2,2)), type = "sites", outputDir = NULL,
+## Test when methylKitData is a list of integers
+test.validateRunPermutation_methylKitData_list_of_int <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = list(a=c(1,2), b=c(2,2)), type = "sites", outputDir = NULL,
         runObservedAnalysis = TRUE,
         nbrPermutations = 2, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -49,20 +47,20 @@ test.validateRunPermutationUsingMethylKitInfo_methylKitInfo_list_of_int <- funct
         tileSize = 1000, stepSize = 100, vSeed = 222),
         error=conditionMessage)
 
-    exp <- paste0("methylKitInfo must be a list containing \"methylRawList\" ",
+    exp <- paste0("methylKitData must be a list containing \"methylRawList\" ",
                   "entries; each entry must contain all \"methylRaw\" objects ",
                   "related to one generation")
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_methylKitInfo_list_of_int() ",
-                      "- Not valid methylKitInfo did not generated expected message.")
+    message <- paste0(" test.validateRunPermutation_methylKitData_list_of_int() ",
+                      "- Not valid methylKitData did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when outputDir is a number
-test.validateRunPermutationUsingMethylKitInfo_outputDir_as_number <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ, type = "sites", outputDir = 33,
+test.validateRunPermutation_outputDir_as_number <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ, type = "sites", outputDir = 33,
         runObservedAnalysis = TRUE,
         nbrPermutations = 2, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -72,16 +70,17 @@ test.validateRunPermutationUsingMethylKitInfo_outputDir_as_number <- function() 
 
     exp <- "output_dir must be a character string or NULL"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_outputDir_as_number() ",
+    message <- paste0(" test.validateRunPermutation_outputDir_as_number() ",
                       "- Not valid outputDir did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when runObservedAnalysis is a string
-test.validateRunPermutationUsingMethylKitInfo_runObservedAnalysis_string <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ,  outputDir = NULL, runObservedAnalysis = "allo",
+test.validateRunPermutation_runObservedAnalysis_string <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ, type="both", outputDir = NULL,
+        runObservedAnalysis = "allo",
         nbrPermutations = 2, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 2,
@@ -90,16 +89,16 @@ test.validateRunPermutationUsingMethylKitInfo_runObservedAnalysis_string <- func
 
     exp <- "runObservedAnalysis must be a logical"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_runObservedAnalysis_string() ",
+    message <- paste0(" test.validateRunPermutation_runObservedAnalysis_string() ",
                       "- Not valid runObservedAnalysis did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when nbrPermutations is a string
-test.validateRunPermutationUsingMethylKitInfo_nbrPermutations_as_string <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ,  type = "sites", outputDir = NULL,
+test.validateRunPermutation_nbrPermutations_as_string <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ,  type = "sites", outputDir = NULL,
         runObservedAnalysis = TRUE,
         nbrPermutations = "TOTO", nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -109,16 +108,16 @@ test.validateRunPermutationUsingMethylKitInfo_nbrPermutations_as_string <- funct
 
     exp <- "nbrPermutations must be a positive integer or numeric"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_nbrPermutations_as_string() ",
+    message <- paste0(" test.validateRunPermutation_nbrPermutations_as_string() ",
                       "- Not valid nbrPermutations did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when nbrCores is zero
-test.validateRunPermutationUsingMethylKitInfo_nbrCores_zero <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ, type = "both", outputDir = NULL,
+test.validateRunPermutation_nbrCores_zero <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ, type = "both", outputDir = NULL,
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 0, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -128,16 +127,16 @@ test.validateRunPermutationUsingMethylKitInfo_nbrCores_zero <- function() {
 
     exp <- "nbrCores must be a positive integer or numeric"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_nbrCores_zero() ",
+    message <- paste0(" test.validateRunPermutation_nbrCores_zero() ",
                       "- Not valid nbrCores did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when nbrCores is a negative integer
-test.validateRunPermutationUsingMethylKitInfo_nbrCores_negative <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ, type = "both", outputDir = NULL,
+test.validateRunPermutation_nbrCores_negative <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ, type = "both", outputDir = NULL,
         runObservedAnalysis = FALSE,
         nbrPermutations = 3, nbrCores = -1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -147,7 +146,7 @@ test.validateRunPermutationUsingMethylKitInfo_nbrCores_negative <- function() {
 
     exp <- "nbrCores must be a positive integer or numeric"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_nbrCores_negative() ",
+    message <- paste0(" test.validateRunPermutation_nbrCores_negative() ",
                       "- Not valid nbrCores did not generated expected message.")
 
 
@@ -155,9 +154,9 @@ test.validateRunPermutationUsingMethylKitInfo_nbrCores_negative <- function() {
 }
 
 ## Test when nbrCoresDiffMeth is zero
-test.validateRunPermutationUsingMethylKitInfo_nbrCoresDiffMeth_zero <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ, type = "both", outputDir = NULL,
+test.validateRunPermutation_nbrCoresDiffMeth_zero <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ, type = "both", outputDir = NULL,
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 0,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -167,16 +166,16 @@ test.validateRunPermutationUsingMethylKitInfo_nbrCoresDiffMeth_zero <- function(
 
     exp <- "nbrCoresDiffMeth must be a positive integer or numeric"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_nbrCoresDiffMeth_zero() ",
+    message <- paste0(" test.validateRunPermutation_nbrCoresDiffMeth_zero() ",
                       "- Not valid nbrCoresDiffMeth did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when nbrCoresDiffMeth is a negative integer
-test.validateRunPermutationUsingMethylKitInfo_nbrCoresDiffMeth_negative <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ, type = "both", outputDir = NULL,
+test.validateRunPermutation_nbrCoresDiffMeth_negative <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ, type = "both", outputDir = NULL,
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = -1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -186,16 +185,16 @@ test.validateRunPermutationUsingMethylKitInfo_nbrCoresDiffMeth_negative <- funct
 
     exp <- "nbrCoresDiffMeth must be a positive integer or numeric"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_nbrCoresDiffMeth_negative() ",
+    message <- paste0(" test.validateRunPermutation_nbrCoresDiffMeth_negative() ",
                     "- Not valid nbrCoresDiffMeth did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when minReads is zero
-test.validateRunPermutationUsingMethylKitInfo_minReads_zero <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ, type = "both", outputDir = NULL,
+test.validateRunPermutation_minReads_zero <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ, type = "both", outputDir = NULL,
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 0, minMethDiff = 10, qvalue = 0.05,
@@ -205,16 +204,16 @@ test.validateRunPermutationUsingMethylKitInfo_minReads_zero <- function() {
 
     exp <- "minReads must be a positive integer or numeric"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_minReads_zero() ",
+    message <- paste0(" test.validateRunPermutation_minReads_zero() ",
                     "- Not valid minReads did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when minReads is negative
-test.validateRunPermutationUsingMethylKitInfo_minReads_negative <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ, type = "both", outputDir = NULL,
+test.validateRunPermutation_minReads_negative <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ, type = "both", outputDir = NULL,
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = -1, minMethDiff = 10, qvalue = 0.05,
@@ -224,16 +223,16 @@ test.validateRunPermutationUsingMethylKitInfo_minReads_negative <- function() {
 
     exp <- "minReads must be a positive integer or numeric"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_minReads_negative() ",
+    message <- paste0(" test.validateRunPermutation_minReads_negative() ",
                     "- Not valid minReads did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when minMethDiff is negative
-test.validateRunPermutationUsingMethylKitInfo_minMethDiff_negative <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ, type = "both", outputDir = NULL,
+test.validateRunPermutation_minMethDiff_negative <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ, type = "both", outputDir = NULL,
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff =-0.1, qvalue = 0.05,
@@ -243,7 +242,7 @@ test.validateRunPermutationUsingMethylKitInfo_minMethDiff_negative <- function()
 
     exp <- "minMethDiff must be a positive double between [0,100]"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_minMethDiff_negative() ",
+    message <- paste0(" test.validateRunPermutation_minMethDiff_negative() ",
                       "- Not valid minMethDiff did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
@@ -251,9 +250,9 @@ test.validateRunPermutationUsingMethylKitInfo_minMethDiff_negative <- function()
 
 
 ## Test when minMethDiff is above 100
-test.validateRunPermutationUsingMethylKitInfo_minMethDiff_above_100 <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ, type = "both", outputDir = NULL,
+test.validateRunPermutation_minMethDiff_above_100 <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ, type = "both", outputDir = NULL,
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 100.1, qvalue = 0.05,
@@ -263,16 +262,16 @@ test.validateRunPermutationUsingMethylKitInfo_minMethDiff_above_100 <- function(
 
     exp <- "minMethDiff must be a positive double between [0,100]"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_minMethDiff_above_100() ",
+    message <- paste0(" test.validateRunPermutation_minMethDiff_above_100() ",
                       "- Not valid minMethDiff did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when qvalue is above 1
-test.validateRunPermutationUsingMethylKitInfo_qvalue_above_1 <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ,  type = "both", outputDir = NULL,
+test.validateRunPermutation_qvalue_above_1 <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ,  type = "both", outputDir = NULL,
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 1.01,
@@ -282,16 +281,16 @@ test.validateRunPermutationUsingMethylKitInfo_qvalue_above_1 <- function() {
 
     exp <- "qvalue must be a positive double between [0,1]"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_qvalue_above_1() ",
+    message <- paste0(" test.validateRunPermutation_qvalue_above_1() ",
                       "- Not valid qvalue did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when qvalue is negative
-test.validateRunPermutationUsingMethylKitInfo_qvalue_negative <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ, type = "both", outputDir = NULL,
+test.validateRunPermutation_qvalue_negative <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ, type = "both", outputDir = NULL,
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = -0.01,
@@ -301,16 +300,16 @@ test.validateRunPermutationUsingMethylKitInfo_qvalue_negative <- function() {
 
     exp <- "qvalue must be a positive double between [0,1]"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_qvalue_negative() ",
+    message <- paste0(" test.validateRunPermutation_qvalue_negative() ",
                       "- Not valid qvalue did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when maxPercReads is not a number
-test.validateRunPermutationUsingMethylKitInfo_maxPercReads_not_number <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ, type = "both", outputDir = NULL,
+test.validateRunPermutation_maxPercReads_not_number <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ, type = "both", outputDir = NULL,
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -320,16 +319,16 @@ test.validateRunPermutationUsingMethylKitInfo_maxPercReads_not_number <- functio
 
     exp <- "maxPercReads must be a positive double between [0,100]"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_maxPercReads_not_number() ",
+    message <- paste0(" test.validateRunPermutation_maxPercReads_not_number() ",
                       "- Not valid maxPercReads did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when maxPercReads is above 100
-test.validateRunPermutationUsingMethylKitInfo_maxPercReads_above_100 <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ,  outputDir = NULL, runObservedAnalysis = TRUE,
+test.validateRunPermutation_maxPercReads_above_100 <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ,  outputDir = NULL, runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 100.1, destrand = TRUE, minCovBasesForTiles = 2,
@@ -338,16 +337,16 @@ test.validateRunPermutationUsingMethylKitInfo_maxPercReads_above_100 <- function
 
     exp <- "maxPercReads must be a positive double between [0,100]"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_maxPercReads_above_100() ",
+    message <- paste0(" test.validateRunPermutation_maxPercReads_above_100() ",
                       "- Not valid maxPercReads did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when maxPercReads is negative
-test.validateRunPermutationUsingMethylKitInfo_maxPercReads_negative <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ, type = "both", outputDir = NULL,
+test.validateRunPermutation_maxPercReads_negative <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ, type = "both", outputDir = NULL,
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -357,7 +356,7 @@ test.validateRunPermutationUsingMethylKitInfo_maxPercReads_negative <- function(
 
     exp <- "maxPercReads must be a positive double between [0,100]"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_maxPercReads_negative() ",
+    message <- paste0(" test.validateRunPermutation_maxPercReads_negative() ",
                       "- Not valid maxPercReads did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
@@ -365,9 +364,9 @@ test.validateRunPermutationUsingMethylKitInfo_maxPercReads_negative <- function(
 
 
 ## Test when destrand is a number
-test.validateRunPermutationUsingMethylKitInfo_destrand_number <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ, type = "both", outputDir = NULL,
+test.validateRunPermutation_destrand_number <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ, type = "both", outputDir = NULL,
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -377,7 +376,7 @@ test.validateRunPermutationUsingMethylKitInfo_destrand_number <- function() {
 
     exp <- "destrand must be a logical"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_destrand_number() ",
+    message <- paste0(" test.validateRunPermutation_destrand_number() ",
                       "- Not valid destrand did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
@@ -385,9 +384,9 @@ test.validateRunPermutationUsingMethylKitInfo_destrand_number <- function() {
 
 
 ## Test when minCovBasesForTiles is a string and type is both
-test.validateRunPermutationUsingMethylKitInfo_minCovBasesForTiles_string_type_both <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ, outputDir = NULL, type = "both",
+test.validateRunPermutation_minCovBasesForTiles_string_type_both <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ, outputDir = NULL, type = "both",
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -397,16 +396,16 @@ test.validateRunPermutationUsingMethylKitInfo_minCovBasesForTiles_string_type_bo
 
     exp <- "minCovBasesForTiles must be a positive integer or numeric"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_minCovBasesForTiles_string_type_both() ",
+    message <- paste0(" test.validateRunPermutation_minCovBasesForTiles_string_type_both() ",
                       "- Not valid minCovBasesForTiles did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when minCovBasesForTiles is negative and type is both
-test.validateRunPermutationUsingMethylKitInfo_minCovBasesForTiles_negative_type_both <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ,  outputDir = NULL, type = "both",
+test.validateRunPermutation_minCovBasesForTiles_negative_type_both <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ,  outputDir = NULL, type = "both",
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -416,16 +415,16 @@ test.validateRunPermutationUsingMethylKitInfo_minCovBasesForTiles_negative_type_
 
     exp <- "minCovBasesForTiles must be a positive integer or numeric"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_minCovBasesForTiles_negative_type_both() ",
+    message <- paste0(" test.validateRunPermutation_minCovBasesForTiles_negative_type_both() ",
                       "- Not valid minCovBasesForTiles did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when minCovBasesForTiles is a string and type is tiles
-test.validateRunPermutationUsingMethylKitInfo_minCovBasesForTiles_string_type_tiles <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ,  outputDir = NULL, type = "tiles",
+test.validateRunPermutation_minCovBasesForTiles_string_type_tiles <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ,  outputDir = NULL, type = "tiles",
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -435,16 +434,16 @@ test.validateRunPermutationUsingMethylKitInfo_minCovBasesForTiles_string_type_ti
 
     exp <- "minCovBasesForTiles must be a positive integer or numeric"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_minCovBasesForTiles_string_type_tiles() ",
+    message <- paste0(" test.validateRunPermutation_minCovBasesForTiles_string_type_tiles() ",
                       "- Not valid minCovBasesForTiles did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when minCovBasesForTiles is negative and type is tiles
-test.validateRunPermutationUsingMethylKitInfo_minCovBasesForTiles_negative_type_tiles <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ,  outputDir = NULL, type = "tiles",
+test.validateRunPermutation_minCovBasesForTiles_negative_type_tiles <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ,  outputDir = NULL, type = "tiles",
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -454,7 +453,7 @@ test.validateRunPermutationUsingMethylKitInfo_minCovBasesForTiles_negative_type_
 
     exp <- "minCovBasesForTiles must be a positive integer or numeric"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_minCovBasesForTiles_negative_type_tiles() ",
+    message <- paste0(" test.validateRunPermutation_minCovBasesForTiles_negative_type_tiles() ",
                       "- Not valid minCovBasesForTiles did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
@@ -462,9 +461,9 @@ test.validateRunPermutationUsingMethylKitInfo_minCovBasesForTiles_negative_type_
 
 
 ## Test when tileSize is a string and type is both
-test.validateRunPermutationUsingMethylKitInfo_tileSize_string_type_both <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ,  outputDir = NULL, type = "both",
+test.validateRunPermutation_tileSize_string_type_both <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ,  outputDir = NULL, type = "both",
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -474,16 +473,16 @@ test.validateRunPermutationUsingMethylKitInfo_tileSize_string_type_both <- funct
 
     exp <- "tileSize must be a positive integer or numeric"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_minCovBasesForTiles_string_type_both() ",
+    message <- paste0(" test.validateRunPermutation_minCovBasesForTiles_string_type_both() ",
                       "- Not valid tileSize did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when tileSize is zero and type is both
-test.validateRunPermutationUsingMethylKitInfo_tileSize_zero_type_both <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ,  outputDir = NULL, type = "both",
+test.validateRunPermutation_tileSize_zero_type_both <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ,  outputDir = NULL, type = "both",
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -493,16 +492,16 @@ test.validateRunPermutationUsingMethylKitInfo_tileSize_zero_type_both <- functio
 
     exp <- "tileSize must be a positive integer or numeric"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_tileSize_zero_type_both() ",
+    message <- paste0(" test.validateRunPermutation_tileSize_zero_type_both() ",
                       "- Not valid tileSize did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when tileSize is negative and type is both
-test.validateRunPermutationUsingMethylKitInfo_tileSize_negative_type_both <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ,  outputDir = NULL, type = "both",
+test.validateRunPermutation_tileSize_negative_type_both <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ,  outputDir = NULL, type = "both",
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -512,16 +511,16 @@ test.validateRunPermutationUsingMethylKitInfo_tileSize_negative_type_both <- fun
 
     exp <- "tileSize must be a positive integer or numeric"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_tileSize_negative_type_both() ",
+    message <- paste0(" test.validateRunPermutation_tileSize_negative_type_both() ",
                       "- Not valid tileSize did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when tileSize is a string and type is tiles
-test.validateRunPermutationUsingMethylKitInfo_tileSize_string_type_tiles <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ,  outputDir = NULL, type = "tiles",
+test.validateRunPermutation_tileSize_string_type_tiles <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ,  outputDir = NULL, type = "tiles",
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -531,7 +530,7 @@ test.validateRunPermutationUsingMethylKitInfo_tileSize_string_type_tiles <- func
 
     exp <- "tileSize must be a positive integer or numeric"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_tileSize_string_type_tiles() ",
+    message <- paste0(" test.validateRunPermutation_tileSize_string_type_tiles() ",
                       "- Not valid tileSize did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
@@ -539,9 +538,9 @@ test.validateRunPermutationUsingMethylKitInfo_tileSize_string_type_tiles <- func
 
 
 ## Test when tileSize is zero and type is tiles
-test.validateRunPermutationUsingMethylKitInfo_tileSize_zero_type_tiles <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ,  outputDir = NULL, type = "tiles",
+test.validateRunPermutation_tileSize_zero_type_tiles <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ,  outputDir = NULL, type = "tiles",
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -551,16 +550,16 @@ test.validateRunPermutationUsingMethylKitInfo_tileSize_zero_type_tiles <- functi
 
     exp <- "tileSize must be a positive integer or numeric"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_tileSize_zero_type_tiles() ",
+    message <- paste0(" test.validateRunPermutation_tileSize_zero_type_tiles() ",
                       "- Not valid tileSize did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when tileSize is negative and type is tiles
-test.validateRunPermutationUsingMethylKitInfo_tileSize_negative_type_tiles <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ,  outputDir = NULL, type = "tiles",
+test.validateRunPermutation_tileSize_negative_type_tiles <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ,  outputDir = NULL, type = "tiles",
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -570,16 +569,16 @@ test.validateRunPermutationUsingMethylKitInfo_tileSize_negative_type_tiles <- fu
 
     exp <- "tileSize must be a positive integer or numeric"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_tileSize_negative_type_tiles() ",
+    message <- paste0(" test.validateRunPermutation_tileSize_negative_type_tiles() ",
                       "- Not valid tileSize did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when stepSize is a string and type is tiles
-test.validateRunPermutationUsingMethylKitInfo_stepSize_string_type_tiles <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ,  outputDir = NULL, type = "tiles",
+test.validateRunPermutation_stepSize_string_type_tiles <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ,  outputDir = NULL, type = "tiles",
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -589,16 +588,16 @@ test.validateRunPermutationUsingMethylKitInfo_stepSize_string_type_tiles <- func
 
     exp <- "stepSize must be a positive integer or numeric"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_stepSize_string_type_tiles() ",
+    message <- paste0(" test.validateRunPermutation_stepSize_string_type_tiles() ",
                       "- Not valid stepSize did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when stepSize is zero and type is tiles
-test.validateRunPermutationUsingMethylKitInfo_stepSizee_zero_type_tiles <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ,  outputDir = NULL, type = "tiles",
+test.validateRunPermutation_stepSizee_zero_type_tiles <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ,  outputDir = NULL, type = "tiles",
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -608,16 +607,16 @@ test.validateRunPermutationUsingMethylKitInfo_stepSizee_zero_type_tiles <- funct
 
     exp <- "stepSize must be a positive integer or numeric"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_stepSizee_zero_type_tiles() ",
+    message <- paste0(" test.validateRunPermutation_stepSizee_zero_type_tiles() ",
                       "- Not valid stepSize did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when stepSize is negative and type is tiles
-test.validateRunPermutationUsingMethylKitInfo_stepSize_negative_type_tiles <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ,  outputDir = NULL, type = "tiles",
+test.validateRunPermutation_stepSize_negative_type_tiles <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ,  outputDir = NULL, type = "tiles",
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -627,16 +626,16 @@ test.validateRunPermutationUsingMethylKitInfo_stepSize_negative_type_tiles <- fu
 
     exp <- "stepSize must be a positive integer or numeric"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_stepSize_negative_type_tiles() ",
+    message <- paste0(" test.validateRunPermutation_stepSize_negative_type_tiles() ",
                       "- Not valid stepSize did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when stepSize is a string and type is both
-test.validateRunPermutationUsingMethylKitInfo_stepSize_string_type_both <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ,  outputDir = NULL, type = "both",
+test.validateRunPermutation_stepSize_string_type_both <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ,  outputDir = NULL, type = "both",
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -646,16 +645,16 @@ test.validateRunPermutationUsingMethylKitInfo_stepSize_string_type_both <- funct
 
     exp <- "stepSize must be a positive integer or numeric"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_stepSize_string_type_both() ",
+    message <- paste0(" test.validateRunPermutation_stepSize_string_type_both() ",
                       "- Not valid stepSize did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when stepSize is zero and type is both
-test.validateRunPermutationUsingMethylKitInfo_stepSizee_zero_type_both <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ,  outputDir = NULL, type = "both",
+test.validateRunPermutation_stepSizee_zero_type_both <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ,  outputDir = NULL, type = "both",
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -665,16 +664,16 @@ test.validateRunPermutationUsingMethylKitInfo_stepSizee_zero_type_both <- functi
 
     exp <- "stepSize must be a positive integer or numeric"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_stepSizee_zero_type_both() ",
+    message <- paste0(" test.validateRunPermutation_stepSizee_zero_type_both() ",
                       "- Not valid stepSize did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when stepSize is negative and type is both
-test.validateRunPermutationUsingMethylKitInfo_stepSize_negative_type_both <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ,  outputDir = NULL, type = "both",
+test.validateRunPermutation_stepSize_negative_type_both <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ,  outputDir = NULL, type = "both",
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -684,16 +683,16 @@ test.validateRunPermutationUsingMethylKitInfo_stepSize_negative_type_both <- fun
 
     exp <- "stepSize must be a positive integer or numeric"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_stepSize_negative_type_both() ",
+    message <- paste0(" test.validateRunPermutation_stepSize_negative_type_both() ",
                       "- Not valid stepSize did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when vSeed is a string
-test.validateRunPermutationUsingMethylKitInfo_vSeed_string <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ,  outputDir = NULL, type = "both",
+test.validateRunPermutation_vSeed_string <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ,  outputDir = NULL, type = "both",
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -703,16 +702,16 @@ test.validateRunPermutationUsingMethylKitInfo_vSeed_string <- function() {
 
     exp <- "vSeed must be either -1 or a positive integer or numeric"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_vSeed_string() ",
+    message <- paste0(" test.validateRunPermutation_vSeed_string() ",
                       "- Not valid vSeed did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when vSeed is a string
-test.validateRunPermutationUsingMethylKitInfo_vSeed_string <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ,  outputDir = NULL, type = "both",
+test.validateRunPermutation_vSeed_string <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ,  outputDir = NULL, type = "both",
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -722,16 +721,16 @@ test.validateRunPermutationUsingMethylKitInfo_vSeed_string <- function() {
 
     exp <- "vSeed must be an integer or numeric"
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_vSeed_string() ",
+    message <- paste0(" test.validateRunPermutation_vSeed_string() ",
                       "- Not valid vSeed did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
 
 ## Test when all parameters valid
-test.validateRunPermutationUsingMethylKitInfo_all_valid_parameters_01 <- function() {
-    obs <- tryCatch(methylInheritance:::validateRunPermutationUsingMethylKitInfo(
-        methylKitInfo = METHYL_OBJ,  outputDir = NULL, type = "sites",
+test.validateRunPermutation_all_valid_parameters_01 <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ,  outputDir = NULL, type = "sites",
         runObservedAnalysis = TRUE,
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -741,7 +740,7 @@ test.validateRunPermutationUsingMethylKitInfo_all_valid_parameters_01 <- functio
 
     exp <- 0
 
-    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_all_valid_parameters_01() ",
+    message <- paste0(" test.validateRunPermutation_all_valid_parameters_01() ",
                       "- All valid parameters did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)

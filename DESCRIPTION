@@ -16,7 +16,7 @@ Author@R: c(person("Astrid", "Deschênes",
     person("Arnaud", "Droit",
     email="arnaud.droit@crchuq.ulaval.ca", role=c("aut")))
 Depends:
-    R (>= 3.3)
+    R (>= 3.4)
 Imports:
     methylKit,
     BiocParallel,
@@ -39,4 +39,4 @@ biocViews: BiologicalQuestion, Epigenetics, DNAMethylation,
     DifferentialMethylation, MethylSeq,
     Software, StatisticalMethod, WholeGenome, Sequencing
 Maintainer: Astrid Deschenes <adeschen@hotmail.com>
-RoxygenNote: 6.0.0
+RoxygenNote: 6.0.1

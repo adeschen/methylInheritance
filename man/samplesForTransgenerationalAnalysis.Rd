@@ -21,15 +21,15 @@ stored in a \code{methylRaw} object. There is \code{methylRaw} objects
 (6 controls and 6 cases) in each generation.
 }
 \description{
-The object is a \code{list} with 3 entries. Each entry correspond to the
+The object is a \code{list} with 3 entries. Each entry corresponds to the
 information for one generation (first entry = first generation, etc..)
 stored in a \code{methylRawList}.
-There is 12 samples (6 controls and 6 cases) for each generation. Each
+There are 12 samples (6 controls and 6 cases) for each generation. Each
 sample information is stored in a \code{methylRaw} object.
 }
 \details{
 This dataset can be
-used to test the \code{runPermutationUsingMethylKitInfo} function.
+used to test the \code{runPermutation} function.
 }
 \examples{
 
@@ -37,15 +37,15 @@ used to test the \code{runPermutationUsingMethylKitInfo} function.
 data(samplesForTransgenerationalAnalysis)
 
 ## Run a permutation analysis
-\dontrun{runPermutationUsingMethylKitInfo(methylKitInfo =
-samplesForTransgenerationalAnalysis, type = "sites", nbrPermutations = 3,
-vSeed = 2001)}
+runPermutation(methylKitData = samplesForTransgenerationalAnalysis,
+    type = "tiles", nbrPermutations = 2, vSeed = 2332)
 
 }
 \seealso{
 \itemize{
-    \item \code{\link{runPermutationUsingMethylKitInfo}} {for running a
-    permutation analysis using methylKit info entry}
+    \item \code{\link{runPermutation}} {for running a
+    permutation analysis, and optionally an observation analysis, using
+    multi-generational dataset}
 }
 }
 \keyword{datasets}

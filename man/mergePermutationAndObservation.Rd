@@ -16,7 +16,7 @@ the result of one permutation.}
 \item{observationResults}{a \code{list} with 1 entry called
 \code{OBSERVATION}. The \code{OBSERVATION} entry is a \code{list} containing
 the result obtained
-with the observed dataset (not permutated).}
+with the observed dataset (not shuffled).}
 }
 \value{
 a \code{list} of class \code{methylInheritanceAllResults} with
@@ -24,15 +24,148 @@ a \code{list} of class \code{methylInheritanceAllResults} with
 \itemize{
 \item \code{PERMUTATION} \code{list} with a number of entries corresponding
 to the number of permutations that have been processed. Each entry contains
-the result of one permutation.
-\item \code{OBSERVATION} a \code{list} containing the result obtained
-with the observed dataset (not permutated).
+the result of one permutation.The elements in each entry are:
+\itemize{
+\item \code{SITES} Only present when a sites analysis has been achieved,
+a \code{list} containing:
+\itemize{
+\item\code{i2} a \code{list} containing:
+\itemize{
+\item \code{HYPER} a \code{list} of \code{integer}, the number of conserved
+hyper differentially methylated sites between two consecutive generations.
+The first element represents the intersection of the first and second
+generations; the second element, the intersection of the second and third
+generations; etc.
+\item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
+hypo differentially methylated sites between two consecutive generations.The
+first element represents the intersection of the first and second
+generations; the second element, the intersection of the second and third
+generations; etc.
+}
+\item\code{iAll} a \code{list} containing:
+\itemize{
+\item \code{HYPER} a \code{list} of \code{integer}, the number of conserved
+hyper differentially methylated sites between three or more consecutive
+generations. The first element represents the intersection of the first
+three generations; the second element, the intersection of the first fourth
+generations; etc.The number of entries depends on the number
+of generations.
+\item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
+hypo differentially methylated sites between three or more consecutive
+generations. The first element represents the intersection of the first
+three generations; the second element, the intersection of the first fourth
+generations; etc. The number of entries depends on the number of
+generations.
+}
+}
+\item \code{TILES} Only present when a tiles analysis has been achieved,
+a \code{list} containing:
+\itemize{
+\item\code{i2} a \code{list} containing:
+\itemize{
+\item \code{HYPER} a \code{list} of \code{integer}, the number of conserved
+hyper differentially methylated positions between two consecutive
+generations. The first element represents the intersection of the
+first and second generations; the second element, the intersection of
+the second and third generations; etc.
+\item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
+hypo differentially methylated positions between two consecutive
+generations.The first element represents the intersection of the first and
+second generations; the second element, the intersection of the second
+and third generations; etc.
+}
+\item\code{iAll} a \code{list} containing:
+\itemize{
+\item \code{HYPER} a \code{list} of \code{integer}, the number of conserved
+hyper differentially methylated positions between three or more consecutive
+generations. The first element represents the intersection of the first
+three generations; the second element, the intersection of the first fourth
+generations; etc. The number of entries depends on the number
+of generations.
+\item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
+hypo differentially methylated positions between three or more consecutive
+generations. The first element represents the intersection of the first
+three generations; the second element, the intersection of the first fourth
+generations; etc.The number of entries depends on the number of
+generations.
+}
+}
+}
+\item \code{OBSERVATION} a \code{list} containing
+the result obtained with the observed dataset (not shuffled). The
+elements are:
+\itemize{
+\item \code{SITES} Only present when a sites analysis has been achieved,
+a \code{list} containing:
+\itemize{
+\item\code{i2} a \code{list} containing:
+\itemize{
+\item \code{HYPER} a \code{list} of \code{integer}, the number of conserved
+hyper differentially methylated sites between two consecutive generations.
+The first element represents the intersection of the first and second
+generations; the second element, the intersection of the second and third
+generations; etc.
+\item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
+hypo differentially methylated sites between two consecutive generations.The
+first element represents the intersection of the first and second
+generations; the second element, the intersection of the second and third
+generations; etc.
+}
+\item\code{iAll} a \code{list} containing:
+\itemize{
+\item \code{HYPER} a \code{list} of \code{integer}, the number of conserved
+hyper differentially methylated sites between three or more consecutive
+generations. The first element represents the intersection of the first
+three generations; the second element, the intersection of the first fourth
+generations; etc.The number of entries depends on the number
+of generations.
+\item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
+hypo differentially methylated sites between three or more consecutive
+generations. The first element represents the intersection of the first
+three generations; the second element, the intersection of the first fourth
+generations; etc. The number of entries depends on the number of
+generations.
+}
+}
+\item \code{TILES} Only present when a tiles analysis has been achieved,
+a \code{list} containing:
+\itemize{
+\item\code{i2} a \code{list} containing:
+\itemize{
+\item \code{HYPER} a \code{list} of \code{integer}, the number of conserved
+hyper differentially methylated positions between two consecutive
+generations. The first element represents the intersection of the
+first and second generations; the second element, the intersection of
+the second and third generations; etc.
+\item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
+hypo differentially methylated positions between two consecutive
+generations.The first element represents the intersection of the first and
+second generations; the second element, the intersection of the second
+and third generations; etc.
+}
+\item\code{iAll} a \code{list} containing:
+\itemize{
+\item \code{HYPER} a \code{list} of \code{integer}, the number of conserved
+hyper differentially methylated positions between three or more consecutive
+generations. The first element represents the intersection of the first
+three generations; the second element, the intersection of the first fourth
+generations; etc. The number of entries depends on the number
+of generations.
+\item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
+hypo differentially methylated positions between three or more consecutive
+generations. The first element represents the intersection of the first
+three generations; the second element, the intersection of the first fourth
+generations; etc.The number of entries depends on the number of
+generations.
+}
+}
+}
 }
 }
 \description{
 Merge the permutation results with the observation results.
 The merging is only needed when permutation and observation have been
-processed separatly. The returned value is a
+processed separately. The returned value is a
 \code{methylInheritanceAllResults} object that can be used by
 the \code{extractInfo} function.
 }
@@ -43,9 +176,9 @@ observed <- list()
 observed[["OBSERVATION"]] <- list()
 observed[["OBSERVATION"]][["SITES"]] <- list()
 observed[["OBSERVATION"]][["SITES"]][["i2"]] <- list(HYPER = list(11, 10),
-HYPO = list(13, 12))
+    HYPO = list(13, 12))
 observed[["OBSERVATION"]][["SITES"]][["iAll"]] <- list(HYPER = list(1),
-HYPO = list(3))
+    HYPO = list(3))
 
 ## Create a permutation result containing only 1 permutation result
 ## Real perumtations results would have more entries
@@ -54,13 +187,13 @@ permutated[["PERMUTATION"]] <- list()
 permutated[["PERMUTATION"]][[1]] <- list()
 permutated[["PERMUTATION"]][[1]][["SITES"]] <- list()
 permutated[["PERMUTATION"]][[1]][["SITES"]][["i2"]] <- list(HYPER =
-list(11, 12), HYPO = list(8, 11))
+    list(11, 12), HYPO = list(8, 11))
 permutated[["PERMUTATION"]][[1]][["SITES"]][["iAll"]] <- list(HYPER =
-list(0), HYPO = list(1))
+    list(0), HYPO = list(1))
 
 ## Merge permutation and observation results
 mergePermutationAndObservation(permutationResults = permutated,
-observationResults = observed)
+    observationResults = observed)
 
 }
 \author{

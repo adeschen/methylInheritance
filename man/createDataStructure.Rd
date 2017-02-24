@@ -72,12 +72,11 @@ separatly.
 \examples{
 
 ## Get the name of the directory where the file is stored
-filesDir <- dir(system.file("extdata", package = "methylInheritance"),
-pattern = "TEST", full.names = TRUE)
+filesDir <- system.file("extdata", "TEST", package="methylInheritance")
 
 ## Load file containing results from a observation analysis
 obsResults <- readRDS(file = paste0(filesDir,
-"/SITES/SITES_observed_results.RDS"))
+    "/SITES/SITES_observed_results.RDS"))
 
 ## Create data structure using information form the observation analysis
 formatedResults <- methylInheritance:::createDataStructure(obsResults)

@@ -3,7 +3,7 @@
 \name{saveInterGenerationResults}
 \alias{saveInterGenerationResults}
 \title{Save the result of on CpG site or tile analysis on all generations.
-The anaysis can come from observed or permutated dataset. Each case is
+The anaysis can come from observed or shuffled dataset. Each case is
 saved with a different extension.}
 \usage{
 saveInterGenerationResults(outputDir, permutationID, type = c("sites",
@@ -44,28 +44,32 @@ successful.
 \description{
 Save the result of on CpG site or tile analysis on all
 generations. The results are saved in a RDS file. The anaysis can have been
-done on the observed or permutated dataset.
+done on the observed or shuffled dataset.
 Each permutation is saved using its identifiant in the file name.
 }
 \examples{
 
 ## Load permutation results on sites
-permutationResultsFile <- dir(system.file("extdata",
-package = "methylInheritance"), pattern = "permutationResultsForSites.RDS",
-full.names = TRUE)
+
+permutationResultsFile <- system.file("extdata",
+    "permutationResultsForSites.RDS", package="methylInheritance")
 permutationResults <- readRDS(permutationResultsFile)
 
 ## Transform result to GRanges
 resultsGR <- methylInheritance:::getGRangesFromMethylDiff(methDiff =
-permutationResults, pDiff = 10, qvalue = 0.01, type = "hyper")
+    permutationResults, pDiff = 10, qvalue = 0.01, type = "hyper")
 
 ## Extract inter-generationally conserved sites
 interGenerationResult <- methylInheritance:::interGeneration(resultsGR)
 
+## Create directories
+dir.create("TEST", showWarnings = TRUE)
+dir.create("TEST/SITES", showWarnings = TRUE)
+
 ## Save results
-\dontrun{methylInheritance:::saveInterGenerationResults(
-outputDir = "TEST", permutationID=100, type = "sites",
-interGenerationResult = interGenerationResult)}
+methylInheritance:::saveInterGenerationResults(
+    outputDir = "TEST/", permutationID=100, type = "sites",
+    interGenerationResult = interGenerationResult)
 
 }
 \author{

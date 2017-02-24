@@ -31,7 +31,7 @@ print.methylInheritanceAllResults <- function(x, ...) {
     nbGenerations <- 0
     if (!is.null(x$OBSERVATION$SITES)) {
         nbGenerations = length(x$OBSERVATION$SITES$i2) + 1
-    } else if (!is.null(x$OBSERVATION$SITES)) {
+    } else if (!is.null(x$OBSERVATION$TILES)) {
         nbGenerations = length(x$OBSERVATION$TILES$i2) + 1
     }
 

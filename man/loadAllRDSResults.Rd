@@ -10,12 +10,12 @@ loadAllRDSResults(analysisResultsDir, permutationResultsDir,
 }
 \arguments{
 \item{analysisResultsDir}{a \code{character} string, the path to the
-directory that contains the analysis results. The path can be the same that
+directory that contains the analysis results. The path can be the same as
 for the \code{permutatioNResultsDir} parameter.}
 
 \item{permutationResultsDir}{a \code{character} string, the path to the
 directory that contains the permutation results. The path can be the same
-that for the \code{analysisResultsDir} parameter.}
+as for the \code{analysisResultsDir} parameter.}
 
 \item{doingSites}{a \code{logical}, the data related to differentially
 methylated sites are loaded when
@@ -26,148 +26,9 @@ methylated tiles are loaded when
 \code{doingTiles} = \code{TRUE}. Default: \code{TRUE}.}
 }
 \value{
-a \code{list} of \code{class} "methylInheritanceAllResults"
-containing the following elements:
-\itemize{
-\item \code{OBSERVATION}, a \code{list} that contains one or two entries.
-The possible entries are:
-\itemize{
-\item \code{SITES} The results of an analysis by sites,
-a \code{list} containing:
-\itemize{
-\item\code{i2} a \code{list} containing:
-\itemize{
-\item \code{HYPER} a \code{list} of \code{integer}, the number of conserved
-hyper differentially methylated sites between two consecutive generations.
-The first element represents the intersection of the first and second
-generations; the second element, the intersection of the second and third
-generations; etc..
-\item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
-hypo differentially methylated sites between two consecutive generations.The
-first element represents the intersection of the first and second
-generations; the second element, the intersection of the second and third
-generations; etc..
-}
-\item\code{iAll} a \code{list} containing:
-\itemize{
-\item \code{HYPER} a \code{list} of \code{integer}, the number of conserved
-hyper differentially methylated sites between three or more consecutive
-generations. The first element represents the intersection of the first
-three generations; the second element, the intersection of the first fourth
-generations; etc..The number of entries depends of the number
-of generations.
-\item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
-hypo differentially methylated sites between three or more consecutive
-generations. The first element represents the intersection of the first
-three generations; the second element, the intersection of the first fourth
-generations; etc..The number of entries depends of the number of
-generations.
-}
-}
-\item \code{TILES} The results of an ananlysis by tiles, a
-\code{list} containing:
-\itemize{
-\item\code{i2} a \code{list} containing:
-\itemize{
-\item \code{HYPER} a \code{list} of \code{integer}, the number of conserved
-hyper differentially methylated positions between two consecutive
-generations. The first element represents the intersection of the
-first and second generations; the second element, the intersection of
-the second and third generations; etc..
-\item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
-hypo differentially methylated positions between two consecutive
-generations.The first element represents the intersection of the first and
-second generations; the second element, the intersection of the second
-and third generations; etc..
-}
-\item\code{iAll} a \code{list} containing:
-\itemize{
-\item \code{HYPER} a \code{list} of \code{integer}, the number of conserved
-hyper differentially methylated positions between three or more consecutive
-generations. The first element represents the intersection of the first
-three generations; the second element, the intersection of the first fourth
-generations; etc..The number of entries depends of the number
-of generations.
-\item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
-hypo differentially methylated positions between three or more consecutive
-generations. The first element represents the intersection of the first
-three generations; the second element, the intersection of the first fourth
-generations; etc..The number of entries depends of the number of
-generations.
-}
-}
-}
-\item \code{PERMUTATION} a \code{list}
-containing multiple entries. Each entry is the result of one permutation
-analysis and contains
-a \code{list} with one or two entries. The possible entries are:
-\itemize{
-\item \code{SITES} The results of an analysis by sites, a
-\code{list} containing:
-\itemize{
-\item\code{i2} a \code{list} containing:
-\itemize{
-\item \code{HYPER} a \code{list} of \code{integer}, the number of conserved
-hyper differentially methylated sites between two consecutive generations.
-The first element represents the intersection of the first and second
-generations; the second element, the intersection of the second and third
-generations; etc..
-\item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
-hypo differentially methylated sites between two consecutive generations.The
-first element represents the intersection of the first and second
-generations; the second element, the intersection of the second and third
-generations; etc..
-}
-\item\code{iAll} a \code{list} containing:
-\itemize{
-\item \code{HYPER} a \code{list} of \code{integer}, the number of conserved
-hyper differentially methylated sites between three or more consecutive
-generations. The first element represents the intersection of the first
-three generations; the second element, the intersection of the first fourth
-generations; etc..The number of entries depends of the number
-of generations.
-\item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
-hypo differentially methylated sites between three or more consecutive
-generations. The first element represents the intersection of the first
-three generations; the second element, the intersection of the first fourth
-generations; etc..The number of entries depends of the number of
-generations.
-}
-}
-\item \code{TILES} The results of an analysis by tiles,
-a \code{list} containing:
-\itemize{
-\item\code{i2} a \code{list} containing:
-\itemize{
-\item \code{HYPER} a \code{list} of \code{integer}, the number of conserved
-hyper differentially methylated positions between two consecutive
-generations. The first element represents the intersection of the
-first and second generations; the second element, the intersection of
-the second and third generations; etc..
-\item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
-hypo differentially methylated positions between two consecutive
-generations.The first element represents the intersection of the first and
-second generations; the second element, the intersection of the second
-and third generations; etc..
-}
-\item\code{iAll} a \code{list} containing:
-\itemize{
-\item \code{HYPER} a \code{list} of \code{integer}, the number of conserved
-hyper differentially methylated positions between three or more consecutive
-generations. The first element represents the intersection of the first
-three generations; the second element, the intersection of the first fourth
-generations; etc..The number of entries depends of the number
-of generations.
-\item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
-hypo differentially methylated positions between three or more consecutive
-generations. The first element represents the intersection of the first
-three generations; the second element, the intersection of the first fourth
-generations; etc..The number of entries depends of the number of
-generations.
-}
-}
-}
-}
+a \code{list} of class \code{methylInheritanceAllResults}
+containing the result of the observation analysis as well as the results
+of all the permutations.
 }
 \description{
 Load all RDS files created by the permutation and
@@ -178,13 +39,17 @@ all the pertinent information.
 \examples{
 
 ## Get the name of the directory where files are stored
-filesDir <- dir(system.file("extdata", package = "methylInheritance"),
-pattern = "TEST", full.names = TRUE)
+filesDir <- system.file("extdata", "TEST", package="methylInheritance")
 
 ## Load information from files
 results <- loadAllRDSResults(analysisResultsDir = filesDir,
-permutationResultsDir = filesDir, doingSites = TRUE, doingTiles = TRUE)
+    permutationResultsDir = filesDir, doingSites = TRUE, doingTiles = TRUE)
 
+}
+\seealso{
+\code{\link{mergePermutationAndObservation}} for detail
+description, in the Value section, of the
+\code{methylInheritanceAllResults} object.
 }
 \author{
 Astrid Deschenes, Pascal Belleau
