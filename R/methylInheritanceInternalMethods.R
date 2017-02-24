@@ -986,8 +986,8 @@ runOnePermutationOnAllGenerations <- function(methylInfoForAllGenerations,
             }
 
             ## Get differentially methylated sites
-            permutationList[["SITES"]][[i]] <- suppressWarnings(calculateDiffMeth(meth.sites,
-                                                num.cores = nbrCoresDiffMeth))
+            permutationList[["SITES"]][[i]] <- suppressWarnings(
+                calculateDiffMeth(meth.sites, num.cores = nbrCoresDiffMeth))
         }
 
         ## TILES
@@ -1013,8 +1013,8 @@ runOnePermutationOnAllGenerations <- function(methylInfoForAllGenerations,
             meth.tiles <- unite(filtered.tiles, destrand = destrand)
 
             ## Get diff methylated tiles
-            permutationList[["TILES"]][[i]] <- suppressWarnings(calculateDiffMeth(meth.tiles,
-                                                num.cores = nbrCoresDiffMeth))
+            permutationList[["TILES"]][[i]] <- suppressWarnings(
+                calculateDiffMeth(meth.tiles, num.cores = nbrCoresDiffMeth))
         }
     }
 

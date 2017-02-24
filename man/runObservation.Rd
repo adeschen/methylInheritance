@@ -86,76 +86,10 @@ needed. When a value inferior or equal to zero is given, a random integer
 is used. Default: \code{-1}.}
 }
 \value{
-a \code{list} containing the following elements:
-\itemize{
-\item \code{OBSERVATION} a \code{list} containing the following elements:
-\itemize{
-\item \code{SITES} Only present when \code{type} = \code{"sites"} or
-\code{"both"}, a \code{list} containing:
-\itemize{
-\item\code{i2} a \code{list} containing:
-\itemize{
-\item \code{HYPER} a \code{list} of \code{integer}, the number of conserved
-hyper differentially methylated sites between two consecutive generations.
-The first element represents the intersection of the first and second
-generations; the second element, the intersection of the second and third
-generations; etc.
-\item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
-hypo differentially methylated sites between two consecutive generations.The
-first element represents the intersection of the first and second
-generations; the second element, the intersection of the second and third
-generations; etc.
-}
-\item\code{iAll} a \code{list} containing:
-\itemize{
-\item \code{HYPER} a \code{list} of \code{integer}, the number of conserved
-hyper differentially methylated sites between three or more consecutive
-generations. The first element represents the intersection of the first
-three generations; the second element, the intersection of the first fourth
-generations; etc. The number of entries depends on the number
-of generations.
-\item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
-hypo differentially methylated sites between three or more consecutive
-generations. The first element represents the intersection of the first
-three generations; the second element, the intersection of the first fourth
-generations; etc. The number of entries depends on the number of
-generations.
-}
-}
-\item \code{TILES} Only present when \code{type} = \code{"tiles"} or
-\code{"both"}, a \code{list} containing:
-\itemize{
-\item\code{i2} a \code{list} containing:
-\itemize{
-\item \code{HYPER} a \code{list} of \code{integer}, the number of conserved
-hyper differentially methylated positions between two consecutive
-generations. The first element represents the intersection of the
-first and second generations; the second element, the intersection of
-the second and third generations; etc.
-\item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
-hypo differentially methylated positions between two consecutive
-generations.The first element represents the intersection of the first and
-second generations; the second element, the intersection of the second
-and third generations; etc.
-}
-\item\code{iAll} a \code{list} containing:
-\itemize{
-\item \code{HYPER} a \code{list} of \code{integer}, the number of conserved
-hyper differentially methylated positions between three or more consecutive
-generations. The first element represents the intersection of the first
-three generations; the second element, the intersection of the first fourth
-generations; etc. The number of entries depends on the number
-of generations.
-\item \code{HYPO} a \code{list} of \code{integer}, the number of conserved
-hypo differentially methylated positions between three or more consecutive
-generations. The first element represents the intersection of the first
-three generations; the second element, the intersection of the first fourth
-generations; etc. The number of entries depends on the number of
-generations.
-}
-}
-}
-}
+a \code{list}
+that contains the result of the observation analysis. The \code{list} is
+identical to the \code{OBSERVATION} section of the
+\code{methylInheritanceAllResults} object.
 }
 \description{
 Run a differential methylation analysis on each generation
@@ -172,13 +106,18 @@ The results can also be saved in RDS file (optional).
 }
 \examples{
 
-## Load methyl information
+## Load methylation information
 data(samplesForTransgenerationalAnalysis)
 
 ## Run an observation analysis
 runObservation(methylKitData = samplesForTransgenerationalAnalysis,
     type = "sites", vSeed = 221)
 
+}
+\seealso{
+\code{\link{mergePermutationAndObservation}}  for detail
+description, in the Value section, of the \code{OBSERVATION} section of the
+\code{methylInheritanceAllResults} object.
 }
 \author{
 Astrid Deschenes, Pascal Belleau
