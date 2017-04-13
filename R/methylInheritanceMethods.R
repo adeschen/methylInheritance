@@ -951,10 +951,11 @@ plotGraph <- function(formatForGraphDataFrame) {
 
     # Add vertical line corresponding to the number of conserved elements
     # in the observed results (real results)
+    RESULT <- NULL
     interceptFrame <- subset(formatForGraphDataFrame,
                             formatForGraphDataFrame$SOURCE == "OBSERVATION")
     p <- p + geom_vline(data = interceptFrame,
-                        aes(xintercept = RESULT, color="observed"),
+                        aes(xintercept=RESULT, color="observed"),
                         linetype="longdash", show.legend=TRUE)
 
     p <- p + scale_color_manual(name = "", values = c(observed = "red")) +
