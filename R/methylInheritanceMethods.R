@@ -952,9 +952,8 @@ plotGraph <- function(formatForGraphDataFrame) {
     interceptFrame <- subset(formatForGraphDataFrame,
                             formatForGraphDataFrame$SOURCE == "OBSERVATION")
     p <- p + geom_vline(data = interceptFrame,
-                        aes(xintercept = interceptFrame$RESULT,
-                        color="observed"), linetype="longdash",
-                        show.legend=TRUE)
+                        aes(xintercept = RESULT, color="observed"),
+                        linetype="longdash", show.legend=TRUE)
 
     p <- p + scale_color_manual(name = "", values = c(observed = "red")) +
         theme(legend.position="bottom")
