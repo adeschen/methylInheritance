@@ -98,7 +98,8 @@ needed. When a value inferior or equal to zero is given, a random integer
 is used. Default: \code{-1}.}
 
 \item{restartCalculation}{a \code{logical}, when \code{TRUE}, only
-permutations that don't have a RDS result final are run.}
+permutations that don't have an associated RDS result file are run. Useful
+to restart a permutation analysis that has been interrupted.}
 }
 \value{
 a \code{list} of class \code{methylInheritanceAllResults} when

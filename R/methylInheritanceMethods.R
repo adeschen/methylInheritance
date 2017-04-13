@@ -98,7 +98,8 @@
 #' is used. Default: \code{-1}.
 #'
 #' @param restartCalculation a \code{logical}, when \code{TRUE}, only
-#' permutations that don't have a RDS result final are run.
+#' permutations that don't have an associated RDS result file are run. Useful
+#' to restart a permutation analysis that has been interrupted.
 #'
 #' @return a \code{list} of class \code{methylInheritanceAllResults} when
 #' \code{runObservationAnalysis} = \code{TRUE}. Otherwise return a \code{list}
@@ -372,7 +373,8 @@ runPermutation <- function(methylKitData,
 #' is used. Default: \code{-1}.
 #'
 #' @param restartCalculation a \code{logical}, when \code{TRUE}, only
-#' permutations that don't have a RDS result final are run.
+#' permutations that don't have a RDS result final are run. Useful
+#' to restart a permutation analysis that has been interrupted.
 #'
 #' @return a \code{list}
 #' that contains the result of the observation analysis. The \code{list} is
