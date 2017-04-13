@@ -97,6 +97,10 @@
 #' needed. When a value inferior or equal to zero is given, a random integer
 #' is used. Default: \code{-1}.
 #'
+#' @param restartCalculation a \code{logical}, when \code{TRUE}, only
+#' permutations that don't have an associated RDS result file are run. Useful
+#' to restart a permutation analysis that has been interrupted.
+#'
 #' @return a \code{list} of class \code{methylInheritanceAllResults} when
 #' \code{runObservationAnalysis} = \code{TRUE}. Otherwise return a \code{list}
 #' that contains all the permutation results. The \code{list} is
@@ -148,7 +152,8 @@ runPermutation <- function(methylKitData,
                             minCovBasesForTiles=0,
                             tileSize=1000,
                             stepSize=1000,
-                            vSeed=-1) {
+                            vSeed=-1,
+                            restartCalculation=FALSE) {
 
     # Validate type value
     type <- match.arg(type)
@@ -245,7 +250,8 @@ runPermutation <- function(methylKitData,
                                     minCovBasesForTiles = minCovBasesForTiles,
                                     tileSize = tileSize,
                                     stepSize = stepSize,
-                                    vSeed = vSeed)
+                                    vSeed = vSeed,
+                                    restartCalculation = restartCalculation)
     } else {
         result <- list()
     }
@@ -264,6 +270,7 @@ runPermutation <- function(methylKitData,
                             minCovBasesForTiles = minCovBasesForTiles,
                             tileSize = tileSize,
                             stepSize = stepSize,
+                            restartCalculation = restartCalculation,
                         BPREDO = redoList,
                         BPPARAM = bpParam)
 
@@ -365,6 +372,10 @@ runPermutation <- function(methylKitData,
 #' needed. When a value inferior or equal to zero is given, a random integer
 #' is used. Default: \code{-1}.
 #'
+#' @param restartCalculation a \code{logical}, when \code{TRUE}, only
+#' permutations that don't have a RDS result final are run. Useful
+#' to restart a permutation analysis that has been interrupted.
+#'
 #' @return a \code{list}
 #' that contains the result of the observation analysis. The \code{list} is
 #' identical to the \code{OBSERVATION} section of the
@@ -397,7 +408,8 @@ runObservation <- function(methylKitData,
                                     minCovBasesForTiles=0,
                                     tileSize=1000,
                                     stepSize=1000,
-                                    vSeed=-1) {
+                                    vSeed=-1,
+                                    restartCalculation = FALSE) {
 
     # Validate type value
     type <- match.arg(type)
@@ -452,7 +464,8 @@ runObservation <- function(methylKitData,
                                     destrand = destrand,
                                     minCovBasesForTiles = minCovBasesForTiles,
                                     tileSize = tileSize,
-                                    stepSize = stepSize)
+                                    stepSize = stepSize,
+                                    restartCalculation = restartCalculation)
 
     ## Create final returned list
     result <- list()

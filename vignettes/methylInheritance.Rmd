@@ -304,6 +304,54 @@ F2_and_F3 <- extractInfo(allResults = demoResults, type = "sites",
 output <- plotGraph(F1_and_F2)
 ```
 
+# Possibility to restart a permutation analysis
+
+When a large number of permutations is processed, the time needed to
+process them all may be long (especially when the number of available CPU is
+limited). Furthermore, some permutations can fail due to parallelization 
+problems. 
+
+The **methylInheritance** package offers the possibility to restart
+an analysis and run only missing permutation results. To take advantage of this
+option, the *outputDir* parameter must not be *NULL* so that permutation
+results are saved in RDS files. When the *restartCalculation* is set to *TRUE*,
+the method will load the permutation results present in RDS files (when 
+available) and only rerun permutations that don't have an associated RDS file.
+
+
+```{r restartAnalysis, warning=FALSE, message=FALSE, collapse=TRUE, cache=TRUE}
+## The permutation analysis is only done on differentially methylated tiles
+## The "output" directory must be specified
+## The "vSeed" must be specified to ensure reproducible results
+## The "restartCalculation" is not important the first time the analysis is run
+permutationResult <- runPermutation(
+                        methylKitData = demoForTransgenerationalAnalysis, # multi-generational dataset
+                        type = "tiles",     # Only tiles
+                        outputDir = "test_restart",   # RDS files are created
+                        runObservationAnalysis = TRUE,
+                        nbrCores = 1,           # Number of cores used
+                        nbrPermutations = 2,    # Should be much higher for a
+                                                # real analysis
+                        vSeed = 212201,     # Ensure reproducible results
+                        restartCalculation = FALSE)
+
+## Assume that the process was stopped before it has done all the permutations
+
+## The process can be restarted
+## All parameters must be identical to the first analysis except "restartCalculation"
+## The "restartCalculation" must be set to TRUE
+permutationResult <- runPermutation(
+                        methylKitData = demoForTransgenerationalAnalysis, # multi-generational dataset
+                        type = "tiles",     # Only tiles
+                        outputDir = "test_restart",   # RDS files are created
+                        runObservationAnalysis = TRUE,
+                        nbrCores = 1,           # Number of cores used
+                        nbrPermutations = 2,    # Should be much higher for a
+                                                # real analysis
+                        vSeed = 212201,     # Ensure reproducible results
+                        restartCalculation = TRUE)         
+```
+
 # References
 
 

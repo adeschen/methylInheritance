@@ -36,7 +36,7 @@ test.validateRunPermutationUsingMethylKitInfo_sites_good_01 <- function() {
         nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = FALSE, minCovBasesForTiles = 2,
-        tileSize = 1000, stepSize = 100),
+        tileSize = 1000, stepSize = 100, restartCalculation = FALSE),
         error=conditionMessage)
 
     exp <- list()
@@ -48,7 +48,7 @@ test.validateRunPermutationUsingMethylKitInfo_sites_good_01 <- function() {
     exp[["SITES"]][["iAll"]][["HYPO"]]   <- list(0)
 
     message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_sites_good_01() ",
-                    "- Valid paramters did not generated expected results.")
+                    "- Valid parameters did not generated expected results.")
 
     checkEquals(obs, exp, msg = message)
 }
@@ -74,7 +74,7 @@ test.validateRunPermutationUsingMethylKitInfo_tiles_good_01 <- function() {
         nbrCoresDiffMeth = 1,
         minReads = 5, minMethDiff = 5, qvalue = 0.05,
         maxPercReads = 99.9, destrand = FALSE, minCovBasesForTiles = 2,
-        tileSize = 1000, stepSize = 100),
+        tileSize = 1000, stepSize = 100, restartCalculation = FALSE),
         error=conditionMessage)
 
     exp <- list()
@@ -86,7 +86,7 @@ test.validateRunPermutationUsingMethylKitInfo_tiles_good_01 <- function() {
     exp[["TILES"]][["iAll"]][["HYPO"]]   <- list(0)
 
     message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_tiles_good_01() ",
-                "- Valid paramters did not generated expected results.")
+                "- Valid parameters did not generated expected results.")
 
     checkEquals(obs, exp, msg = message)
 }
