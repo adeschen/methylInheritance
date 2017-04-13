@@ -7,7 +7,7 @@
 \usage{
 validateRunObservation(methylKitData, type, outputDir, nbrCoresDiffMeth,
   minReads, minMethDiff, qvalue, maxPercReads, destrand, minCovBasesForTiles,
-  tileSize, stepSize, vSeed)
+  tileSize, stepSize, vSeed, restartCalculation)
 }
 \arguments{
 \item{methylKitData}{a \code{list} of \code{methylRawList} entries or the
@@ -78,6 +78,10 @@ used when \code{doingTiles} = \code{TRUE}.}
 \item{vSeed}{a \code{integer}, a seed used when reproducible results are
 needed. When a value inferior or equal to zero is given, a random integer
 is used.}
+
+\item{restartCalculation}{a \code{logical}, when \code{TRUE}, only
+permutations that don't have an associated RDS result file are run. Useful
+to restart a permutation analysis that has been interrupted.}
 }
 \value{
 \code{0} indicating that all parameters validations have been
@@ -98,7 +102,7 @@ methylInheritance:::validateRunObservation(
     outputDir = NULL, nbrCoresDiffMeth = 1, minReads = 10,
     minMethDiff = 25, qvalue = 0.01,
     maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-    tileSize = 1000, stepSize = 500, vSeed = 12)
+    tileSize = 1000, stepSize = 500, vSeed = 12, restartCalculation = TRUE)
 
 ## The function raises an error when at least one paramater is not valid
 \dontrun{methylInheritance:::validateRunObservation(
@@ -106,7 +110,7 @@ methylInheritance:::validateRunObservation(
     type = "tiles", outputDir = NULL, nbrCoresDiffMeth = 1, minReads = "HI",
     minMethDiff = 25, qvalue = 0.01,
     maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-    tileSize = 1000, stepSize = 500, vSeed = 12)}
+    tileSize = 1000, stepSize = 500, vSeed = 12, restartCalculation = FALSE)}
 
 }
 \author{

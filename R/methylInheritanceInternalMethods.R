@@ -82,6 +82,10 @@
 #' needed. When a value inferior or equal to zero is given, a random integer
 #' is used.
 #'
+#' @param restartCalculation a \code{logical}, when \code{TRUE}, only
+#' permutations that don't have an associated RDS result file are run. Useful
+#' to restart a permutation analysis that has been interrupted.
+#'
 #' @return \code{0} indicating that all parameters validations have been
 #' successful.
 #'
@@ -97,7 +101,7 @@
 #'     nbrPermutations = 10000, nbrCores = 1,
 #'     nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 25, qvalue = 0.01,
 #'     maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-#'     tileSize = 1000, stepSize = 500, vSeed = 12)
+#'     tileSize = 1000, stepSize = 500, vSeed = 12, restartCalculation = FALSE)
 #'
 #' ## The function raises an error when at least one paramater is not valid
 #' \dontrun{methylInheritance:::validateRunPermutation(
@@ -105,7 +109,7 @@
 #'     runObservedAnalysis = FALSE, nbrPermutations = 10000, nbrCores = 1,
 #'     nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 25, qvalue = 0.01,
 #'     maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-#'     tileSize = 1000, stepSize = 500, vSeed = 12)}
+#'     tileSize = 1000, stepSize = 500, vSeed = 12, restartCalculation = FALSE)}
 #'
 #' @author Astrid Deschenes
 #' @importFrom S4Vectors isSingleInteger isSingleNumber
@@ -117,20 +121,21 @@ validateRunPermutation <- function(methylKitData,
                                     minReads, minMethDiff, qvalue,
                                     maxPercReads, destrand,
                                     minCovBasesForTiles, tileSize,
-                                    stepSize, vSeed) {
+                                    stepSize, vSeed, restartCalculation) {
 
     ## Validate methylKitData, outputDir, nbrCoresDiffMeth
     ## minReads, minMethDiff, qvalue, maxPercReads, destrand,
     ## minCovBasesForTiles, tileSize, stepSize, vSeed
     validateRunObservation(methylKitData = methylKitData,
-                           type = type, outputDir = outputDir,
-                           nbrCoresDiffMeth = nbrCoresDiffMeth,
-                           minReads = minReads, minMethDiff = minMethDiff,
-                           qvalue = qvalue,
-                           maxPercReads = maxPercReads, destrand = destrand,
-                           minCovBasesForTiles = minCovBasesForTiles,
-                           tileSize = tileSize,
-                           stepSize = stepSize, vSeed = vSeed)
+                            type = type, outputDir = outputDir,
+                            nbrCoresDiffMeth = nbrCoresDiffMeth,
+                            minReads = minReads, minMethDiff = minMethDiff,
+                            qvalue = qvalue,
+                            maxPercReads = maxPercReads, destrand = destrand,
+                            minCovBasesForTiles = minCovBasesForTiles,
+                            tileSize = tileSize,
+                            stepSize = stepSize, vSeed = vSeed,
+                            restartCalculation = restartCalculation)
 
     ## Validate that the runObservedAnalysis is a logical
     if (!is.logical(runObservedAnalysis)) {
@@ -234,6 +239,10 @@ validateRunPermutation <- function(methylKitData,
 #' needed. When a value inferior or equal to zero is given, a random integer
 #' is used.
 #'
+#' @param restartCalculation a \code{logical}, when \code{TRUE}, only
+#' permutations that don't have an associated RDS result file are run. Useful
+#' to restart a permutation analysis that has been interrupted.
+#'
 #' @return \code{0} indicating that all parameters validations have been
 #' successful.
 #'
@@ -248,7 +257,7 @@ validateRunPermutation <- function(methylKitData,
 #'     outputDir = NULL, nbrCoresDiffMeth = 1, minReads = 10,
 #'     minMethDiff = 25, qvalue = 0.01,
 #'     maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-#'     tileSize = 1000, stepSize = 500, vSeed = 12)
+#'     tileSize = 1000, stepSize = 500, vSeed = 12, restartCalculation = TRUE)
 #'
 #' ## The function raises an error when at least one paramater is not valid
 #' \dontrun{methylInheritance:::validateRunObservation(
@@ -256,7 +265,7 @@ validateRunPermutation <- function(methylKitData,
 #'     type = "tiles", outputDir = NULL, nbrCoresDiffMeth = 1, minReads = "HI",
 #'     minMethDiff = 25, qvalue = 0.01,
 #'     maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-#'     tileSize = 1000, stepSize = 500, vSeed = 12)}
+#'     tileSize = 1000, stepSize = 500, vSeed = 12, restartCalculation = FALSE)}
 #'
 #' @author Astrid Deschenes
 #' @importFrom S4Vectors isSingleInteger isSingleNumber
@@ -267,7 +276,7 @@ validateRunObservation <- function(methylKitData,
                                     minReads, minMethDiff, qvalue,
                                     maxPercReads, destrand,
                                     minCovBasesForTiles, tileSize,
-                                    stepSize, vSeed) {
+                                    stepSize, vSeed, restartCalculation) {
 
     ## Validate that methylKitData is a valid RDS file when string is passed
     if (is.character(methylKitData)) {
@@ -352,11 +361,16 @@ validateRunObservation <- function(methylKitData,
                 as.integer(stepSize) < 1) {
             stop("stepSize must be a positive integer or numeric")
         }
-
     }
+
     ## Validate that vSeed is an integer
     if (!(isSingleInteger(vSeed) || isSingleNumber(vSeed))) {
         stop("vSeed must be an integer or numeric")
+    }
+
+    ## Validate that restartCalculation is a logical
+    if (!is.logical(restartCalculation)) {
+        stop("restartCalculation must be a logical")
     }
 
     return(0)

@@ -170,7 +170,8 @@ runPermutation <- function(methylKitData,
                                 destrand = destrand,
                                 minCovBasesForTiles = minCovBasesForTiles,
                                 tileSize = tileSize, stepSize = stepSize,
-                                vSeed = vSeed)
+                                vSeed = vSeed,
+                                restartCalculation = restartCalculation)
 
     ## Add last slash to path when absent
     if (!is.null(outputDir) &&
@@ -409,7 +410,7 @@ runObservation <- function(methylKitData,
                                     tileSize=1000,
                                     stepSize=1000,
                                     vSeed=-1,
-                                    restartCalculation = FALSE) {
+                                    restartCalculation=FALSE) {
 
     # Validate type value
     type <- match.arg(type)
@@ -423,7 +424,8 @@ runObservation <- function(methylKitData,
                             maxPercReads = maxPercReads, destrand = destrand,
                             minCovBasesForTiles = minCovBasesForTiles,
                             tileSize = tileSize,
-                            stepSize = stepSize, vSeed = vSeed)
+                            stepSize = stepSize, vSeed = vSeed,
+                            restartCalculation = restartCalculation)
 
     ## Add last slash to path when absent
     if (!is.null(outputDir) &&

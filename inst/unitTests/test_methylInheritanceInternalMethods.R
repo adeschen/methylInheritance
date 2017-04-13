@@ -90,3 +90,20 @@ test.validateRunPermutationUsingMethylKitInfo_tiles_good_01 <- function() {
 
     checkEquals(obs, exp, msg = message)
 }
+
+###########################################################
+## isInterGenerationResults() function
+###########################################################
+
+test.isInterGenerationResults_true <- function() {
+
+    filesDir <- system.file("extdata", "TEST", package="methylInheritance")
+
+    obs <- methylInheritance:::isInterGenerationResults(outputDir =
+                paste0(filesDir, "/"), 0, "sites")
+
+    message <- paste0("test.isInterGenerationResults_true() ",
+                      "- Function should return TRUE")
+
+    checkTrue(obs, msg = message)
+}
