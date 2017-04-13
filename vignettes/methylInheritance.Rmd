@@ -54,14 +54,14 @@ a relation between the number of conserved DME from one generation to the next
 to the inheritance effect of treatment and to dismiss stochastic effect.  It 
 is used as a robust alternative to inference based on parametric assumptions.
 
-The `r Rpackage("methylInheritance")` package can perform a permutation 
+The `r Biocpkg("methylInheritance")` package can perform a permutation 
 analysis on both differentially methylated sites (DMS) and differentially 
-methylated tiles (DMT) using `r Biocpkg("methylKit")` package.
+methylated tiles (DMT) using the `r Biocpkg("methylKit")` package.
 
 
 # Loading methylInheritance package
 
-As with any R package, the `r Rpackage("methylInheritance")` package should 
+As with any R package, the `r Biocpkg("methylInheritance")` package should 
 first be loaded with the following command:
 
 ```{r loadingPackage, warning=FALSE, message=FALSE}
@@ -86,7 +86,7 @@ number that can be obtained through a randomness analysis.
 A typical **methylInheritance** analysis consists of the following steps:
 
 1. Process to a differentially methylation analysis on each generation 
-separately using real dataset with `r Rpackage("methylKit")`.
+separately using real dataset with the `r Biocpkg("methylKit")` package.
 2. Calculate the number of conserved differentially methylated elements 
 between two consecutive generations (F1 and F2, F2 and F3, etc..).  The number
 of conserved differentially methylated elements is also calculated for three
@@ -96,7 +96,8 @@ Those results are considered the reference values.
 3. Fix a threshold (conventionally 0.05) that is used as a cutoff between the 
 null and alternative hypothesis. 
 4. Process to a differential methylation analysis on each shuffled dataset.
-Each generation is analysed separately using `r Rpackage("methylKit")` package.
+Each generation is analysed separately using the `r Biocpkg("methylKit")` 
+package.
 5. Calculate the significant level for each consecutive subset of generations. 
 The significant level is defined as the percentage of results equal or higher 
 than the reference values. The reference values are added to the analysis so 
@@ -241,8 +242,7 @@ When observation and permutation analysis have been run together using the
 
 ## Extract a specific analysis
 
-The *runPermutation()* and 
-*runObservation()* functions 
+The *runPermutation()* and *runObservation()* functions 
 calculate the number of conserved differentially methylated elements 
 between two consecutive generations (F1 and F2, F2 and F3, etc..).  The 
 number of conserved differentially methylated elements is also 
@@ -271,6 +271,7 @@ F1_and_F2_results <- extractInfo(allResults = allResults, type = "sites",
 
 head(F1_and_F2_results)
 ```
+
 
 ## Significant level and visual representation
 
@@ -303,6 +304,7 @@ F2_and_F3 <- extractInfo(allResults = demoResults, type = "sites",
 ## between F1 and F2 
 output <- plotGraph(F1_and_F2)
 ```
+
 
 # Possibility to restart a permutation analysis
 
@@ -351,6 +353,53 @@ permutationResult <- runPermutation(
                         vSeed = 212201,     # Ensure reproducible results
                         restartCalculation = TRUE)         
 ```
+
+
+# Format multigenerational dataset into an input for methylInheritance
+
+The permutation analysis needs a *list* of *methylRawList* objects
+as input. A *methylRawList* is a *list* of *methylRaw* objects. 
+The *methylRawList*  and *methylRaw* objects are defined in the 
+`r Biocpkg("methylKit")` package. 
+
+To create a *methylRawList*, all samples (cases and controls) from the same
+generation must be first seperatly transformed into a *methylRaw* object. 
+The S4 *methylRaw* class extends *data.frame* class and has been created to
+store raw methylation data. The raw methylation is essentially percent 
+methylation values and read coverage values per base or region.
+
+Excluding the *data.frame* section, the slots present in the *methylRaw* 
+class are:
+
+* sample.id: a string, the sample identification
+* assembly: a string, the genomic assembly
+* context: a string, the methylation context, as exemple, CpG, CpH, etc...
+* resolution: a string, the resolution of methylation information,
+mainly 'base' or 'region'
+
+```{r demoRaw, warning=FALSE, message=FALSE, collapse=TRUE, cache=TRUE}
+f1_list <- list()
+f1_list[[1]] <- new("methylRaw", 
+                    data.frame(chr = c("chr21", "chr21", "chr21"), 
+                    start = c(9764513, 9764522, 9764542), 
+                    end = c(9764513, 9764522, 9764542), 
+                    strand = c("+", "+", "-"), 
+                    coverage = c(100, 30, 15), numCs = c(88, 21, 2), 
+                    numTs = c(100, 30, 15) - c(88, 21, 2)), 
+                    sample.id = "F1_control_01", assembly = "hg19", 
+                    context = "CpG", resolution = 'base')
+f1_list[[2]] <- new("methylRaw", 
+                    data.frame(chr = c("chr21", "chr21", "chr21"), 
+                    start = c(9764513, 9764522, 9764542), 
+                    end = c(9764513, 9764522, 9764542), 
+                    strand = c("+", "-", "-"), 
+                    coverage = c(33, 23, 21), numCs = c(16, 22, 1), 
+                    numTs = c(33, 23, 21) - c(16, 22, 1)), 
+                    sample.id = "F1_case_02", assembly = "hg19", 
+                    context = "CpG", resolution = 'base')
+
+```
+
 
 # References
 
