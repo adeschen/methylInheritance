@@ -34,6 +34,8 @@ Suggests:
     RUnit
 Encoding: UTF-8
 License: Artistic-2.0
+URL: https://github.com/adeschen/methylInheritance
+BugReports: https://github.com/adeschen/methylInheritance/issues
 VignetteBuilder: knitr
 biocViews: BiologicalQuestion, Epigenetics, DNAMethylation,
     DifferentialMethylation, MethylSeq,
