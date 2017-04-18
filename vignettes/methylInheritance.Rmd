@@ -28,8 +28,8 @@ library(methylKit)
 
 # Licensing 
 
-The `r Rpackage("methylInheritance")` package and the underlying 
-`r Rpackage("methylInheritance")` code 
+The `r Biocpkg("methylInheritance")` package and the underlying 
+`r Biocpkg("methylInheritance")` code 
 are distributed under the Artistic license 2.0. You are free to use and 
 redistribute this software. 
 
