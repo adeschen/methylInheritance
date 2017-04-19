@@ -9,7 +9,7 @@
 #' related to one generation (first entry = first generation, second
 #' entry = second generation, etc..). The number of generations must
 #' correspond to the number
-#' of entries in the \code{methylKitData}.At least 2 generations
+#' of entries in the \code{methylKitData}. At least 2 generations
 #' must be present to do a permutation analysis. More information can be found
 #' in the methylKit package.
 #'
@@ -175,7 +175,7 @@ validateRunPermutation <- function(methylKitData,
 #' \code{methylRawList} contains all the \code{methylRaw} entries related to
 #' one generation (first entry = first generation, second entry = second
 #' generation, etc..). The number of generations must correspond to the number
-#' of entries in the \code{methylKitData}.At least 2 generations
+#' of entries in the \code{methylKitData}. At least 2 generations
 #' must be present to calculate the conserved elements. More information can
 #' be found in the methylKit package.
 #'
@@ -1006,8 +1006,12 @@ runOnePermutationOnAllGenerations <- function(methylInfoForAllGenerations,
             }
 
             ## Get differentially methylated sites
-            permutationList[["SITES"]][[i]] <- suppressWarnings(
+            allSites <- suppressWarnings(
                 calculateDiffMeth(meth.sites, mc.cores = nbrCoresDiffMeth))
+
+            permutationList[["SITES"]][[i]] <- suppressWarnings(
+                getMethylDiff(allSites, difference = minMethDiff,
+                                qvalue = qvalue))
         }
 
         ## TILES
@@ -1033,10 +1037,20 @@ runOnePermutationOnAllGenerations <- function(methylInfoForAllGenerations,
             meth.tiles <- unite(filtered.tiles, destrand = destrand)
 
             ## Get diff methylated tiles
-            permutationList[["TILES"]][[i]] <- suppressWarnings(
+            allTiles <- suppressWarnings(
                 calculateDiffMeth(meth.tiles, mc.cores = nbrCoresDiffMeth))
+
+            permutationList[["TILES"]][[i]] <- suppressWarnings(
+                getMethylDiff(allTiles, difference = minMethDiff,
+                              qvalue = qvalue))
         }
     }
+
+    ## Save all results per generation in RDS file when specified
+    # if (!is.null(outputDir)) {
+    #     saveRDS(object = permutationList, file = paste0(outputDir,
+    #                         "allInfoPerGeneration_", id, ".RDS"))
+    # }
 
     permutationFinal <- list()
 

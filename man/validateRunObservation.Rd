@@ -15,7 +15,7 @@ name of the RDS file containing the list. Each
 \code{methylRawList} contains all the \code{methylRaw} entries related to
 one generation (first entry = first generation, second entry = second
 generation, etc..). The number of generations must correspond to the number
-of entries in the \code{methylKitData}.At least 2 generations
+of entries in the \code{methylKitData}. At least 2 generations
 must be present to calculate the conserved elements. More information can
 be found in the methylKit package.}
 
