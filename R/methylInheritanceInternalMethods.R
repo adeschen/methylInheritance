@@ -9,7 +9,7 @@
 #' related to one generation (first entry = first generation, second
 #' entry = second generation, etc..). The number of generations must
 #' correspond to the number
-#' of entries in the \code{methylKitData}.At least 2 generations
+#' of entries in the \code{methylKitData}. At least 2 generations
 #' must be present to do a permutation analysis. More information can be found
 #' in the methylKit package.
 #'
@@ -175,7 +175,7 @@ validateRunPermutation <- function(methylKitData,
 #' \code{methylRawList} contains all the \code{methylRaw} entries related to
 #' one generation (first entry = first generation, second entry = second
 #' generation, etc..). The number of generations must correspond to the number
-#' of entries in the \code{methylKitData}.At least 2 generations
+#' of entries in the \code{methylKitData}. At least 2 generations
 #' must be present to calculate the conserved elements. More information can
 #' be found in the methylKit package.
 #'
@@ -1046,11 +1046,11 @@ runOnePermutationOnAllGenerations <- function(methylInfoForAllGenerations,
         }
     }
 
-    ## Save results in RDS file when specified
-    if (!is.null(outputDir)) {
-        saveRDS(object = permutationList,file = paste0(outputDir,
-                            "allInfo_", id, ".RDS"))
-    }
+    ## Save all results per generation in RDS file when specified
+    # if (!is.null(outputDir)) {
+    #     saveRDS(object = permutationList, file = paste0(outputDir,
+    #                         "allInfoPerGeneration_", id, ".RDS"))
+    # }
 
     permutationFinal <- list()
 
