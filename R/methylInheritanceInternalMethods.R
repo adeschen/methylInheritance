@@ -1045,19 +1045,21 @@ runOnePermutationOnAllGenerations <- function(methylInfoForAllGenerations,
             filtered.sites <- normalizeCoverage(filtered.sites, "median")
 
             ## Merge all samples to one table
-            meth.sites <- unite(filtered.sites, destrand = destrand)
+            filtered.sites <- unite(filtered.sites, destrand = destrand)
 
             if (length(meth.sites@.Data[[1]]) == 0) {
                 stop("meth.sites IS EMPTY")
             }
 
             ## Get differentially methylated sites
-            allSites <- suppressWarnings(
-                calculateDiffMeth(meth.sites, mc.cores = nbrCoresDiffMeth))
+            filtered.sites <- suppressWarnings(
+                calculateDiffMeth(filtered.sites, mc.cores = nbrCoresDiffMeth))
 
             permutationList[["SITES"]][[i]] <- suppressWarnings(
-                getMethylDiff(allSites, difference = minMethDiff,
+                getMethylDiff(filtered.sites, difference = minMethDiff,
                                 qvalue = qvalue))
+
+            rm(filtered.sites)
         }
 
         ## TILES
@@ -1080,17 +1082,21 @@ runOnePermutationOnAllGenerations <- function(methylInfoForAllGenerations,
             filtered.tiles <- normalizeCoverage(filtered.tiles, "median")
 
             ## Merge all samples to one table
-            meth.tiles <- unite(filtered.tiles, destrand = destrand)
+            filtered.tiles <- unite(filtered.tiles, destrand = destrand)
 
             ## Get diff methylated tiles
-            allTiles <- suppressWarnings(
-                calculateDiffMeth(meth.tiles, mc.cores = nbrCoresDiffMeth))
+            filtered.tiles <- suppressWarnings(
+                calculateDiffMeth(filtered.tiles, mc.cores = nbrCoresDiffMeth))
 
             permutationList[["TILES"]][[i]] <- suppressWarnings(
-                getMethylDiff(allTiles, difference = minMethDiff,
+                getMethylDiff(filtered.tiles, difference = minMethDiff,
                               qvalue = qvalue))
+
+            rm(filtered.tiles)
         }
     }
+
+    rm(methylInfoForAllGenerations)
 
     ## Save all results per generation in RDS file when specified
     if (!is.null(outputDir) && saveInfoByGeneration) {

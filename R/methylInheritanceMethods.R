@@ -142,6 +142,7 @@
 #' @author Astrid Deschenes, Pascal Belleau
 #' @importFrom BiocParallel bplapply MulticoreParam SnowParam bptry bpok
 #' @importFrom methods new
+#' @importFrom utils object.size
 #' @export
 runPermutation <- function(methylKitData,
                             type=c("both", "sites", "tiles"),
@@ -227,14 +228,14 @@ runPermutation <- function(methylKitData,
         finalList[[i]] <- list(sample = permutationList, id = i)
     }
 
+    print(object.size(finalList))
+
     # Fix the BiocParallel parameter
     if (nbrCores == 1) {
         bpParam <- SnowParam()
     } else {
         bpParam <- SnowParam(workers = nbrCores)
     }
-
-    redoList <- list()
 
     if (!is.null(outputDir)) {
         doTiles <- any(type %in% c("tiles", "both"))
@@ -280,7 +281,6 @@ runPermutation <- function(methylKitData,
                             stepSize = stepSize,
                             restartCalculation = restartCalculation,
                             saveInfoByGeneration = saveInfoByGeneration,
-                        BPREDO = redoList,
                         BPPARAM = bpParam)
 
     result[["PERMUTATION"]] <- permutationResults

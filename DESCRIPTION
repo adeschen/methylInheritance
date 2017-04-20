@@ -25,7 +25,8 @@ Imports:
     S4Vectors,
     methods,
     ggplot2,
-    gridExtra
+    gridExtra,
+    utils
 Suggests:
     BiocStyle,
     BiocGenerics,
