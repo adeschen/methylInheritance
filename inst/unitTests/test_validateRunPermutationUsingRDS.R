@@ -23,7 +23,8 @@ test.validateRunPermutation_methylKitData_number <- function() {
             nbrPermutations = 2, nbrCores = 1, nbrCoresDiffMeth = 1,
             minReads = 10, minMethDiff = 10, qvalue = 0.05,
             maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 2,
-            tileSize = 1000, stepSize = 100, vSeed = 222),
+            tileSize = 1000, stepSize = 100, vSeed = 222,
+            restartCalculation = FALSE, saveInfoByGeneration = FALSE),
             error=conditionMessage)
 
     exp <- paste0("methylKitData must be a list containing \"methylRawList\" ",
@@ -44,7 +45,8 @@ test.validateRunPermutation_methylKitData_list_of_int <- function() {
         nbrPermutations = 2, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 2,
-        tileSize = 1000, stepSize = 100, vSeed = 222),
+        tileSize = 1000, stepSize = 100, vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- paste0("methylKitData must be a list containing \"methylRawList\" ",
@@ -65,7 +67,8 @@ test.validateRunPermutation_outputDir_as_number <- function() {
         nbrPermutations = 2, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 2,
-        tileSize = 1000, stepSize = 100, vSeed = 222),
+        tileSize = 1000, stepSize = 100, vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "output_dir must be a character string or NULL"
@@ -84,7 +87,8 @@ test.validateRunPermutation_runObservedAnalysis_string <- function() {
         nbrPermutations = 2, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 2,
-        tileSize = 1000, stepSize = 100, vSeed = 222),
+        tileSize = 1000, stepSize = 100, vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "runObservedAnalysis must be a logical"
@@ -103,7 +107,8 @@ test.validateRunPermutation_nbrPermutations_as_string <- function() {
         nbrPermutations = "TOTO", nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 2,
-        tileSize = 1000, stepSize = 100, vSeed = 222),
+        tileSize = 1000, stepSize = 100, vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "nbrPermutations must be a positive integer or numeric"
@@ -122,7 +127,8 @@ test.validateRunPermutation_nbrCores_zero <- function() {
         nbrPermutations = 3, nbrCores = 0, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 2,
-        tileSize = 1000, stepSize = 100, vSeed = 222),
+        tileSize = 1000, stepSize = 100, vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "nbrCores must be a positive integer or numeric"
@@ -141,7 +147,8 @@ test.validateRunPermutation_nbrCores_negative <- function() {
         nbrPermutations = 3, nbrCores = -1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 2,
-        tileSize = 1000, stepSize = 100, vSeed = 222),
+        tileSize = 1000, stepSize = 100, vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "nbrCores must be a positive integer or numeric"
@@ -161,7 +168,8 @@ test.validateRunPermutation_nbrCoresDiffMeth_zero <- function() {
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 0,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 2,
-        tileSize = 1000, stepSize = 100, vSeed = 222),
+        tileSize = 1000, stepSize = 100, vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "nbrCoresDiffMeth must be a positive integer or numeric"
@@ -180,7 +188,8 @@ test.validateRunPermutation_nbrCoresDiffMeth_negative <- function() {
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = -1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 2,
-        tileSize = 1000, stepSize = 100, vSeed = 222),
+        tileSize = 1000, stepSize = 100, vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "nbrCoresDiffMeth must be a positive integer or numeric"
@@ -199,7 +208,8 @@ test.validateRunPermutation_minReads_zero <- function() {
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 0, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 2,
-        tileSize = 1000, stepSize = 100, vSeed = 222),
+        tileSize = 1000, stepSize = 100, vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "minReads must be a positive integer or numeric"
@@ -218,7 +228,8 @@ test.validateRunPermutation_minReads_negative <- function() {
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = -1, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 2,
-        tileSize = 1000, stepSize = 100, vSeed = 222),
+        tileSize = 1000, stepSize = 100, vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "minReads must be a positive integer or numeric"
@@ -237,7 +248,8 @@ test.validateRunPermutation_minMethDiff_negative <- function() {
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff =-0.1, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 2,
-        tileSize = 1000, stepSize = 100, vSeed = 222),
+        tileSize = 1000, stepSize = 100, vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "minMethDiff must be a positive double between [0,100]"
@@ -257,7 +269,8 @@ test.validateRunPermutation_minMethDiff_above_100 <- function() {
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 100.1, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 2,
-        tileSize = 1000, stepSize = 100, vSeed = 222),
+        tileSize = 1000, stepSize = 100, vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "minMethDiff must be a positive double between [0,100]"
@@ -276,7 +289,8 @@ test.validateRunPermutation_qvalue_above_1 <- function() {
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 1.01,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 2,
-        tileSize = 1000, stepSize = 100, vSeed = 222),
+        tileSize = 1000, stepSize = 100, vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "qvalue must be a positive double between [0,1]"
@@ -295,7 +309,8 @@ test.validateRunPermutation_qvalue_negative <- function() {
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = -0.01,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 2,
-        tileSize = 1000, stepSize = 100, vSeed = 222),
+        tileSize = 1000, stepSize = 100, vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "qvalue must be a positive double between [0,1]"
@@ -314,7 +329,8 @@ test.validateRunPermutation_maxPercReads_not_number <- function() {
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = "lala", destrand = TRUE, minCovBasesForTiles = 2,
-        tileSize = 1000, stepSize = 100, vSeed = 222),
+        tileSize = 1000, stepSize = 100, vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "maxPercReads must be a positive double between [0,100]"
@@ -332,7 +348,8 @@ test.validateRunPermutation_maxPercReads_above_100 <- function() {
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 100.1, destrand = TRUE, minCovBasesForTiles = 2,
-        tileSize = 1000, stepSize = 100, vSeed = 222),
+        tileSize = 1000, stepSize = 100, vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "maxPercReads must be a positive double between [0,100]"
@@ -351,7 +368,8 @@ test.validateRunPermutation_maxPercReads_negative <- function() {
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = -0.1, destrand = TRUE, minCovBasesForTiles = 2,
-        tileSize = 1000, stepSize = 100, vSeed = 222),
+        tileSize = 1000, stepSize = 100, vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "maxPercReads must be a positive double between [0,100]"
@@ -371,7 +389,8 @@ test.validateRunPermutation_destrand_number <- function() {
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = 20, minCovBasesForTiles = 2,
-        tileSize = 1000, stepSize = 100, vSeed = 222),
+        tileSize = 1000, stepSize = 100, vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "destrand must be a logical"
@@ -391,7 +410,8 @@ test.validateRunPermutation_minCovBasesForTiles_string_type_both <- function() {
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = "ici",
-        tileSize = 1000, stepSize = 100, vSeed = 222),
+        tileSize = 1000, stepSize = 100, vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "minCovBasesForTiles must be a positive integer or numeric"
@@ -410,7 +430,8 @@ test.validateRunPermutation_minCovBasesForTiles_negative_type_both <- function()
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = -1,
-        tileSize = 1000, stepSize = 100, vSeed = 222),
+        tileSize = 1000, stepSize = 100, vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "minCovBasesForTiles must be a positive integer or numeric"
@@ -429,7 +450,8 @@ test.validateRunPermutation_minCovBasesForTiles_string_type_tiles <- function() 
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = "a",
-        tileSize = 1000, stepSize = 100, vSeed = 222),
+        tileSize = 1000, stepSize = 100, vSeed = 222, restartCalculation = FALSE,
+        saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "minCovBasesForTiles must be a positive integer or numeric"
@@ -448,7 +470,8 @@ test.validateRunPermutation_minCovBasesForTiles_negative_type_tiles <- function(
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = -1,
-        tileSize = 1000, stepSize = 100, vSeed = 222),
+        tileSize = 1000, stepSize = 100, vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "minCovBasesForTiles must be a positive integer or numeric"
@@ -468,7 +491,8 @@ test.validateRunPermutation_tileSize_string_type_both <- function() {
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-        tileSize = "yes", stepSize = 100, vSeed = 222),
+        tileSize = "yes", stepSize = 100, vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "tileSize must be a positive integer or numeric"
@@ -487,7 +511,8 @@ test.validateRunPermutation_tileSize_zero_type_both <- function() {
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-        tileSize = 0, stepSize = 100, vSeed = 222),
+        tileSize = 0, stepSize = 100, vSeed = 222, restartCalculation = FALSE,
+        saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "tileSize must be a positive integer or numeric"
@@ -506,7 +531,8 @@ test.validateRunPermutation_tileSize_negative_type_both <- function() {
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-        tileSize = -1, stepSize = 100, vSeed = 222),
+        tileSize = -1, stepSize = 100, vSeed = 222, restartCalculation = FALSE,
+        saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "tileSize must be a positive integer or numeric"
@@ -525,7 +551,9 @@ test.validateRunPermutation_tileSize_string_type_tiles <- function() {
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-        tileSize = "yes", stepSize = 100, vSeed = 222),
+        tileSize = "yes", stepSize = 100, vSeed = 222,
+        restartCalculation = FALSE,
+        saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "tileSize must be a positive integer or numeric"
@@ -545,7 +573,8 @@ test.validateRunPermutation_tileSize_zero_type_tiles <- function() {
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-        tileSize = 0, stepSize = 100, vSeed = 222),
+        tileSize = 0, stepSize = 100, vSeed = 222, restartCalculation = FALSE,
+        saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "tileSize must be a positive integer or numeric"
@@ -564,7 +593,8 @@ test.validateRunPermutation_tileSize_negative_type_tiles <- function() {
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-        tileSize = -1, stepSize = 100, vSeed = 222),
+        tileSize = -1, stepSize = 100, vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "tileSize must be a positive integer or numeric"
@@ -583,7 +613,8 @@ test.validateRunPermutation_stepSize_string_type_tiles <- function() {
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-        tileSize = 10000, stepSize = "one", vSeed = 222),
+        tileSize = 10000, stepSize = "one", vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "stepSize must be a positive integer or numeric"
@@ -602,7 +633,8 @@ test.validateRunPermutation_stepSizee_zero_type_tiles <- function() {
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-        tileSize = 10000, stepSize = 0, vSeed = 222),
+        tileSize = 10000, stepSize = 0, vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "stepSize must be a positive integer or numeric"
@@ -621,7 +653,8 @@ test.validateRunPermutation_stepSize_negative_type_tiles <- function() {
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-        tileSize = 10000, stepSize = -1, vSeed = 222),
+        tileSize = 10000, stepSize = -1, vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "stepSize must be a positive integer or numeric"
@@ -640,7 +673,8 @@ test.validateRunPermutation_stepSize_string_type_both <- function() {
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-        tileSize = 10000, stepSize = "one", vSeed = 222),
+        tileSize = 10000, stepSize = "one", vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "stepSize must be a positive integer or numeric"
@@ -659,7 +693,8 @@ test.validateRunPermutation_stepSizee_zero_type_both <- function() {
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-        tileSize = 10000, stepSize = 0, vSeed = 222),
+        tileSize = 10000, stepSize = 0, vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "stepSize must be a positive integer or numeric"
@@ -678,7 +713,8 @@ test.validateRunPermutation_stepSize_negative_type_both <- function() {
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-        tileSize = 10000, stepSize = -1, vSeed = 222),
+        tileSize = 10000, stepSize = -1, vSeed = 222,
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "stepSize must be a positive integer or numeric"
@@ -697,7 +733,8 @@ test.validateRunPermutation_vSeed_string <- function() {
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-        tileSize = 10000, stepSize = 100, vSeed = "222"),
+        tileSize = 10000, stepSize = 100, vSeed = "222",
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "vSeed must be either -1 or a positive integer or numeric"
@@ -716,13 +753,54 @@ test.validateRunPermutation_vSeed_string <- function() {
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-        tileSize = 10000, stepSize = 100, vSeed = "33"),
+        tileSize = 10000, stepSize = 100, vSeed = "33",
+        restartCalculation = FALSE, saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- "vSeed must be an integer or numeric"
 
     message <- paste0(" test.validateRunPermutation_vSeed_string() ",
                       "- Not valid vSeed did not generated expected message.")
+
+    checkEquals(obs, exp, msg = message)
+}
+
+## Test when restartCalculation is a string
+test.validateRunPermutation_restartCalculation_string <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ,  outputDir = NULL, type = "both",
+        runObservedAnalysis = TRUE,
+        nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
+        minReads = 10, minMethDiff = 10, qvalue = 0.05,
+        maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
+        tileSize = 10000, stepSize = 100, vSeed = 22,
+        restartCalculation = "TRUE", saveInfoByGeneration = FALSE),
+        error=conditionMessage)
+
+    exp <- "restartCalculation must be a logical"
+
+    message <- paste0(" test.validateRunPermutation_restartCalculation_string() ",
+                      "- Not valid restartCalculation did not generated expected message.")
+
+    checkEquals(obs, exp, msg = message)
+}
+
+## Test when saveInfoByGeneration is a string
+test.validateRunPermutation_saveInfoByGeneration_string <- function() {
+    obs <- tryCatch(methylInheritance:::validateRunPermutation(
+        methylKitData = METHYL_OBJ,  outputDir = NULL, type = "both",
+        runObservedAnalysis = TRUE,
+        nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
+        minReads = 10, minMethDiff = 10, qvalue = 0.05,
+        maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
+        tileSize = 10000, stepSize = 100, vSeed = 22,
+        restartCalculation = TRUE, saveInfoByGeneration = "FALSE"),
+        error=conditionMessage)
+
+    exp <- "saveInfoByGeneration must be a logical"
+
+    message <- paste0(" test.validateRunPermutation_saveInfoByGeneration_string() ",
+                      "- Not valid saveInfoByGeneration did not generated expected message.")
 
     checkEquals(obs, exp, msg = message)
 }
@@ -735,7 +813,8 @@ test.validateRunPermutation_all_valid_parameters_01 <- function() {
         nbrPermutations = 3, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = -3,
-        tileSize = -1, stepSize = -2, vSeed = 22),
+        tileSize = -1, stepSize = -2, vSeed = 22, restartCalculation = FALSE,
+        saveInfoByGeneration = FALSE),
         error=conditionMessage)
 
     exp <- 0

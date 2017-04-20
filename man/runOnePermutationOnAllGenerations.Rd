@@ -9,7 +9,8 @@ runOnePermutationOnAllGenerations(methylInfoForAllGenerations,
   type = c("both", "sites", "tiles"), outputDir = NULL,
   nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 10, qvalue = 0.01,
   maxPercReads = 99.9, destrand = FALSE, minCovBasesForTiles = 0,
-  tileSize = 1000, stepSize = 1000)
+  tileSize = 1000, stepSize = 1000, restartCalculation,
+  saveInfoByGeneration)
 }
 \arguments{
 \item{methylInfoForAllGenerations}{a \code{list} containing the
@@ -28,6 +29,11 @@ of differentially methylated elements should be returned. For
 retrieving differentially methylated bases type="sites"; for
 differentially methylated regions type="tiles". Default: "both".}
 
+\item{outputDir}{a string, the name of the directory that will contain
+the results of the permutation or \code{NULL}. If the directory does not
+exist, it will be created. When \code{NULL}, the results of the permutation
+are not saved. Default: \code{NULL}.}
+
 \item{nbrCoresDiffMeth}{a positive integer, the number of cores to use for
 parallel differential methylation calculations.Parameter used for both
 sites and tiles analysis. The parameter
@@ -40,11 +46,9 @@ coverage than this count are discarded. The parameter
 correspond to the \code{lo.count} parameter in the  \code{methylKit} package.}
 
 \item{minMethDiff}{a positive integer betwwen [0,100], the absolute value
-of methylation
-percentage change between cases and controls. The parameter
+of methylation percentage change between cases and controls. The parameter
 correspond to the \code{difference} parameter in the
-package \code{methylKit}.
-Default: \code{10}.}
+package \code{methylKit}. Default: \code{10}.}
 
 \item{qvalue}{a positive \code{double} inferior to \code{1}, the cutoff
 for qvalue of differential methylation statistic. Default: \code{0.01}.}
@@ -60,8 +64,7 @@ Default: \code{99.9}.}
 \item{destrand}{a logical, when \code{TRUE} will merge reads on both
 strands of a CpG dinucleotide to provide better coverage. Only advised
 when looking at CpG methylation. Parameter used for both
-sites and tiles analysis.
-Default: \code{FALSE}.}
+sites and tiles analysis. Default: \code{FALSE}.}
 
 \item{minCovBasesForTiles}{a non-negative integer, the minimum number of
 bases to be covered in a given tiling window. The parameter
@@ -80,11 +83,14 @@ parameter corresponds to the \code{stepSize} parameter in
 the  \code{methylKit} package. Only
 used when \code{doingTiles} = \code{TRUE}. Default: \code{1000}.}
 
-\item{doingSites}{a logical, when \code{TRUE} will do the analysis on the
-CpG dinucleotide sites. Default: \code{TRUE}.}
+\item{restartCalculation}{a \code{logical}, when \code{TRUE}, only
+permutations that don't have a RDS result final are run.}
 
-\item{doingTiles}{a logical, when \code{TRUE} will do the analysis on the
-tiles. Default: \code{FALSE}.}
+\item{saveInfoByGeneration}{a \code{logical}, when \code{TRUE}, the
+information about differentially methylated sites and tiles for each
+generation is saved in a RDS file. The information is saved in a different
+file for each permutation. The files are only saved when the
+\code{outputDir} is not \code{NULL}.}
 }
 \value{
 a \code{list} containing the following elements:
@@ -174,7 +180,7 @@ methylInheritance:::runOnePermutationOnAllGenerations(
     methylInfoForAllGenerations = info, type = "tiles", outputDir = NULL,
     nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 10, qvalue = 0.01,
     maxPercReads = 99.9, destrand = FALSE, minCovBasesForTiles = 0,
-    tileSize = 1000, stepSize = 1000)
+    tileSize = 1000, stepSize = 1000, restartCalculation = FALSE)
 
 }
 \author{

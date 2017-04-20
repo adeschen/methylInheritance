@@ -23,19 +23,12 @@ considered as permutation results and are saved in a file with the
 "_permutation_{permutationID}.RDS" extension.}
 
 \item{type}{One of the \code{"sites"} or \code{"tiles"} strings. Specifies
-the type
-of differentially methylated elements should be returned. For
-retrieving differentially methylated bases \code{type} =\code{"sites"}; for
-differentially methylated regions \code{type} = \code{"tiles"}. Default:
-\code{"both"}.}
+the type of differentially methylated elements should be saved.
+Default: \code{"sites"}.}
 
 \item{interGenerationResult}{a \code{list} that corresponds to the output
 of the \code{interGeneration} function, the result of on CpG site or tile
 analysis on all generations.}
-
-\item{type}{One of the \code{"sites"} or \code{"tiles"} strings. Specifies
-the type of differentially methylated elements should be saved.
-Default: \code{"sites"}.}
 }
 \value{
 \code{0} indicating that all parameters validations have been

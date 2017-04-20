@@ -5,7 +5,8 @@
 \title{Create directories that will contained the results of the
 permutations in RDS format}
 \usage{
-createOutputDir(outputDir, doingSites = TRUE, doingTiles = FALSE)
+createOutputDir(outputDir, doingSites = TRUE, doingTiles = FALSE,
+  saveInfoByGeneration)
 }
 \arguments{
 \item{outputDir}{a string of \code{character}, the name of the main
@@ -18,6 +19,11 @@ results of the permutation analysis for sites is created when
 \item{doingTiles}{a \code{logical}, a directory consecrated to contain the
 results of the permutation analysis for tiles is created when
 \code{doingTiles} = \code{TRUE}. Default: \code{FALSE}.}
+
+\item{saveInfoByGeneration}{a \code{logical}, when \code{TRUE}, the
+information about differentially methylated sites and tiles for each
+generation is saved in a RDS file. The information is saved in a different
+file for each permutation.}
 }
 \value{
 \code{0} when all directories are created without problem.
@@ -30,7 +36,7 @@ permutations in RDS format.
 
 ## Create an output directory for SITES only
 methylInheritance:::createOutputDir(outputDir = "testSites",
-    doingSites = TRUE, doingTiles = FALSE)
+    doingSites = TRUE, doingTiles = FALSE, saveInfoByGeneration = TRUE)
 
 }
 \author{
