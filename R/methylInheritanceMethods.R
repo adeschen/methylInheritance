@@ -236,7 +236,7 @@ runPermutation <- function(methylKitData,
     if (nbrCores == 1) {
         bpParam <- SnowParam()
     } else {
-        bpParam <- SnowParam(workers = nbrCores)
+        bpParam <- MulticoreParam(workers = nbrCores)
     }
 
     if (!is.null(outputDir)) {
