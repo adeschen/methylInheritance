@@ -9,7 +9,7 @@
 #' related to one generation (first entry = first generation, second
 #' entry = second generation, etc..). The number of generations must
 #' correspond to the number
-#' of entries in the \code{methylKitData}.At least 2 generations
+#' of entries in the \code{methylKitData}. At least 2 generations
 #' must be present to do a permutation analysis. More information can be found
 #' in the methylKit package.
 #'
@@ -86,6 +86,12 @@
 #' permutations that don't have an associated RDS result file are run. Useful
 #' to restart a permutation analysis that has been interrupted.
 #'
+#' @param saveInfoByGeneration a \code{logical}, when \code{TRUE}, the
+#' information about differentially methylated sites and tiles for each
+#' generation is saved in a RDS file. The information is saved in a different
+#' file for each permutation. The files are only saved when the
+#' \code{outputDir} is not \code{NULL}.
+#'
 #' @return \code{0} indicating that all parameters validations have been
 #' successful.
 #'
@@ -101,7 +107,8 @@
 #'     nbrPermutations = 10000, nbrCores = 1,
 #'     nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 25, qvalue = 0.01,
 #'     maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-#'     tileSize = 1000, stepSize = 500, vSeed = 12, restartCalculation = FALSE)
+#'     tileSize = 1000, stepSize = 500, vSeed = 12, restartCalculation = FALSE,
+#'     saveInfoByGeneration = FALSE)
 #'
 #' ## The function raises an error when at least one paramater is not valid
 #' \dontrun{methylInheritance:::validateRunPermutation(
@@ -109,19 +116,19 @@
 #'     runObservedAnalysis = FALSE, nbrPermutations = 10000, nbrCores = 1,
 #'     nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 25, qvalue = 0.01,
 #'     maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-#'     tileSize = 1000, stepSize = 500, vSeed = 12, restartCalculation = FALSE)}
+#'     tileSize = 1000, stepSize = 500, vSeed = 12, restartCalculation = FALSE,
+#'     saveInfoByGeneration = FALSE)}
 #'
 #' @author Astrid Deschenes
 #' @importFrom S4Vectors isSingleInteger isSingleNumber
 #' @keywords internal
 validateRunPermutation <- function(methylKitData,
-                                    type, outputDir, runObservedAnalysis,
-                                    nbrPermutations, nbrCores,
-                                    nbrCoresDiffMeth,
-                                    minReads, minMethDiff, qvalue,
-                                    maxPercReads, destrand,
-                                    minCovBasesForTiles, tileSize,
-                                    stepSize, vSeed, restartCalculation) {
+                            type, outputDir, runObservedAnalysis,
+                            nbrPermutations, nbrCores, nbrCoresDiffMeth,
+                            minReads, minMethDiff, qvalue, maxPercReads,
+                            destrand, minCovBasesForTiles, tileSize,
+                            stepSize, vSeed, restartCalculation,
+                            saveInfoByGeneration) {
 
     ## Validate methylKitData, outputDir, nbrCoresDiffMeth
     ## minReads, minMethDiff, qvalue, maxPercReads, destrand,
@@ -135,7 +142,8 @@ validateRunPermutation <- function(methylKitData,
                             minCovBasesForTiles = minCovBasesForTiles,
                             tileSize = tileSize,
                             stepSize = stepSize, vSeed = vSeed,
-                            restartCalculation = restartCalculation)
+                            restartCalculation = restartCalculation,
+                            saveInfoByGeneration = saveInfoByGeneration)
 
     ## Validate that the runObservedAnalysis is a logical
     if (!is.logical(runObservedAnalysis)) {
@@ -175,7 +183,7 @@ validateRunPermutation <- function(methylKitData,
 #' \code{methylRawList} contains all the \code{methylRaw} entries related to
 #' one generation (first entry = first generation, second entry = second
 #' generation, etc..). The number of generations must correspond to the number
-#' of entries in the \code{methylKitData}.At least 2 generations
+#' of entries in the \code{methylKitData}. At least 2 generations
 #' must be present to calculate the conserved elements. More information can
 #' be found in the methylKit package.
 #'
@@ -243,6 +251,12 @@ validateRunPermutation <- function(methylKitData,
 #' permutations that don't have an associated RDS result file are run. Useful
 #' to restart a permutation analysis that has been interrupted.
 #'
+#' @param saveInfoByGeneration a \code{logical}, when \code{TRUE}, the
+#' information about differentially methylated sites and tiles for each
+#' generation is saved in a RDS file. The information is saved in a different
+#' file for each permutation. The files are only saved when the
+#' \code{outputDir} is not \code{NULL}.
+#'
 #' @return \code{0} indicating that all parameters validations have been
 #' successful.
 #'
@@ -257,7 +271,8 @@ validateRunPermutation <- function(methylKitData,
 #'     outputDir = NULL, nbrCoresDiffMeth = 1, minReads = 10,
 #'     minMethDiff = 25, qvalue = 0.01,
 #'     maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-#'     tileSize = 1000, stepSize = 500, vSeed = 12, restartCalculation = TRUE)
+#'     tileSize = 1000, stepSize = 500, vSeed = 12, restartCalculation = TRUE,
+#'     saveInfoByGeneration = FALSE)
 #'
 #' ## The function raises an error when at least one paramater is not valid
 #' \dontrun{methylInheritance:::validateRunObservation(
@@ -265,7 +280,8 @@ validateRunPermutation <- function(methylKitData,
 #'     type = "tiles", outputDir = NULL, nbrCoresDiffMeth = 1, minReads = "HI",
 #'     minMethDiff = 25, qvalue = 0.01,
 #'     maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-#'     tileSize = 1000, stepSize = 500, vSeed = 12, restartCalculation = FALSE)}
+#'     tileSize = 1000, stepSize = 500, vSeed = 12, restartCalculation = FALSE,
+#'     saveInfoByGeneration = FALSE)}
 #'
 #' @author Astrid Deschenes
 #' @importFrom S4Vectors isSingleInteger isSingleNumber
@@ -276,7 +292,8 @@ validateRunObservation <- function(methylKitData,
                                     minReads, minMethDiff, qvalue,
                                     maxPercReads, destrand,
                                     minCovBasesForTiles, tileSize,
-                                    stepSize, vSeed, restartCalculation) {
+                                    stepSize, vSeed, restartCalculation,
+                                    saveInfoByGeneration) {
 
     ## Validate that methylKitData is a valid RDS file when string is passed
     if (is.character(methylKitData)) {
@@ -371,6 +388,11 @@ validateRunObservation <- function(methylKitData,
     ## Validate that restartCalculation is a logical
     if (!is.logical(restartCalculation)) {
         stop("restartCalculation must be a logical")
+    }
+
+    ## Validate that saveInfoByGeneration is a logical
+    if (!is.logical(saveInfoByGeneration)) {
+        stop("saveInfoByGeneration must be a logical")
     }
 
     return(0)
@@ -737,18 +759,24 @@ interGeneration <- function(resultAllGenGR) {
 #' results of the permutation analysis for tiles is created when
 #' \code{doingTiles} = \code{TRUE}. Default: \code{FALSE}.
 #'
+#' @param saveInfoByGeneration a \code{logical}, when \code{TRUE}, the
+#' information about differentially methylated sites and tiles for each
+#' generation is saved in a RDS file. The information is saved in a different
+#' file for each permutation.
+#'
 #' @return \code{0} when all directories are created without problem.
 #'
 #' @examples
 #'
 #' ## Create an output directory for SITES only
 #' methylInheritance:::createOutputDir(outputDir = "testSites",
-#'     doingSites = TRUE, doingTiles = FALSE)
+#'     doingSites = TRUE, doingTiles = FALSE, saveInfoByGeneration = TRUE)
 #'
 #' @author Astrid Deschenes
 #' @keywords internal
 createOutputDir <- function(outputDir, doingSites = TRUE,
-                                doingTiles = FALSE) {
+                                doingTiles = FALSE,
+                            saveInfoByGeneration) {
 
     # Create directories for output files
     if (!dir.exists(outputDir)) {
@@ -766,6 +794,14 @@ createOutputDir <- function(outputDir, doingSites = TRUE,
     if (doingTiles) {
         type <-  "TILES"
         dirName <- paste0(outputDir, type)
+        if (!dir.exists(dirName)) {
+            dir.create(dirName, showWarnings = TRUE)
+        }
+    }
+
+    # Create directory for the information for each generation
+    if (saveInfoByGeneration) {
+        dirName <- paste0(outputDir, "InfoByGeneration")
         if (!dir.exists(dirName)) {
             dir.create(dirName, showWarnings = TRUE)
         }
@@ -801,6 +837,11 @@ createOutputDir <- function(outputDir, doingSites = TRUE,
 #' retrieving differentially methylated bases type="sites"; for
 #' differentially methylated regions type="tiles". Default: "both".
 #'
+#' @param outputDir a string, the name of the directory that will contain
+#' the results of the permutation or \code{NULL}. If the directory does not
+#' exist, it will be created. When \code{NULL}, the results of the permutation
+#' are not saved. Default: \code{NULL}.
+#'
 #' @param nbrCoresDiffMeth a positive integer, the number of cores to use for
 #' parallel differential methylation calculations.Parameter used for both
 #' sites and tiles analysis. The parameter
@@ -831,8 +872,7 @@ createOutputDir <- function(outputDir, doingSites = TRUE,
 #' @param destrand a logical, when \code{TRUE} will merge reads on both
 #' strands of a CpG dinucleotide to provide better coverage. Only advised
 #' when looking at CpG methylation. Parameter used for both
-#' sites and tiles analysis.
-#' Default: \code{FALSE}.
+#' sites and tiles analysis. Default: \code{FALSE}.
 #'
 #' @param minCovBasesForTiles a non-negative integer, the minimum number of
 #' bases to be covered in a given tiling window. The parameter
@@ -853,6 +893,12 @@ createOutputDir <- function(outputDir, doingSites = TRUE,
 #'
 #' @param restartCalculation a \code{logical}, when \code{TRUE}, only
 #' permutations that don't have a RDS result final are run.
+#'
+#' @param saveInfoByGeneration a \code{logical}, when \code{TRUE}, the
+#' information about differentially methylated sites and tiles for each
+#' generation is saved in a RDS file. The information is saved in a different
+#' file for each permutation. The files are only saved when the
+#' \code{outputDir} is not \code{NULL}.
 #'
 #' @return a \code{list} containing the following elements:
 #' \itemize{
@@ -948,7 +994,7 @@ runOnePermutationOnAllGenerations <- function(methylInfoForAllGenerations,
                         qvalue = 0.01, maxPercReads = 99.9,
                         destrand = FALSE, minCovBasesForTiles = 0,
                         tileSize = 1000, stepSize = 1000,
-                        restartCalculation) {
+                        restartCalculation, saveInfoByGeneration) {
 
     # Validate type value
     type <- match.arg(type)
@@ -1006,8 +1052,12 @@ runOnePermutationOnAllGenerations <- function(methylInfoForAllGenerations,
             }
 
             ## Get differentially methylated sites
-            permutationList[["SITES"]][[i]] <- suppressWarnings(
+            allSites <- suppressWarnings(
                 calculateDiffMeth(meth.sites, mc.cores = nbrCoresDiffMeth))
+
+            permutationList[["SITES"]][[i]] <- suppressWarnings(
+                getMethylDiff(allSites, difference = minMethDiff,
+                                qvalue = qvalue))
         }
 
         ## TILES
@@ -1033,9 +1083,19 @@ runOnePermutationOnAllGenerations <- function(methylInfoForAllGenerations,
             meth.tiles <- unite(filtered.tiles, destrand = destrand)
 
             ## Get diff methylated tiles
-            permutationList[["TILES"]][[i]] <- suppressWarnings(
+            allTiles <- suppressWarnings(
                 calculateDiffMeth(meth.tiles, mc.cores = nbrCoresDiffMeth))
+
+            permutationList[["TILES"]][[i]] <- suppressWarnings(
+                getMethylDiff(allTiles, difference = minMethDiff,
+                              qvalue = qvalue))
         }
+    }
+
+    ## Save all results per generation in RDS file when specified
+    if (!is.null(outputDir) && saveInfoByGeneration) {
+        saveRDS(object = permutationList, file = paste0(outputDir,
+                        "InfoByGeneration/DMEByGeneration_", id, ".RDS"))
     }
 
     permutationFinal <- list()
