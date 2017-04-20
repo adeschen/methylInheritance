@@ -207,6 +207,8 @@ runPermutation <- function(methylKitData,
     ## Create all permutations
     permutationSamples <- t(replicate(nbrPermutations, sample(1:nbSamples)))
 
+    print(object_size(permutationSamples))
+
     ## Create list that will contain all information to run permutation
     finalList <- vector("list", nbrPermutations)
 
