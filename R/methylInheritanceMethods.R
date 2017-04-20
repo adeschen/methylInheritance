@@ -142,7 +142,7 @@
 #' @author Astrid Deschenes, Pascal Belleau
 #' @importFrom BiocParallel bplapply MulticoreParam SnowParam bptry bpok
 #' @importFrom methods new
-#' @importFrom pryr object_size
+#' @importFrom plyr object_size
 #' @export
 runPermutation <- function(methylKitData,
                             type=c("both", "sites", "tiles"),
