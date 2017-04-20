@@ -9,7 +9,7 @@ runPermutation(methylKitData, type = c("both", "sites", "tiles"),
   nbrCores = 1, nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 10,
   qvalue = 0.01, maxPercReads = 99.9, destrand = FALSE,
   minCovBasesForTiles = 0, tileSize = 1000, stepSize = 1000, vSeed = -1,
-  restartCalculation = FALSE)
+  restartCalculation = FALSE, saveInfoByGeneration = FALSE)
 }
 \arguments{
 \item{methylKitData}{a \code{list} of \code{methylRawList} entries or the
@@ -100,6 +100,12 @@ is used. Default: \code{-1}.}
 \item{restartCalculation}{a \code{logical}, when \code{TRUE}, only
 permutations that don't have an associated RDS result file are run. Useful
 to restart a permutation analysis that has been interrupted.}
+
+\item{saveInfoByGeneration}{a \code{logical}, when \code{TRUE}, the
+information about differentially methylated sites and tiles for each
+generation is saved in a RDS file. The information is saved in a different
+file for each permutation. The files are only saved when the
+\code{outputDir} is not \code{NULL}.}
 }
 \value{
 a \code{list} of class \code{methylInheritanceAllResults} when

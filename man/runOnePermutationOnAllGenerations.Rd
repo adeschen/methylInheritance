@@ -9,7 +9,8 @@ runOnePermutationOnAllGenerations(methylInfoForAllGenerations,
   type = c("both", "sites", "tiles"), outputDir = NULL,
   nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 10, qvalue = 0.01,
   maxPercReads = 99.9, destrand = FALSE, minCovBasesForTiles = 0,
-  tileSize = 1000, stepSize = 1000, restartCalculation)
+  tileSize = 1000, stepSize = 1000, restartCalculation,
+  saveInfoByGeneration)
 }
 \arguments{
 \item{methylInfoForAllGenerations}{a \code{list} containing the
@@ -27,6 +28,11 @@ must be present to do a permutation analysis.
 of differentially methylated elements should be returned. For
 retrieving differentially methylated bases type="sites"; for
 differentially methylated regions type="tiles". Default: "both".}
+
+\item{outputDir}{a string, the name of the directory that will contain
+the results of the permutation or \code{NULL}. If the directory does not
+exist, it will be created. When \code{NULL}, the results of the permutation
+are not saved. Default: \code{NULL}.}
 
 \item{nbrCoresDiffMeth}{a positive integer, the number of cores to use for
 parallel differential methylation calculations.Parameter used for both
@@ -58,8 +64,7 @@ Default: \code{99.9}.}
 \item{destrand}{a logical, when \code{TRUE} will merge reads on both
 strands of a CpG dinucleotide to provide better coverage. Only advised
 when looking at CpG methylation. Parameter used for both
-sites and tiles analysis.
-Default: \code{FALSE}.}
+sites and tiles analysis. Default: \code{FALSE}.}
 
 \item{minCovBasesForTiles}{a non-negative integer, the minimum number of
 bases to be covered in a given tiling window. The parameter
@@ -80,6 +85,12 @@ used when \code{doingTiles} = \code{TRUE}. Default: \code{1000}.}
 
 \item{restartCalculation}{a \code{logical}, when \code{TRUE}, only
 permutations that don't have a RDS result final are run.}
+
+\item{saveInfoByGeneration}{a \code{logical}, when \code{TRUE}, the
+information about differentially methylated sites and tiles for each
+generation is saved in a RDS file. The information is saved in a different
+file for each permutation. The files are only saved when the
+\code{outputDir} is not \code{NULL}.}
 }
 \value{
 a \code{list} containing the following elements:
