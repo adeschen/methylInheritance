@@ -7,7 +7,7 @@
 \usage{
 validateRunObservation(methylKitData, type, outputDir, nbrCoresDiffMeth,
   minReads, minMethDiff, qvalue, maxPercReads, destrand, minCovBasesForTiles,
-  tileSize, stepSize, vSeed, restartCalculation)
+  tileSize, stepSize, vSeed, restartCalculation, saveInfoByGeneration)
 }
 \arguments{
 \item{methylKitData}{a \code{list} of \code{methylRawList} entries or the
@@ -82,6 +82,12 @@ is used.}
 \item{restartCalculation}{a \code{logical}, when \code{TRUE}, only
 permutations that don't have an associated RDS result file are run. Useful
 to restart a permutation analysis that has been interrupted.}
+
+\item{saveInfoByGeneration}{a \code{logical}, when \code{TRUE}, the
+information about differentially methylated sites and tiles for each
+generation is saved in a RDS file. The information is saved in a different
+file for each permutation. The files are only saved when the
+\code{outputDir} is not \code{NULL}.}
 }
 \value{
 \code{0} indicating that all parameters validations have been
@@ -102,7 +108,8 @@ methylInheritance:::validateRunObservation(
     outputDir = NULL, nbrCoresDiffMeth = 1, minReads = 10,
     minMethDiff = 25, qvalue = 0.01,
     maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-    tileSize = 1000, stepSize = 500, vSeed = 12, restartCalculation = TRUE)
+    tileSize = 1000, stepSize = 500, vSeed = 12, restartCalculation = TRUE,
+    saveInfoByGeneration = FALSE)
 
 ## The function raises an error when at least one paramater is not valid
 \dontrun{methylInheritance:::validateRunObservation(
@@ -110,7 +117,8 @@ methylInheritance:::validateRunObservation(
     type = "tiles", outputDir = NULL, nbrCoresDiffMeth = 1, minReads = "HI",
     minMethDiff = 25, qvalue = 0.01,
     maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
-    tileSize = 1000, stepSize = 500, vSeed = 12, restartCalculation = FALSE)}
+    tileSize = 1000, stepSize = 500, vSeed = 12, restartCalculation = FALSE,
+    saveInfoByGeneration = FALSE)}
 
 }
 \author{

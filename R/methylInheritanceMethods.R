@@ -101,6 +101,12 @@
 #' permutations that don't have an associated RDS result file are run. Useful
 #' to restart a permutation analysis that has been interrupted.
 #'
+#' @param saveInfoByGeneration a \code{logical}, when \code{TRUE}, the
+#' information about differentially methylated sites and tiles for each
+#' generation is saved in a RDS file. The information is saved in a different
+#' file for each permutation. The files are only saved when the
+#' \code{outputDir} is not \code{NULL}.
+#'
 #' @return a \code{list} of class \code{methylInheritanceAllResults} when
 #' \code{runObservationAnalysis} = \code{TRUE}. Otherwise return a \code{list}
 #' that contains all the permutation results. The \code{list} is
@@ -153,25 +159,24 @@ runPermutation <- function(methylKitData,
                             tileSize=1000,
                             stepSize=1000,
                             vSeed=-1,
-                            restartCalculation=FALSE) {
+                            restartCalculation=FALSE,
+                            saveInfoByGeneration=FALSE) {
 
     # Validate type value
     type <- match.arg(type)
 
     ## Parameters validation
     validateRunPermutation(methylKitData = methylKitData,
-                                type = type, outputDir = outputDir,
-                                runObservedAnalysis = runObservationAnalysis,
-                                nbrPermutations = nbrPermutations,
-                                nbrCores = nbrCores,
-                                nbrCoresDiffMeth = nbrCoresDiffMeth,
-                                minReads = minReads, minMethDiff = minMethDiff,
-                                qvalue = qvalue, maxPercReads = maxPercReads,
-                                destrand = destrand,
-                                minCovBasesForTiles = minCovBasesForTiles,
-                                tileSize = tileSize, stepSize = stepSize,
-                                vSeed = vSeed,
-                                restartCalculation = restartCalculation)
+                    type = type, outputDir = outputDir,
+                    runObservedAnalysis = runObservationAnalysis,
+                    nbrPermutations = nbrPermutations, nbrCores = nbrCores,
+                    nbrCoresDiffMeth = nbrCoresDiffMeth, minReads = minReads,
+                    minMethDiff = minMethDiff, qvalue = qvalue,
+                    maxPercReads = maxPercReads, destrand = destrand,
+                    minCovBasesForTiles = minCovBasesForTiles,
+                    tileSize = tileSize, stepSize = stepSize, vSeed = vSeed,
+                    restartCalculation = restartCalculation,
+                    saveInfoByGeneration = saveInfoByGeneration)
 
     ## Add last slash to path when absent
     if (!is.null(outputDir) &&
@@ -234,25 +239,27 @@ runPermutation <- function(methylKitData,
     if (!is.null(outputDir)) {
         doTiles <- any(type %in% c("tiles", "both"))
         doSites <- any(type %in% c("sites", "both"))
-        createOutputDir(outputDir, doingSites = doSites, doingTiles = doTiles)
+        createOutputDir(outputDir, doingSites = doSites, doingTiles = doTiles,
+                        saveInfoByGeneration = saveInfoByGeneration)
     }
 
     ## Call observation analysis
     if (runObservationAnalysis) {
         result <- runObservation(methylKitData = methylKitData,
-                                    type = type,
-                                    outputDir = outputDir,
-                                    nbrCoresDiffMeth = nbrCoresDiffMeth,
-                                    minReads = minReads,
-                                    minMethDiff = minMethDiff,
-                                    qvalue = qvalue,
-                                    maxPercReads = maxPercReads,
-                                    destrand = destrand,
-                                    minCovBasesForTiles = minCovBasesForTiles,
-                                    tileSize = tileSize,
-                                    stepSize = stepSize,
-                                    vSeed = vSeed,
-                                    restartCalculation = restartCalculation)
+                                type = type,
+                                outputDir = outputDir,
+                                nbrCoresDiffMeth = nbrCoresDiffMeth,
+                                minReads = minReads,
+                                minMethDiff = minMethDiff,
+                                qvalue = qvalue,
+                                maxPercReads = maxPercReads,
+                                destrand = destrand,
+                                minCovBasesForTiles = minCovBasesForTiles,
+                                tileSize = tileSize,
+                                stepSize = stepSize,
+                                vSeed = vSeed,
+                                restartCalculation = restartCalculation,
+                                saveInfoByGeneration = saveInfoByGeneration)
     } else {
         result <- list()
     }
@@ -272,6 +279,7 @@ runPermutation <- function(methylKitData,
                             tileSize = tileSize,
                             stepSize = stepSize,
                             restartCalculation = restartCalculation,
+                            saveInfoByGeneration = saveInfoByGeneration,
                         BPREDO = redoList,
                         BPPARAM = bpParam)
 
@@ -377,6 +385,11 @@ runPermutation <- function(methylKitData,
 #' permutations that don't have a RDS result final are run. Useful
 #' to restart a permutation analysis that has been interrupted.
 #'
+#' @param saveInfoByGeneration a \code{logical}, when \code{TRUE}, the
+#' information about differentially methylated sites and tiles for each
+#' generation is saved in a RDS file. The files are only saved when the
+#' \code{outputDir} is not \code{NULL}.
+#'
 #' @return a \code{list}
 #' that contains the result of the observation analysis. The \code{list} is
 #' identical to the \code{OBSERVATION} section of the
@@ -410,7 +423,8 @@ runObservation <- function(methylKitData,
                                     tileSize=1000,
                                     stepSize=1000,
                                     vSeed=-1,
-                                    restartCalculation=FALSE) {
+                                    restartCalculation=FALSE,
+                                    saveInfoByGeneration=FALSE) {
 
     # Validate type value
     type <- match.arg(type)
@@ -425,7 +439,8 @@ runObservation <- function(methylKitData,
                             minCovBasesForTiles = minCovBasesForTiles,
                             tileSize = tileSize,
                             stepSize = stepSize, vSeed = vSeed,
-                            restartCalculation = restartCalculation)
+                            restartCalculation = restartCalculation,
+                            saveInfoByGeneration = saveInfoByGeneration)
 
     ## Add last slash to path when absent
     if (!is.null(outputDir) &&
@@ -451,23 +466,25 @@ runObservation <- function(methylKitData,
     if (!is.null(outputDir)) {
         doTiles <- any(type %in% c("tiles", "both"))
         doSites <- any(type %in% c("sites", "both"))
-        createOutputDir(outputDir, doingSites = doSites, doingTiles = doTiles)
+        createOutputDir(outputDir, doingSites = doSites, doingTiles = doTiles,
+                        saveInfoByGeneration = saveInfoByGeneration)
     }
 
     ## Extract information
     observed <- runOnePermutationOnAllGenerations(methylInfoForAllGenerations =
                                                         methylInfo,
-                                    type = type, outputDir = outputDir,
-                                    nbrCoresDiffMeth = nbrCoresDiffMeth,
-                                    minReads = minReads,
-                                    minMethDiff = minMethDiff,
-                                    qvalue = qvalue,
-                                    maxPercReads = maxPercReads,
-                                    destrand = destrand,
-                                    minCovBasesForTiles = minCovBasesForTiles,
-                                    tileSize = tileSize,
-                                    stepSize = stepSize,
-                                    restartCalculation = restartCalculation)
+                                type = type, outputDir = outputDir,
+                                nbrCoresDiffMeth = nbrCoresDiffMeth,
+                                minReads = minReads,
+                                minMethDiff = minMethDiff,
+                                qvalue = qvalue,
+                                maxPercReads = maxPercReads,
+                                destrand = destrand,
+                                minCovBasesForTiles = minCovBasesForTiles,
+                                tileSize = tileSize,
+                                stepSize = stepSize,
+                                restartCalculation = restartCalculation,
+                                saveInfoByGeneration = saveInfoByGeneration)
 
     ## Create final returned list
     result <- list()
