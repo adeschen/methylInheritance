@@ -142,7 +142,7 @@
 #' @author Astrid Deschenes, Pascal Belleau
 #' @importFrom BiocParallel bplapply MulticoreParam SnowParam bptry bpok
 #' @importFrom methods new
-#' @importFrom utils object.size
+#' @importFrom pryr object_size
 #' @export
 runPermutation <- function(methylKitData,
                             type=c("both", "sites", "tiles"),
@@ -228,7 +228,7 @@ runPermutation <- function(methylKitData,
         finalList[[i]] <- list(sample = permutationList, id = i)
     }
 
-    print(object.size(finalList))
+    print(object_size(finalList))
 
     # Fix the BiocParallel parameter
     if (nbrCores == 1) {

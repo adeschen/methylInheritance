@@ -1047,8 +1047,8 @@ runOnePermutationOnAllGenerations <- function(methylInfoForAllGenerations,
             ## Merge all samples to one table
             filtered.sites <- unite(filtered.sites, destrand = destrand)
 
-            if (length(meth.sites@.Data[[1]]) == 0) {
-                stop("meth.sites IS EMPTY")
+            if (length(filtered.sites@.Data[[1]]) == 0) {
+                stop("filtered.sites IS EMPTY")
             }
 
             ## Get differentially methylated sites

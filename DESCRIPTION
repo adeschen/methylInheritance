@@ -26,7 +26,7 @@ Imports:
     methods,
     ggplot2,
     gridExtra,
-    utils
+    plyr
 Suggests:
     BiocStyle,
     BiocGenerics,
