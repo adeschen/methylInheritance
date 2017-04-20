@@ -1,0 +1,3 @@
+chrBase	chr	base	strand	coverage	freqC	freqT
+21.9764514	21	9764514	F	40	0	100
+21.9764522	21	9764522	F	30	6.67	93.33

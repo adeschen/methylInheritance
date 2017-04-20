@@ -28,8 +28,8 @@ library(methylKit)
 
 # Licensing 
 
-The `r Rpackage("methylInheritance")` package and the underlying 
-`r Rpackage("methylInheritance")` code 
+The `r Biocpkg("methylInheritance")` package and the underlying 
+`r Biocpkg("methylInheritance")` code 
 are distributed under the Artistic license 2.0. You are free to use and 
 redistribute this software. 
 
@@ -54,14 +54,14 @@ a relation between the number of conserved DME from one generation to the next
 to the inheritance effect of treatment and to dismiss stochastic effect.  It 
 is used as a robust alternative to inference based on parametric assumptions.
 
-The `r Rpackage("methylInheritance")` package can perform a permutation 
+The `r Biocpkg("methylInheritance")` package can perform a permutation 
 analysis on both differentially methylated sites (DMS) and differentially 
-methylated tiles (DMT) using `r Biocpkg("methylKit")` package.
+methylated tiles (DMT) using the `r Biocpkg("methylKit")` package.
 
 
 # Loading methylInheritance package
 
-As with any R package, the `r Rpackage("methylInheritance")` package should 
+As with any R package, the `r Biocpkg("methylInheritance")` package should 
 first be loaded with the following command:
 
 ```{r loadingPackage, warning=FALSE, message=FALSE}
@@ -86,7 +86,7 @@ number that can be obtained through a randomness analysis.
 A typical **methylInheritance** analysis consists of the following steps:
 
 1. Process to a differentially methylation analysis on each generation 
-separately using real dataset with `r Rpackage("methylKit")`.
+separately using real dataset with the `r Biocpkg("methylKit")` package.
 2. Calculate the number of conserved differentially methylated elements 
 between two consecutive generations (F1 and F2, F2 and F3, etc..).  The number
 of conserved differentially methylated elements is also calculated for three
@@ -96,7 +96,8 @@ Those results are considered the reference values.
 3. Fix a threshold (conventionally 0.05) that is used as a cutoff between the 
 null and alternative hypothesis. 
 4. Process to a differential methylation analysis on each shuffled dataset.
-Each generation is analysed separately using `r Rpackage("methylKit")` package.
+Each generation is analysed separately using the `r Biocpkg("methylKit")` 
+package.
 5. Calculate the significant level for each consecutive subset of generations. 
 The significant level is defined as the percentage of results equal or higher 
 than the reference values. The reference values are added to the analysis so 
@@ -241,8 +242,7 @@ When observation and permutation analysis have been run together using the
 
 ## Extract a specific analysis
 
-The *runPermutation()* and 
-*runObservation()* functions 
+The *runPermutation()* and *runObservation()* functions 
 calculate the number of conserved differentially methylated elements 
 between two consecutive generations (F1 and F2, F2 and F3, etc..).  The 
 number of conserved differentially methylated elements is also 
@@ -271,6 +271,7 @@ F1_and_F2_results <- extractInfo(allResults = allResults, type = "sites",
 
 head(F1_and_F2_results)
 ```
+
 
 ## Significant level and visual representation
 
@@ -303,6 +304,180 @@ F2_and_F3 <- extractInfo(allResults = demoResults, type = "sites",
 ## between F1 and F2 
 output <- plotGraph(F1_and_F2)
 ```
+
+
+# Possibility to restart a permutation analysis
+
+When a large number of permutations is processed, the time needed to
+process them all may be long (especially when the number of available CPU is
+limited). Furthermore, some permutations can fail due to parallelization 
+problems. 
+
+The **methylInheritance** package offers the possibility to restart
+an analysis and run only missing permutation results. To take advantage of this
+option, the *outputDir* parameter must not be *NULL* so that permutation
+results are saved in RDS files. When the *restartCalculation* is set to *TRUE*,
+the method will load the permutation results present in RDS files (when 
+available) and only rerun permutations that don't have an associated RDS file.
+
+
+```{r restartAnalysis, warning=FALSE, message=FALSE, collapse=TRUE, cache=TRUE}
+## The permutation analysis is only done on differentially methylated tiles
+## The "output" directory must be specified
+## The "vSeed" must be specified to ensure reproducible results
+## The "restartCalculation" is not important the first time the analysis is run
+permutationResult <- runPermutation(
+                        methylKitData = demoForTransgenerationalAnalysis, # multi-generational dataset
+                        type = "tiles",     # Only tiles
+                        outputDir = "test_restart",   # RDS files are created
+                        runObservationAnalysis = TRUE,
+                        nbrCores = 1,           # Number of cores used
+                        nbrPermutations = 2,    # Should be much higher for a
+                                                # real analysis
+                        vSeed = 212201,     # Ensure reproducible results
+                        restartCalculation = FALSE)
+
+## Assume that the process was stopped before it has done all the permutations
+
+## The process can be restarted
+## All parameters must be identical to the first analysis except "restartCalculation"
+## The "restartCalculation" must be set to TRUE
+permutationResult <- runPermutation(
+                        methylKitData = demoForTransgenerationalAnalysis, # multi-generational dataset
+                        type = "tiles",     # Only tiles
+                        outputDir = "test_restart",   # RDS files are created
+                        runObservationAnalysis = TRUE,
+                        nbrCores = 1,           # Number of cores used
+                        nbrPermutations = 2,    # Should be much higher for a
+                                                # real analysis
+                        vSeed = 212201,     # Ensure reproducible results
+                        restartCalculation = TRUE)         
+```
+
+
+# Format multigenerational dataset into an input
+
+The permutation analysis needs a *list* of *methylRawList* objects
+as input. A *methylRawList* is a *list* of *methylRaw* objects. 
+The *methylRawList*  and *methylRaw* objects are defined in the 
+`r Biocpkg("methylKit")` package. 
+
+To create a *methylRawList*, all samples (cases and controls) from the same
+generation must be first separately transformed into a *methylRaw* object. 
+The S4 *methylRaw* class extends *data.frame* class and has been created to
+store raw methylation data. The raw methylation is essentially percent 
+methylation values and read coverage values per base or region.
+
+Excluding the *data.frame* section, the slots present in the *methylRaw* 
+class are:
+
+* sample.id: a string, the sample identification
+* assembly: a string, the genomic assembly
+* context: a string, the methylation context, as an exemple, CpG, CpH, etc...
+* resolution: a string, the resolution of methylation information,
+mainly 'base' or 'region'
+
+```{r demoRaw1, warning=FALSE, message=FALSE, collapse=TRUE, cache=TRUE}
+## The list of methylRaw objects for all controls and cases related to F1
+f1_list <- list()
+f1_list[[1]] <- new("methylRaw", 
+                    data.frame(chr = c("chr21", "chr21"), 
+                    start = c(9764513, 9764542), 
+                    end = c(9764513, 9764542), strand = c("+", "-"), 
+                    coverage = c(100, 15), numCs = c(88, 2), 
+                    numTs = c(100, 15) - c(88, 2)), 
+                    sample.id = "F1_control_01", assembly = "hg19", 
+                    context = "CpG", resolution = 'base')
+f1_list[[2]] <- new("methylRaw", 
+                    data.frame(chr = c("chr21", "chr21"), 
+                    start = c(9764513, 9764522), 
+                    end = c(9764513, 9764522), strand = c("-", "-"), 
+                    coverage = c(38, 21), numCs = c(12, 2), 
+                    numTs = c(38, 21) - c(12, 2)), 
+                    sample.id = "F1_case_02", assembly = "hg19", 
+                    context = "CpG", resolution = 'base')
+
+## The list of methylRaw objects for all controls and cases related to F2
+f2_list <- list()
+f2_list[[1]] <- new("methylRaw", 
+                    data.frame(chr = c("chr21", "chr21"), 
+                    start = c(9764514, 9764522), 
+                    end = c(9764514, 9764522), strand = c("+", "+"), 
+                    coverage = c(40, 30), numCs = c(0, 2), 
+                    numTs = c(40, 30) - c(0, 2)), 
+                    sample.id = "F2_control_01", assembly = "hg19", 
+                    context = "CpG", resolution = 'base')
+f2_list[[2]] <- new("methylRaw", 
+                    data.frame(chr = c("chr21", "chr21"), 
+                    start = c(9764513, 9764533), 
+                    end = c(9764513, 9764533), strand = c("+", "-"), 
+                    coverage = c(33, 23), numCs = c(12, 1), 
+                    numTs = c(33, 23) - c(12, 1)), 
+                    sample.id = "F2_case_01", assembly = "hg19", 
+                    context = "CpG", resolution = 'base')
+
+## The list to use as input for methylInheritance 
+final_list <- list()
+
+## The methylRawList for F1 - the first generation is on the first position
+final_list[[1]] <- new("methylRawList", f1_list, treatment = c(0,1))
+## The methylRawList for F2 - the second generation is on the second position
+final_list[[2]] <- new("methylRawList", f2_list, treatment = c(0,1))
+
+## A list of methylRawList ready for methylInheritance
+final_list
+```
+
+Another approach is to transform the files that contain the raw methylation 
+information into a format that can be read by the `r Biocpkg("methylKit")` 
+*methRead* function. The *methRead* function implements methods that enable 
+the creation of *methylRawList* objects.
+
+Here is one valid file format among many (tab separated):
+```
+chrBase     chr     base    strand  coverage    freqC   freqT
+1.176367    1       176367  R       29          100.00  0.00
+1.176392    1       176392  R       58          100.00  0.00
+1.176422    1       176422  R       29          3.45    96.55
+1.176552    1       176552  R       58          96.55   3.45
+```
+
+```{r demoRaw2, warning=FALSE, message=FALSE, collapse=TRUE, cache=TRUE}
+library(methylKit)
+
+## The methylRawList for F1
+generation_01 <- methRead(location = list("demo/F1_control_01.txt", "demo/F1_case_01.txt"), 
+                    sample.id = list("F1_control_01", "F1_case_01"), 
+                    assembly = "hg19", treatment = c(0, 1), context = "CpG")
+
+## The methylRawList for F2
+generation_02 <- methRead(location = list("demo/F2_control_01.txt", "demo/F2_case_01.txt"), 
+                    sample.id = list("F2_control_01", "F2_case_01"), 
+                    assembly = "hg19", treatment = c(0, 1), context = "CpG")
+
+## A list of methylRawList ready for methylInheritance
+final_list <- list(generation_01, generation_02)
+final_list
+```
+
+More information about methRead function can be found in the documentation of
+the `r Biocpkg("methylKit")` package.
+
+
+# Acknowledgment
+
+We thank Marie Pier Scott-Boyer for her advice on the vignette content.
+
+
+# Session info
+
+Here is the output of sessionInfo() on the system on which this document 
+was compiled:
+
+```{r sessionInfo, echo=FALSE}
+sessionInfo()
+```
+
 
 # References
 
