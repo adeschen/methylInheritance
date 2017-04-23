@@ -228,11 +228,8 @@ runPermutation <- function(methylKitData,
     }
 
     # Fix the BiocParallel parameter
-    if (nbrCores == 1) {
-        bpParam <- SnowParam()
-    } else {
-        bpParam <- MulticoreParam(workers = nbrCores)
-    }
+    bpParam <- SnowParam(workers = nbrCores)
+
 
     redoList <- list()
 
