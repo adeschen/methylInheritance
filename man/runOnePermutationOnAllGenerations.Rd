@@ -5,7 +5,7 @@
 \title{Run the analysis on one permutation dataset, including all
 generations, using \code{methylKit} package}
 \usage{
-runOnePermutationOnAllGenerations(methylInfoForAllGenerations,
+runOnePermutationOnAllGenerations(id, methylInfoForAllGenerations,
   type = c("both", "sites", "tiles"), outputDir = NULL,
   nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 10, qvalue = 0.01,
   maxPercReads = 99.9, destrand = FALSE, minCovBasesForTiles = 0,
@@ -173,11 +173,11 @@ specified.
 
 ## Load methyl information
 data(samplesForTransgenerationalAnalysis)
-info <- list(sample = samplesForTransgenerationalAnalysis, id = 100)
 
 ## Run a permutation analysis
-methylInheritance:::runOnePermutationOnAllGenerations(
-    methylInfoForAllGenerations = info, type = "tiles", outputDir = NULL,
+methylInheritance:::runOnePermutationOnAllGenerations(id = 2,
+    methylInfoForAllGenerations = samplesForTransgenerationalAnalysis,
+    type = "tiles", outputDir = NULL,
     nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 10, qvalue = 0.01,
     maxPercReads = 99.9, destrand = FALSE, minCovBasesForTiles = 0,
     tileSize = 1000, stepSize = 1000, restartCalculation = FALSE)

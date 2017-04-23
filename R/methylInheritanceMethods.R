@@ -141,6 +141,7 @@
 #'
 #' @author Astrid Deschenes, Pascal Belleau
 #' @importFrom BiocParallel bplapply MulticoreParam SnowParam bptry bpok
+#' @importFrom parallel mclapply nextRNGSubStream
 #' @importFrom methods new
 #' @export
 runPermutation <- function(methylKitData,
@@ -195,6 +196,7 @@ runPermutation <- function(methylKitData,
         tSeed <- as.numeric(Sys.time())
         vSeed <- 1e8 * (tSeed - floor(tSeed))
     }
+    RNGkind("L'Ecuyer-CMRG")
     set.seed(vSeed)
 
     ## Extract information
@@ -205,31 +207,8 @@ runPermutation <- function(methylKitData,
 
     ## Create all permutations
     permutationSamples <- t(replicate(nbrPermutations, sample(1:nbSamples)))
-
-    ## Create list that will contain all information to run permutation
-    finalList <- vector("list", nbrPermutations)
-
-    for (i in 1:nbrPermutations) {
-        ## Create list that will contain information for all generations
-        ## related to the same permutation analysis
-        permutationList <- vector("list", nbGenerations)
-        start <- 1
-        for (j in 1:nbGenerations) {
-            end <- start + nbSamplesByGeneration[j] - 1
-            samplePos <- permutationSamples[i, start:end]
-            treatment <- methylKitData[[j]]@treatment
-            newSampleList <- new("methylRawList", allSamples[samplePos],
-                                    treatment = treatment)
-            permutationList[[j]] <- newSampleList
-            start <- end + 1
-        }
-
-        finalList[[i]] <- list(sample = permutationList, id = i)
-    }
-
-    # Fix the BiocParallel parameter
-    bpParam <- SnowParam(workers = nbrCores)
-
+    permWithID <- cbind(matrix(1:nbrPermutations, ncol = 1),
+                            permutationSamples)
 
     redoList <- list()
 
@@ -261,9 +240,14 @@ runPermutation <- function(methylKitData,
         result <- list()
     }
 
+    ## Upgrade seed
+    .Random.seed <- nextRNGSubStream(.Random.seed)
+
     ## Call permutations in parallel mode
-    permutationResults <- bplapply(finalList, FUN =
+    if (nbrCores > 1) {
+        permutationResults <- mclapply(seq_len(nbrPermutations), FUN =
                                         runOnePermutationOnAllGenerations,
+                            methylInfoForAllGenerations = methylKitData,
                             type = type,
                             outputDir = outputDir,
                             nbrCoresDiffMeth = nbrCoresDiffMeth,
@@ -277,8 +261,26 @@ runPermutation <- function(methylKitData,
                             stepSize = stepSize,
                             restartCalculation = restartCalculation,
                             saveInfoByGeneration = saveInfoByGeneration,
-                        BPREDO = redoList,
-                        BPPARAM = bpParam)
+                        mc.cores = nbrCores,
+                        mc.preschedule = FALSE)
+    } else {
+        permutationResults <- lapply(seq_len(nbrPermutations), FUN =
+                                           runOnePermutationOnAllGenerations,
+                                       methylInfoForAllGenerations = methylKitData,
+                                       type = type,
+                                       outputDir = outputDir,
+                                       nbrCoresDiffMeth = nbrCoresDiffMeth,
+                                       minReads = minReads,
+                                       minMethDiff = minMethDiff,
+                                       qvalue = qvalue,
+                                       maxPercReads = maxPercReads,
+                                       destrand = destrand,
+                                       minCovBasesForTiles = minCovBasesForTiles,
+                                       tileSize = tileSize,
+                                       stepSize = stepSize,
+                                       restartCalculation = restartCalculation,
+                                       saveInfoByGeneration = saveInfoByGeneration)
+    }
 
     result[["PERMUTATION"]] <- permutationResults
 
@@ -456,6 +458,7 @@ runObservation <- function(methylKitData,
         tSeed <- as.numeric(Sys.time())
         vSeed <- 1e8 * (tSeed - floor(tSeed))
     }
+    RNGkind("L'Ecuyer-CMRG")
     set.seed(vSeed)
 
     methylInfo <- list(sample = methylKitData, id = 0)
@@ -468,8 +471,8 @@ runObservation <- function(methylKitData,
     }
 
     ## Extract information
-    observed <- runOnePermutationOnAllGenerations(methylInfoForAllGenerations =
-                                                        methylInfo,
+    observed <- runOnePermutationOnAllGenerations(id = 0,
+                                methylInfoForAllGenerations = methylKitData,
                                 type = type, outputDir = outputDir,
                                 nbrCoresDiffMeth = nbrCoresDiffMeth,
                                 minReads = minReads,

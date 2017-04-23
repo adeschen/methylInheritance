@@ -970,11 +970,11 @@ createOutputDir <- function(outputDir, doingSites = TRUE,
 #'
 #' ## Load methyl information
 #' data(samplesForTransgenerationalAnalysis)
-#' info <- list(sample = samplesForTransgenerationalAnalysis, id = 100)
 #'
 #' ## Run a permutation analysis
-#' methylInheritance:::runOnePermutationOnAllGenerations(
-#'     methylInfoForAllGenerations = info, type = "tiles", outputDir = NULL,
+#' methylInheritance:::runOnePermutationOnAllGenerations(id = 2,
+#'     methylInfoForAllGenerations = samplesForTransgenerationalAnalysis,
+#'     type = "tiles", outputDir = NULL,
 #'     nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 10, qvalue = 0.01,
 #'     maxPercReads = 99.9, destrand = FALSE, minCovBasesForTiles = 0,
 #'     tileSize = 1000, stepSize = 1000, restartCalculation = FALSE)
@@ -984,7 +984,8 @@ createOutputDir <- function(outputDir, doingSites = TRUE,
 #' calculateDiffMeth getMethylDiff getData tileMethylCounts methRead
 #' @importFrom GenomicRanges width
 #' @keywords internal
-runOnePermutationOnAllGenerations <- function(methylInfoForAllGenerations,
+runOnePermutationOnAllGenerations <- function(id,
+                        methylInfoForAllGenerations,
                         type = c("both", "sites", "tiles"),
                         outputDir = NULL,
                         nbrCoresDiffMeth = 1,
@@ -1001,9 +1002,12 @@ runOnePermutationOnAllGenerations <- function(methylInfoForAllGenerations,
     doSites <- any(type %in% c("sites", "both"))
 
     ## Extract info from input list
-    methylRawForAllGenerations <- methylInfoForAllGenerations$sample
-    id <- methylInfoForAllGenerations$id
-
+    if (id > 0) {
+        methylRawForAllGenerations <- formatInputMethylData(methylKitData =
+                                            methylInfoForAllGenerations)
+    } else {
+        methylRawForAllGenerations <- methylInfoForAllGenerations
+    }
     nbrGenerations <- length(methylRawForAllGenerations)
 
     ## Preparing list that will receive final results
@@ -1461,4 +1465,45 @@ createDataStructure <- function(interGenerationGR) {
     return(result)
 }
 
+#' @title TODO
+#'
+#' @description TODO
+#'
+#' @param methylKitData TODO
+#'
+#' @return TODO
+#'
+#' @examples
+#'
+#' ## TODO
+#'
+#' @author Astrid Deschenes, Pascal Belleau
+#' @importFrom methods new
+#' @keywords internal
+formatInputMethylData <- function(methylKitData) {
 
+    ## Extract information
+    nbGenerations <- length(methylKitData)
+    nbSamplesByGeneration <- sapply(methylKitData, length)
+    nbSamples  <- sum(nbSamplesByGeneration)
+    allSamples <- unlist(methylKitData, recursive = FALSE)
+
+    ## Random sample
+    permutationSample <- sample(seq_len(nbSamples))
+
+    ## Create list that will contain information for all generations
+    ## related to the same permutation analysis
+    permutationList <- list()
+    start <- 1
+    for (j in 1:nbGenerations) {
+        end <- start + nbSamplesByGeneration[j] - 1
+        samplePos <- permutationSample[start:end]
+        treatment <- methylKitData[[j]]@treatment
+        newSampleList <- new("methylRawList", allSamples[samplePos],
+                                treatment = treatment)
+        permutationList[[j]] <- newSampleList
+        start <- end + 1
+    }
+
+    return(permutationList)
+}
