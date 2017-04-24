@@ -199,29 +199,30 @@ runPermutation <- function(methylKitData,
     RNGkind("L'Ecuyer-CMRG")
     set.seed(vSeed)
 
-    ## Extract information
-    nbGenerations <- length(methylKitData)
-    nbSamplesByGeneration <- sapply(methylKitData, length)
-    nbSamples  <- sum(nbSamplesByGeneration)
-    allSamples <- unlist(methylKitData, recursive = FALSE)
+    # ## Extract information
+    # nbGenerations <- length(methylKitData)
+    # nbSamplesByGeneration <- sapply(methylKitData, length)
+    # nbSamples  <- sum(nbSamplesByGeneration)
+    # allSamples <- unlist(methylKitData, recursive = FALSE)
+    #
+    # ## Create all permutations
+    # permutationSamples <- t(replicate(nbrPermutations, sample(1:nbSamples)))
+    # permWithID <- cbind(matrix(1:nbrPermutations, ncol = 1),
+    #                         permutationSamples)
 
-    ## Create all permutations
-    permutationSamples <- t(replicate(nbrPermutations, sample(1:nbSamples)))
-    permWithID <- cbind(matrix(1:nbrPermutations, ncol = 1),
-                            permutationSamples)
-
-    redoList <- list()
+    # redoList <- list()
 
     if (!is.null(outputDir)) {
-        doTiles <- any(type %in% c("tiles", "both"))
-        doSites <- any(type %in% c("sites", "both"))
-        createOutputDir(outputDir, doingSites = doSites, doingTiles = doTiles,
+        createOutputDir(outputDir,
+                        doingSites = any(type %in% c("sites", "both")),
+                        doingTiles = any(type %in% c("tiles", "both")),
                         saveInfoByGeneration = saveInfoByGeneration)
     }
 
     ## Call observation analysis
     if (runObservationAnalysis) {
-        result <- runObservation(methylKitData = methylKitData,
+        # result <-
+        runObservation(methylKitData = methylKitData,
                                 type = type,
                                 outputDir = outputDir,
                                 nbrCoresDiffMeth = nbrCoresDiffMeth,
@@ -237,7 +238,7 @@ runPermutation <- function(methylKitData,
                                 restartCalculation = restartCalculation,
                                 saveInfoByGeneration = saveInfoByGeneration)
     } else {
-        result <- list()
+        # result <- list()
     }
 
     ## Upgrade seed
@@ -245,7 +246,8 @@ runPermutation <- function(methylKitData,
 
     ## Call permutations in parallel mode
     if (nbrCores > 1) {
-        permutationResults <- mclapply(seq_len(nbrPermutations), FUN =
+        # permutationResults <-
+        mclapply(seq_len(nbrPermutations), FUN =
                                         runOnePermutationOnAllGenerations,
                             methylInfoForAllGenerations = methylKitData,
                             type = type,
@@ -262,33 +264,34 @@ runPermutation <- function(methylKitData,
                             restartCalculation = restartCalculation,
                             saveInfoByGeneration = saveInfoByGeneration,
                         mc.cores = nbrCores,
-                        mc.preschedule = FALSE)
+                        mc.preschedule = TRUE)
     } else {
-        permutationResults <- lapply(seq_len(nbrPermutations), FUN =
-                                           runOnePermutationOnAllGenerations,
-                                       methylInfoForAllGenerations = methylKitData,
-                                       type = type,
-                                       outputDir = outputDir,
-                                       nbrCoresDiffMeth = nbrCoresDiffMeth,
-                                       minReads = minReads,
-                                       minMethDiff = minMethDiff,
-                                       qvalue = qvalue,
-                                       maxPercReads = maxPercReads,
-                                       destrand = destrand,
-                                       minCovBasesForTiles = minCovBasesForTiles,
-                                       tileSize = tileSize,
-                                       stepSize = stepSize,
-                                       restartCalculation = restartCalculation,
-                                       saveInfoByGeneration = saveInfoByGeneration)
+        #permutationResults <-
+        lapply(seq_len(nbrPermutations), FUN =
+                                        runOnePermutationOnAllGenerations,
+                                methylInfoForAllGenerations = methylKitData,
+                                type = type,
+                                outputDir = outputDir,
+                                nbrCoresDiffMeth = nbrCoresDiffMeth,
+                                minReads = minReads,
+                                minMethDiff = minMethDiff,
+                                qvalue = qvalue,
+                                maxPercReads = maxPercReads,
+                                destrand = destrand,
+                                minCovBasesForTiles = minCovBasesForTiles,
+                                tileSize = tileSize,
+                                stepSize = stepSize,
+                                restartCalculation = restartCalculation,
+                                saveInfoByGeneration = saveInfoByGeneration)
     }
 
-    result[["PERMUTATION"]] <- permutationResults
+    # result[["PERMUTATION"]] <- permutationResults
+    #
+    # if (runObservationAnalysis) {
+    #     class(result)<-"methylInheritanceAllResults"
+    # }
 
-    if (runObservationAnalysis) {
-        class(result)<-"methylInheritanceAllResults"
-    }
-
-    return(result)
+    return(0)
 }
 
 

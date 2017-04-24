@@ -1122,26 +1122,26 @@ runOnePermutationOnAllGenerations <- function(id,
         }
 
         ## Create list that will contain final results
-        permutationFinal[["SITES"]] <- list()
-        permutationFinal[["SITES"]][["i2"]] <- list()
-        permutationFinal[["SITES"]][["i2"]][["HYPER"]] <- list()
-        permutationFinal[["SITES"]][["i2"]][["HYPO"]]  <- list()
-        permutationFinal[["SITES"]][["iAll"]][["HYPER"]]  <- list()
-        permutationFinal[["SITES"]][["iAll"]][["HYPO"]]   <- list()
-
-        permutationFinal[["SITES"]][["i2"]][["HYPER"]] <- lapply(result$i2,
-                        FUN = function(x) {sum(width(x[x$typeDiff > 0]))})
-
-        permutationFinal[["SITES"]][["i2"]][["HYPO"]]  <- lapply(result$i2,
-                        FUN = function(x) {sum(width(x[x$typeDiff < 0]))})
-
-        permutationFinal[["SITES"]][["iAll"]][["HYPER"]] <- lapply(
-                        result$iAll,
-                        FUN = function(x) {sum(width(x[x$typeDiff > 0]))})
-
-        permutationFinal[["SITES"]][["iAll"]][["HYPO"]]  <- lapply(
-                        result$iAll,
-                        FUN = function(x) {sum(width(x[x$typeDiff < 0]))})
+        # permutationFinal[["SITES"]] <- list()
+        # permutationFinal[["SITES"]][["i2"]] <- list()
+        # permutationFinal[["SITES"]][["i2"]][["HYPER"]] <- list()
+        # permutationFinal[["SITES"]][["i2"]][["HYPO"]]  <- list()
+        # permutationFinal[["SITES"]][["iAll"]][["HYPER"]]  <- list()
+        # permutationFinal[["SITES"]][["iAll"]][["HYPO"]]   <- list()
+        #
+        # permutationFinal[["SITES"]][["i2"]][["HYPER"]] <- lapply(result$i2,
+        #                 FUN = function(x) {sum(width(x[x$typeDiff > 0]))})
+        #
+        # permutationFinal[["SITES"]][["i2"]][["HYPO"]]  <- lapply(result$i2,
+        #                 FUN = function(x) {sum(width(x[x$typeDiff < 0]))})
+        #
+        # permutationFinal[["SITES"]][["iAll"]][["HYPER"]] <- lapply(
+        #                 result$iAll,
+        #                 FUN = function(x) {sum(width(x[x$typeDiff > 0]))})
+        #
+        # permutationFinal[["SITES"]][["iAll"]][["HYPO"]]  <- lapply(
+        #                 result$iAll,
+        #                 FUN = function(x) {sum(width(x[x$typeDiff < 0]))})
     }
 
     ## Calculate the number of TILES in the intersection
@@ -1164,26 +1164,26 @@ runOnePermutationOnAllGenerations <- function(id,
         }
 
         ## Create list that will contain final results
-        permutationFinal[["TILES"]] <- list()
-        permutationFinal[["TILES"]][["i2"]] <- list()
-        permutationFinal[["TILES"]][["i2"]][["HYPER"]] <- list()
-        permutationFinal[["TILES"]][["i2"]][["HYPO"]]  <- list()
-        permutationFinal[["TILES"]][["iAll"]][["HYPER"]]  <- list()
-        permutationFinal[["TILES"]][["iAll"]][["HYPO"]]   <- list()
-
-        permutationFinal[["TILES"]][["i2"]][["HYPER"]] <- lapply(result$i2,
-                        FUN = function(x) {sum(width(x[x$typeDiff > 0]))})
-
-        permutationFinal[["TILES"]][["i2"]][["HYPO"]]  <- lapply(result$i2,
-                        FUN = function(x) {sum(width(x[x$typeDiff < 0]))})
-
-        permutationFinal[["TILES"]][["iAll"]][["HYPER"]] <- lapply(
-                        result$iAll,
-                        FUN = function(x) {sum(width(x[x$typeDiff > 0]))})
-
-        permutationFinal[["TILES"]][["iAll"]][["HYPO"]]  <- lapply(
-                        result$iAll,
-                        FUN = function(x) {sum(width(x[x$typeDiff < 0]))})
+        # permutationFinal[["TILES"]] <- list()
+        # permutationFinal[["TILES"]][["i2"]] <- list()
+        # permutationFinal[["TILES"]][["i2"]][["HYPER"]] <- list()
+        # permutationFinal[["TILES"]][["i2"]][["HYPO"]]  <- list()
+        # permutationFinal[["TILES"]][["iAll"]][["HYPER"]]  <- list()
+        # permutationFinal[["TILES"]][["iAll"]][["HYPO"]]   <- list()
+        #
+        # permutationFinal[["TILES"]][["i2"]][["HYPER"]] <- lapply(result$i2,
+        #                 FUN = function(x) {sum(width(x[x$typeDiff > 0]))})
+        #
+        # permutationFinal[["TILES"]][["i2"]][["HYPO"]]  <- lapply(result$i2,
+        #                 FUN = function(x) {sum(width(x[x$typeDiff < 0]))})
+        #
+        # permutationFinal[["TILES"]][["iAll"]][["HYPER"]] <- lapply(
+        #                 result$iAll,
+        #                 FUN = function(x) {sum(width(x[x$typeDiff > 0]))})
+        #
+        # permutationFinal[["TILES"]][["iAll"]][["HYPO"]]  <- lapply(
+        #                 result$iAll,
+        #                 FUN = function(x) {sum(width(x[x$typeDiff < 0]))})
     }
 
     return(permutationFinal)
