@@ -141,7 +141,7 @@
 #'
 #' @author Astrid Deschenes, Pascal Belleau
 #' @importFrom BiocParallel bplapply MulticoreParam SnowParam bptry bpok
-#' @importFrom parallel mclapply nextRNGSubStream
+#' @importFrom parallel mclapply nextRNGSubStream splitIndices
 #' @importFrom methods new
 #' @export
 runPermutation <- function(methylKitData,
@@ -246,25 +246,53 @@ runPermutation <- function(methylKitData,
 
     ## Call permutations in parallel mode
     if (nbrCores > 1) {
-        # permutationResults <-
-        mclapply(seq_len(nbrPermutations), FUN =
-                                        runOnePermutationOnAllGenerations,
-                            methylInfoForAllGenerations = methylKitData,
-                            type = type,
-                            outputDir = outputDir,
-                            nbrCoresDiffMeth = nbrCoresDiffMeth,
-                            minReads = minReads,
-                            minMethDiff = minMethDiff,
-                            qvalue = qvalue,
-                            maxPercReads = maxPercReads,
-                            destrand = destrand,
-                            minCovBasesForTiles = minCovBasesForTiles,
-                            tileSize = tileSize,
-                            stepSize = stepSize,
-                            restartCalculation = restartCalculation,
-                            saveInfoByGeneration = saveInfoByGeneration,
-                        mc.cores = nbrCores,
-                        mc.preschedule = TRUE)
+
+        N <- length(seq_len(nbrPermutations))
+        maxjobs <- nbrCores
+        i.list <- splitIndices(N, N/maxjobs)
+        result.list <- list()
+        for(i in seq_along(i.list)){
+            i.vec <- i.list[[i]]
+            mclapply(seq_len(nbrPermutations)[i.vec], FUN =
+                         runOnePermutationOnAllGenerations,
+                     methylInfoForAllGenerations = methylKitData,
+                     type = type,
+                     outputDir = outputDir,
+                     nbrCoresDiffMeth = nbrCoresDiffMeth,
+                     minReads = minReads,
+                     minMethDiff = minMethDiff,
+                     qvalue = qvalue,
+                     maxPercReads = maxPercReads,
+                     destrand = destrand,
+                     minCovBasesForTiles = minCovBasesForTiles,
+                     tileSize = tileSize,
+                     stepSize = stepSize,
+                     restartCalculation = restartCalculation,
+                     saveInfoByGeneration = saveInfoByGeneration,
+                     mc.cores = nbrCores,
+                     mc.preschedule = TRUE)
+            ## Upgrade seed
+            .Random.seed <- nextRNGSubStream(.Random.seed)
+        }
+
+        # mclapply(seq_len(nbrPermutations), FUN =
+        #                                 runOnePermutationOnAllGenerations,
+        #                     methylInfoForAllGenerations = methylKitData,
+        #                     type = type,
+        #                     outputDir = outputDir,
+        #                     nbrCoresDiffMeth = nbrCoresDiffMeth,
+        #                     minReads = minReads,
+        #                     minMethDiff = minMethDiff,
+        #                     qvalue = qvalue,
+        #                     maxPercReads = maxPercReads,
+        #                     destrand = destrand,
+        #                     minCovBasesForTiles = minCovBasesForTiles,
+        #                     tileSize = tileSize,
+        #                     stepSize = stepSize,
+        #                     restartCalculation = restartCalculation,
+        #                     saveInfoByGeneration = saveInfoByGeneration,
+        #                 mc.cores = nbrCores,
+        #                 mc.preschedule = TRUE)
     } else {
         #permutationResults <-
         lapply(seq_len(nbrPermutations), FUN =
