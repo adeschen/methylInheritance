@@ -1118,7 +1118,7 @@ plotConvergence <- function(analysisResultsDir,
     for (i in seqFiles) {
         data <- loadAllRDSResults(analysisResultsDir = analysisResultsDir,
                     permutationResultsDir = permutationResultsDir,
-                    doingSites = TRUE, doingTiles = TRUE, maxID = i)
+                    doingSites = doingSites, doingTiles = doingTiles, maxID = i)
 
         info <- extractInfo(allResults = data, type = type,
                             inter = inter, position)
