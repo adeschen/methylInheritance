@@ -105,3 +105,27 @@ test.isInterGenerationResults_true <- function() {
 
     checkTrue(obs, msg = message)
 }
+
+###########################################################
+## calculateSignificantLevel() function
+###########################################################
+
+test.calculateSignificantLevel_true <- function() {
+
+    filesDir <- system.file("extdata", "TEST", package="methylInheritance")
+
+    results <- loadAllRDSResults(analysisResultsDir = filesDir,
+                      permutationResultsDir = filesDir, doingSites = TRUE,
+                      doingTiles = FALSE)
+
+    iAll <- extractInfo(results, type = "sites", inter = "iAll", 1)
+
+    obs <- methylInheritance:::calculateSignificantLevel(iAll)
+
+    message <- paste0("test.calculateSignificantLevel_true() ",
+                      "- Function did not return expected values")
+
+    exp <- list(HYPER=1.0, HYPO=(2.0/4.0))
+
+    checkEquals(obs, exp, msg = message)
+}

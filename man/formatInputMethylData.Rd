@@ -2,22 +2,32 @@
 % Please edit documentation in R/methylInheritanceInternalMethods.R
 \name{formatInputMethylData}
 \alias{formatInputMethylData}
-\title{TODO}
+\title{Permute dataset}
 \usage{
 formatInputMethylData(methylKitData)
 }
 \arguments{
-\item{methylKitData}{TODO}
+\item{methylKitData}{a \code{list} of \code{methylRawList} entries. Each
+\code{methylRawList} entry must contain all the \code{methylRaw} entries
+related to one generation (first entry = first generation, second
+entry = second generation, etc..). The number of generations must
+correspond to the number
+of entries in the \code{methylKitData}. At least 2 generations
+must be present to make a permutation analysis. More information can be
+found in the methylKit package.}
 }
 \value{
-TODO
+a \code{list} of \code{methylRawList} entries.
 }
 \description{
-TODO
+Permute dataset and format it to be ready for an analysis
 }
 \examples{
 
-## TODO
+## Load dataset
+data("samplesForTransgenerationalAnalysis")
+
+methylInheritance:::formatInputMethylData(samplesForTransgenerationalAnalysis)
 
 }
 \author{

@@ -13,16 +13,18 @@ runOnePermutationOnAllGenerations(id, methylInfoForAllGenerations,
   saveInfoByGeneration)
 }
 \arguments{
-\item{methylInfoForAllGenerations}{a \code{list} containing the
-following elements:
-\itemize{
-\item \code{sample} a \code{list} of \code{methylRawList} entries, each
-\code{methylRawList} contains all the \code{methylRaw} entries related to
-one generation. The number of generations must correspond to the number
-of entries in the \code{sample}. At least 2 generations
-must be present to do a permutation analysis.
-\item \code{id} an integer, the permutation id.
-}}
+\item{id}{an \code{integer}, the unique identification of the permutation.
+When \code{id} is \code{0}, the analysis is done on the real dataset.}
+
+\item{methylInfoForAllGenerations}{a \code{list} of \code{methylRawList}
+entries. Each
+\code{methylRawList} entry must contain all the \code{methylRaw} entries
+related to one generation (first entry = first generation, second
+entry = second generation, etc..). The number of generations must
+correspond to the number
+of entries in the \code{methylKitData}. At least 2 generations
+must be present to make a permutation analysis. More information can be
+found in the methylKit package.}
 
 \item{type}{One of the "sites","tiles" or "both" strings. Specifies the type
 of differentially methylated elements should be returned. For

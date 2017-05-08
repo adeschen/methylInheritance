@@ -819,16 +819,18 @@ createOutputDir <- function(outputDir, doingSites = TRUE,
 #' analysis is saved in a RDS file when an directory is
 #' specified.
 #'
-#' @param methylInfoForAllGenerations a \code{list} containing the
-#' following elements:
-#' \itemize{
-#' \item \code{sample} a \code{list} of \code{methylRawList} entries, each
-#' \code{methylRawList} contains all the \code{methylRaw} entries related to
-#' one generation. The number of generations must correspond to the number
-#' of entries in the \code{sample}. At least 2 generations
-#' must be present to do a permutation analysis.
-#' \item \code{id} an integer, the permutation id.
-#' }
+#' @param id an \code{integer}, the unique identification of the permutation.
+#' When \code{id} is \code{0}, the analysis is done on the real dataset.
+#'
+#' @param methylInfoForAllGenerations a \code{list} of \code{methylRawList}
+#' entries. Each
+#' \code{methylRawList} entry must contain all the \code{methylRaw} entries
+#' related to one generation (first entry = first generation, second
+#' entry = second generation, etc..). The number of generations must
+#' correspond to the number
+#' of entries in the \code{methylKitData}. At least 2 generations
+#' must be present to make a permutation analysis. More information can be
+#' found in the methylKit package.
 #'
 #' @param type One of the "sites","tiles" or "both" strings. Specifies the type
 #' of differentially methylated elements should be returned. For
@@ -1003,9 +1005,11 @@ runOnePermutationOnAllGenerations <- function(id,
 
     ## Extract info from input list
     if (id > 0) {
+        ## Use permuted dataset, permutation needed
         methylRawForAllGenerations <- formatInputMethylData(methylKitData =
                                             methylInfoForAllGenerations)
     } else {
+        ## Use real dataset, no permutation needed
         methylRawForAllGenerations <- methylInfoForAllGenerations
     }
     nbrGenerations <- length(methylRawForAllGenerations)
@@ -1465,17 +1469,27 @@ createDataStructure <- function(interGenerationGR) {
     return(result)
 }
 
-#' @title TODO
+#' @title Permute dataset
 #'
-#' @description TODO
+#' @description Permute dataset and format it to be ready for an analysis
 #'
-#' @param methylKitData TODO
+#' @param methylKitData a \code{list} of \code{methylRawList} entries. Each
+#' \code{methylRawList} entry must contain all the \code{methylRaw} entries
+#' related to one generation (first entry = first generation, second
+#' entry = second generation, etc..). The number of generations must
+#' correspond to the number
+#' of entries in the \code{methylKitData}. At least 2 generations
+#' must be present to make a permutation analysis. More information can be
+#' found in the methylKit package.
 #'
-#' @return TODO
+#' @return a \code{list} of \code{methylRawList} entries.
 #'
 #' @examples
 #'
-#' ## TODO
+#' ## Load dataset
+#' data("samplesForTransgenerationalAnalysis")
+#'
+#' methylInheritance:::formatInputMethylData(samplesForTransgenerationalAnalysis)
 #'
 #' @author Astrid Deschenes, Pascal Belleau
 #' @importFrom methods new
@@ -1506,4 +1520,67 @@ formatInputMethylData <- function(methylKitData) {
     }
 
     return(permutationList)
+}
+
+#' @title Calculate significant level for hypo and hyper conserved elements
+#'
+#' @description  Calculate significant level for hypo and hyper conserved
+#' elements using permutation results as well as observed results
+#'
+#' @param formatForGraphDataFrame a \code{data.frame} containing the
+#' observation results (using real
+#' data) and the permutation results (using shuffled data). Both hyper and
+#' hypo differentially conserved methylation results must be present. The
+#' \code{data.frame} must have 3 columns : "TYPE", "RESULT" and "SOURCE".
+#' The "TYPE" can be either "HYPER" or "HYPO". The "RESULT" is the number
+#' of conserved differentially elements. The "SOURCE" can be either
+#' "OBSERVATION" or "PERMUTATION".
+#'
+#' @return a list containing two elements:
+#' \itemize{
+#' \item \code{HYPER} a \code{double}, the significant level for the
+#' hyper differentially methylated conserved elements
+#' \item \code{HYPO} a \code{double}, the significant level for the
+#' hypo differentially methylated conserved elements
+#' }
+#'
+#' @examples
+#'
+#' ## Loading dataset containing all results
+#' data(methylInheritanceResults)
+#'
+#' ## Extract information for the intersection between conserved differentially
+#' ## methylated sites (type = sites) between the intersection of 2
+#' ## generations (inter = i2): F2 and F3 (position = 2)
+#' info <- extractInfo(allResults = methylInheritanceResults,
+#'     type = "sites", inter="i2", 2)
+#'
+#' ## Create graph
+#' methylInheritance:::calculateSignificantLevel(info)
+#'
+#' @author Astrid Deschenes, Pascal Belleau
+#' @export
+calculateSignificantLevel <- function(formatForGraphDataFrame) {
+
+    ## Observed results
+    observedData <- subset(formatForGraphDataFrame,
+                        formatForGraphDataFrame$SOURCE == "OBSERVATION")
+
+    ## HYPO results
+    hypoDataSet <- subset(formatForGraphDataFrame,
+                        formatForGraphDataFrame$TYPE == "HYPO")
+    hypoTotal <- as.double(nrow(hypoDataSet))
+    hypoNumber <- observedData[observedData$TYPE == "HYPO",]$RESULT
+    signifLevelHypo <- nrow(subset(hypoDataSet,
+                        hypoDataSet$RESULT >= hypoNumber))/hypoTotal
+
+    ## HYPER results
+    hyperDataSet <- subset(formatForGraphDataFrame,
+                        formatForGraphDataFrame$TYPE == "HYPER")
+    hyperTotal <- as.double(nrow(hyperDataSet))
+    hyperNumber <- observedData[observedData$TYPE == "HYPER",]$RESULT
+    signifLevelHyper <- nrow(subset(hyperDataSet,
+                    hyperDataSet$RESULT >= hyperNumber))/hyperTotal
+
+    return(list(HYPER=signifLevelHyper, HYPO=signifLevelHypo))
 }

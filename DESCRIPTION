@@ -17,7 +17,7 @@ Author@R: c(person("Astrid", "Deschênes", email="adeschen@hotmail.com",
         email="arnaud.droit@crchuq.ulaval.ca", role=c("aut")))
 Depends: R (>= 3.4)
 Imports: methylKit, BiocParallel, GenomicRanges, IRanges, S4Vectors,
-        methods, ggplot2, gridExtra
+        methods, ggplot2, gridExtra, rebus
 Suggests: BiocStyle, BiocGenerics, knitr, rmarkdown, RUnit
 Encoding: UTF-8
 License: Artistic-2.0

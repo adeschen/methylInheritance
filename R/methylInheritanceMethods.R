@@ -522,6 +522,10 @@ runObservation <- function(methylKitData,
 #' methylated tiles are loaded when
 #' \code{doingTiles} = \code{TRUE}. Default: \code{TRUE}.
 #'
+#' @param maxID \code{NA} or a positive \code{integer}, the maximum
+#' identification number of the permutation files to be loaded. When \code{NA},
+#' all files present in the directory are loaded. Default: \code{NA}.
+#'
 #' @return a \code{list} of class \code{methylInheritanceAllResults}
 #' containing the result of the observation analysis as well as the results
 #' of all the permutations.
@@ -540,10 +544,17 @@ runObservation <- function(methylKitData,
 #'     permutationResultsDir = filesDir, doingSites = TRUE, doingTiles = TRUE)
 #'
 #' @author Astrid Deschenes, Pascal Belleau
+#' @importFrom rebus number_range
 #' @export
 loadAllRDSResults <- function(analysisResultsDir,
                                     permutationResultsDir,
-                                    doingSites=TRUE, doingTiles=FALSE) {
+                                    doingSites=TRUE, doingTiles=FALSE,
+                                    maxID = NA) {
+
+    ## Validate parameters
+    if (!is.na(maxID) && !is.numeric(maxID) && maxID > 0) {
+        stop("maxID must be NA or a positive numeric")
+    }
 
     ## Add last slash to analysisResultsDIR when absent
     if (!is.null(analysisResultsDir) &&
@@ -561,6 +572,15 @@ loadAllRDSResults <- function(analysisResultsDir,
 
     result<-list()
 
+    if (!is.na(maxID)) {
+        rxRange <- suppressWarnings(number_range(1, maxID))
+        newRange <- gsub(pattern = "\\?\\:", replacement = "",
+                         toString(rxRange))
+        filePattern <- paste0("[^[:digit:]]", newRange,  ".RDS")
+    } else {
+        filePattern <- "[[:digit:]].RDS"
+    }
+
     ## SITES
     if (doingSites) {
         analysisResults <- readRDS(file = paste0(analysisResultsDir,
@@ -571,7 +591,7 @@ loadAllRDSResults <- function(analysisResultsDir,
 
         filesInDir <- list.files(path = paste0(analysisResultsDir,
                                                                 "SITES/"),
-                                pattern = "[[:digit:]].RDS", all.files = FALSE,
+                                pattern = filePattern, all.files = FALSE,
                                 full.names = TRUE, recursive = FALSE,
                                 ignore.case = FALSE, include.dirs = FALSE,
                                 no.. = FALSE)
@@ -596,7 +616,7 @@ loadAllRDSResults <- function(analysisResultsDir,
 
         filesInDir <- list.files(path = paste0(permutationResultsDir,
                                                             "TILES/"),
-                                pattern = "[[:digit:]].RDS", all.files = FALSE,
+                                pattern = filePattern, all.files = FALSE,
                                 full.names = TRUE, recursive = FALSE,
                                 ignore.case = FALSE, include.dirs = FALSE,
                                 no.. = FALSE)
@@ -984,19 +1004,13 @@ plotGraph <- function(formatForGraphDataFrame) {
         theme(legend.position="bottom")
 
     # Calculate the significant level for HYPER AND HYPO
-    hypoDataSet <- subset(formatForGraphDataFrame,
-                            formatForGraphDataFrame$TYPE == "HYPO")
-    hypoTotal <- nrow(hypoDataSet)
-    hypoNumber <- interceptFrame[interceptFrame$TYPE == "HYPO",]$RESULT
-    signifLevelHypo <- nrow(subset(hypoDataSet,
-                                hypoDataSet$RESULT >= hypoNumber))/hypoTotal
+    signif <- calculateSignificantLevel(formatForGraphDataFrame)
 
-    hyperDataSet <- subset(formatForGraphDataFrame,
-                            formatForGraphDataFrame$TYPE == "HYPER")
-    hyperTotal <- nrow(hyperDataSet)
+    signifLevelHypo  <- signif[["HYPO"]]
+    signifLevelHyper <- signif[["HYPER"]]
+
     hyperNumber <- interceptFrame[interceptFrame$TYPE == "HYPER",]$RESULT
-    signifLevelHyper <- nrow(subset(hyperDataSet,
-                                hyperDataSet$RESULT >= hyperNumber))/hyperTotal
+    hypoNumber  <- interceptFrame[interceptFrame$TYPE == "HYPO",]$RESULT
 
     # Number of observed conserved elements as annotated text
     info <- data.frame(type = c("HYPER", "HYPO"),
@@ -1009,4 +1023,120 @@ plotGraph <- function(formatForGraphDataFrame) {
                         heights = c(2, 1), clip = FALSE)
 
     return(g)
+}
+
+
+#' @title Generate a graph for a permutation analysis
+#'
+#' @description  Generate a graph for a permutation analysis using observed
+#' and shuffled results.
+#'
+#' @param analysisResultsDir a \code{character} string, the path to the
+#' directory that contains the analysis results. The path can be the same as
+#' for the \code{permutatioNResultsDir} parameter.
+#'
+#' @param permutationResultsDir a \code{character} string, the path to the
+#' directory that contains the permutation results. The path can be the same
+#' as for the \code{analysisResultsDir} parameter.
+#'
+#' @param type One of the \code{"sites"} or \code{"tiles"} strings.
+#' Specifies the type
+#' of differentially methylated elements should be returned. For
+#' retrieving differentially methylated bases \code{type} = \code{"sites"}; for
+#' differentially methylated regions \code{type} = \code{"tiles"}.
+#' Default: \code{"sites"}.
+#'
+#' @param inter One of the \code{"i2"} or \code{"iAll"} strings. Specifies the
+#' type of intersection should be returned. For
+#' retrieving intersection results between two consecutive generations
+#' \code{inter} = \code{"i2"}; for intersection results between three
+#' generations or more \code{inter} = \code{"iAll"}.
+#' Default: \code{"i2"}.
+#'
+#' @param position a positive \code{integer}, the position in the \code{list}
+#' where the information will be extracted.
+#'
+#' @param by a \code{integer}, the increment of the number of permutations
+#' where the significant level is tested. Default: 100.
+#'
+#' @return a graph showing the evolution of the significant level with the
+#' number of permutations
+#'
+#' @examples
+#'
+#' ## TODO
+#'
+#' @author Astrid Deschenes, Pascal Belleau
+#' @importFrom ggplot2 ggplot geom_point geom_line facet_grid aes xlab ylab
+#' @export
+plotConvergence <- function(analysisResultsDir,
+                            permutationResultsDir, type=c("sites", "tiles"),
+                            inter=c("i2", "iAll"), position, by=100) {
+    # Validate type value
+    type <- match.arg(type)
+
+    # Validate type value
+    inter <- match.arg(inter)
+
+    ## Add last slash to analysisResultsDIR when absent
+    if (!is.null(analysisResultsDir) &&
+        (substr(analysisResultsDir, nchar(analysisResultsDir),
+                nchar(analysisResultsDir)) != "/")) {
+        analysisResultsDir <- paste0(analysisResultsDir, "/")
+    }
+
+    ## Add last slash to permutationResultsDIR when absent
+    if (!is.null(permutationResultsDir) &&
+        (substr(permutationResultsDir, nchar(permutationResultsDir),
+                nchar(permutationResultsDir)) != "/")) {
+        permutationResultsDir <- paste0(permutationResultsDir, "/")
+    }
+
+    if (type == "sites") {
+        doingSites = TRUE
+        doingTiles = FALSE
+        extension = "SITES/"
+    } else {
+        doingSites = FALSE
+        doingTiles = TRUE
+        extension = "TILES/"
+    }
+
+    filesInDir <- list.files(path = paste0(analysisResultsDir, extension),
+                             pattern = "[[:digit:]].RDS", all.files = FALSE,
+                             full.names = TRUE, recursive = FALSE,
+                             ignore.case = FALSE, include.dirs = FALSE,
+                             no.. = FALSE)
+
+    nbFiles <- length(filesInDir)
+    seqFiles <- c(seq(by, nbFiles, by), nbFiles)
+
+    final <- data.frame(NBR_PERMUTATIONS = integer(), TYPE=character(),
+                            SIGNIFICANT_LEVEL = numeric(),
+                            stringsAsFactors=FALSE)
+
+    for (i in seqFiles) {
+        data <- loadAllRDSResults(analysisResultsDir = analysisResultsDir,
+                    permutationResultsDir = permutationResultsDir,
+                    doingSites = TRUE, doingTiles = TRUE, maxID = i)
+
+        info <- extractInfo(allResults = data, type = type,
+                            inter = inter, position)
+
+        result <- calculateSignificantLevel(info)
+        temp <- data.frame(NBR_PERMUTATIONS = rep(i, 2),
+                    TYPE=c("HYPER", "HYPO"),
+                    SIGNIFICANT_LEVEL = c(result$HYPER, result$HYPO),
+                    stringsAsFactors=FALSE)
+
+        final <- rbind(final, temp)
+    }
+
+    NBR_PERMUTATIONS <- NULL
+    SIGNIFICANT_LEVEL <- NULL
+    ggplot(data=final, aes(x=NBR_PERMUTATIONS, y=SIGNIFICANT_LEVEL)) +
+        geom_point(color='blue', size=2) +
+        geom_line(color='blue', linetype = "dashed", size=1) +
+            facet_grid(.~TYPE) + ylab("Significant Level") +
+            xlab("Number of permutations")
 }

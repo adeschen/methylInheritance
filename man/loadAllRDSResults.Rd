@@ -6,7 +6,7 @@
 analysis}
 \usage{
 loadAllRDSResults(analysisResultsDir, permutationResultsDir,
-  doingSites = TRUE, doingTiles = FALSE)
+  doingSites = TRUE, doingTiles = FALSE, maxID = NA)
 }
 \arguments{
 \item{analysisResultsDir}{a \code{character} string, the path to the
@@ -24,6 +24,10 @@ methylated sites are loaded when
 \item{doingTiles}{a \code{logical}, the data related to differentially
 methylated tiles are loaded when
 \code{doingTiles} = \code{TRUE}. Default: \code{TRUE}.}
+
+\item{maxID}{\code{NA} or a positive \code{integer}, the maximum
+identification number of the permutation files to be loaded. When \code{NA},
+all files present in the directory are loaded. Default: \code{NA}.}
 }
 \value{
 a \code{list} of class \code{methylInheritanceAllResults}
