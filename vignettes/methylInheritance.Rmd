@@ -466,7 +466,7 @@ the `r Biocpkg("methylKit")` package.
 
 # Acknowledgment
 
-We thank Marie Pier Scott-Boyer for her advice on the vignette content.
+We thank Marie-Pier Scott-Boyer for her advice on the vignette content.
 
 
 # Session info
