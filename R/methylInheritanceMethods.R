@@ -246,7 +246,7 @@ runPermutation <- function(methylKitData,
 
     ## Call permutations in parallel mode
     if (nbrCores > 1) {
-        # permutationResults <-
+
         mclapply(seq_len(nbrPermutations), FUN =
                                         runOnePermutationOnAllGenerations,
                             methylInfoForAllGenerations = methylKitData,
