@@ -446,7 +446,7 @@ validateRunObservation <- function(methylKitData,
 #' @keywords internal
 validateExtractInfo <- function(allResults, type, inter, position) {
 
-    if (position < 1) {
+    if (!is.numeric(position) || floor(position) != position || position < 1) {
         stop("position must be a positive integer")
     }
 
@@ -512,7 +512,7 @@ validateExtractInfo <- function(allResults, type, inter, position) {
 #' @description Validation of some parameters needed by the public
 #' \code{\link{mergePermutationAndObservation}} function.
 #'
-#' @param @param permutationResults a \code{list} with 1 entry called
+#' @param permutationResults a \code{list} with 1 entry called
 #' \code{PERMUTATION}. The  \code{PERMUTATION} entry is a \code{list} with
 #' a number of entries corresponding
 #' to the number of permutations that have been processed. Each entry contains
@@ -575,6 +575,76 @@ validateMergePermutationAndObservation <- function(permutationResults,
 
     if (is.null(observationResults$OBSERVATION)) {
         stop("observationResults must have an element called \"OBSERVATION\"")
+    }
+
+    return(0)
+}
+
+#' @title Validation of some parameters of the
+#' \code{\link{loadConvergenceData}} function
+#'
+#' @description Validation of some parameters needed by the public
+#' \code{\link{loadConvergenceData}} function.
+#'
+#' @param analysisResultsDir a \code{character} string, the path to the
+#' directory that contains the analysis results. The path can be the same as
+#' for the \code{permutatioNResultsDir} parameter.
+#'
+#' @param permutationResultsDir a \code{character} string, the path to the
+#' directory that contains the permutation results. The path can be the same
+#' as for the \code{analysisResultsDir} parameter.
+#'
+#' @param position a positive \code{integer}, the position in the \code{list}
+#' where the information will be extracted.
+#'
+#' @param by a \code{integer}, the increment of the number of permutations
+#' where the significant level is tested. Default: 100.
+#'
+#' @return \code{0} indicating that all parameters validations have been
+#' successful.
+#'
+#' @examples
+#'
+#' ## Get the name of the directory where files are stored
+#' filesDir <- system.file("extdata", "TEST", package="methylInheritance")
+#'
+#' ## Merge permutation and observation results
+#' methylInheritance:::validateLoadConvergenceData(analysisResultsDir =
+#'     filesDir, permutationResults = filesDir, position = 1, by = 1)
+#'
+#' ## The function raises an error when at least one paramater is not valid
+#' \dontrun{methylInheritance:::validateLoadConvergenceData(
+#'     analysisResultsDir = filesDir, permutationResults = filesDir,
+#'     position = "hello", by = 1))}
+#'
+#' @author Astrid Deschenes, Pascal Belleau
+#' @keywords internal
+validateLoadConvergenceData <- function(analysisResultsDir,
+                                        permutationResultsDir, position, by) {
+
+    ## Validate that the analysisResultsDir is an not empty string
+    if (!is.null(analysisResultsDir) && !is.character(analysisResultsDir)) {
+        stop("analysisResultsDir must be a character string")
+        if (!dir.exists(analysisResultsDir)) {
+            stop("analysisResultsDir must be an existing directory")
+        }
+    }
+
+    ## Validate that the permutationResultsDir is an not empty string
+    if (!is.null(permutationResultsDir) &&
+            !is.character(permutationResultsDir)) {
+        stop("permutationResultsDir must be a character string")
+        if (!dir.exists(permutationResultsDir)) {
+            stop("permutationResultsDir must be an existing directory")
+        }
+    }
+
+    if (!is.numeric(position) || floor(position) != position || position < 1) {
+        stop("position must be a positive integer")
+    }
+
+    if (!is.numeric(by) || floor(by) != by || by < 1) {
+        stop("by must be a positive integer")
     }
 
     return(0)
@@ -1583,4 +1653,25 @@ calculateSignificantLevel <- function(formatForGraphDataFrame) {
                     hyperDataSet$RESULT >= hyperNumber))/hyperTotal
 
     return(list(HYPER=signifLevelHyper, HYPO=signifLevelHypo))
+}
+
+createDataFrameFromOneResult <- function(oneResult, type=c("sites", "tiles",
+                            source=c("OBSERVATION", "PERMUTATION"))) {
+
+    if (type == "sites") {
+        tt <- unlist(oneResult$SITES)
+    } else {
+        tt <- unlist(oneResult$TILES)
+    }
+
+    tt.names <- sapply(names(tt), function(x) {strsplit(x, "[.]")})
+    tt.analysis <- sapply(tt.names, function(x) {return(x[[1]])})
+    tt.types <- sapply(tt.names, function(x) {return(x[[2]])})
+
+    result <- data.frame(SOURCE=rep(source, length(tt)),
+                    ELEMENT = rep(toupper(type), length(tt)),
+                    ANALYSIS = tt.analysis, TYPE = tt.types,
+                    RESULT=tt, stringsAsFactors = FALSE, row.names = NULL)
+
+    return(result)
 }

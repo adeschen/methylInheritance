@@ -6,7 +6,7 @@
 analysis}
 \usage{
 extractInfo(allResults, type = c("sites", "tiles"), inter = c("i2", "iAll"),
-  position)
+  position = 1)
 }
 \arguments{
 \item{allResults}{a \code{list} of class \code{methylInheritanceAllResults}
@@ -33,7 +33,7 @@ generations or more \code{inter} = \code{"iAll"}.
 Default: \code{"i2"}.}
 
 \item{position}{a positive \code{integer}, the position in the \code{list}
-where the information will be extracted.}
+where the information will be extracted. Default=\code{1}.}
 }
 \value{
 a \code{data.frame}

@@ -553,7 +553,7 @@ loadAllRDSResults <- function(analysisResultsDir,
 
     ## Validate parameters
     if (!is.na(maxID) && !is.numeric(maxID) && maxID > 0) {
-        stop("maxID must be NA or a positive numeric")
+        stop("maxID must be NA or a positive integer")
     }
 
     ## Add last slash to analysisResultsDIR when absent
@@ -883,7 +883,7 @@ mergePermutationAndObservation <- function(permutationResults,
 #' Default: \code{"i2"}.
 #'
 #' @param position a positive \code{integer}, the position in the \code{list}
-#' where the information will be extracted.
+#' where the information will be extracted. Default=\code{1}.
 #'
 #' @return a \code{data.frame}
 #' containing the observation results (using real
@@ -907,14 +907,15 @@ mergePermutationAndObservation <- function(permutationResults,
 #' @author Astrid Deschenes, Pascal Belleau
 #' @export
 extractInfo <- function(allResults, type=c("sites", "tiles"),
-                            inter=c("i2", "iAll"), position) {
+                            inter=c("i2", "iAll"), position=1) {
 
-    # Validate type value
+    ## Validate type value
     type <- match.arg(type)
 
-    # Validate type value
+    ## Validate type value
     inter <- match.arg(inter)
 
+    ## Validate other parameters
     validateExtractInfo(allResults = allResults, type, inter, position)
 
     type <- toupper(type)
@@ -1026,10 +1027,9 @@ plotGraph <- function(formatForGraphDataFrame) {
 }
 
 
-#' @title Generate a graph for a permutation analysis
+#' @title Load convergence information from RDS files
 #'
-#' @description  Generate a graph for a permutation analysis using observed
-#' and shuffled results.
+#' @description  Load convergence information from RDS files.
 #'
 #' @param analysisResultsDir a \code{character} string, the path to the
 #' directory that contains the analysis results. The path can be the same as
@@ -1064,79 +1064,135 @@ plotGraph <- function(formatForGraphDataFrame) {
 #'
 #' @examples
 #'
-#' ## TODO
+#' ## Get the name of the directory where files are stored
+#' filesDir <- system.file("extdata", "TEST", package="methylInheritance")
+#'
+#' ## Load convergence information
+#' results <- loadConvergenceData(analysisResultsDir = filesDir,
+#'     permutationResultsDir = filesDir, type="sites", inter="i2", position=1,
+#'     by=1)
 #'
 #' @author Astrid Deschenes, Pascal Belleau
-#' @importFrom ggplot2 ggplot geom_point geom_line facet_grid aes xlab ylab
 #' @export
-plotConvergence <- function(analysisResultsDir,
-                            permutationResultsDir, type=c("sites", "tiles"),
-                            inter=c("i2", "iAll"), position, by=100) {
-    # Validate type value
+loadConvergenceData <- function(analysisResultsDir,
+                            permutationResultsDir, type = c("sites", "tiles"),
+                            inter = c("i2", "iAll"), position, by = 100) {
+    ## Validate type value
     type <- match.arg(type)
 
-    # Validate type value
+    ## Validate type value
     inter <- match.arg(inter)
 
-    ## Add last slash to analysisResultsDIR when absent
-    if (!is.null(analysisResultsDir) &&
-        (substr(analysisResultsDir, nchar(analysisResultsDir),
-                nchar(analysisResultsDir)) != "/")) {
+    ## Validate other parameters
+    validateLoadConvergenceData(analysisResultsDir, permutationResultsDir,
+                                    position, by)
+
+    ## Add last slash to analysisResultsDir when absent
+    if (substr(analysisResultsDir, nchar(analysisResultsDir),
+                nchar(analysisResultsDir)) != "/") {
         analysisResultsDir <- paste0(analysisResultsDir, "/")
     }
 
-    ## Add last slash to permutationResultsDIR when absent
-    if (!is.null(permutationResultsDir) &&
-        (substr(permutationResultsDir, nchar(permutationResultsDir),
-                nchar(permutationResultsDir)) != "/")) {
+    ## Add last slash to permutationResultsDir when absent
+    if (substr(permutationResultsDir, nchar(permutationResultsDir),
+                nchar(permutationResultsDir)) != "/") {
         permutationResultsDir <- paste0(permutationResultsDir, "/")
     }
 
     if (type == "sites") {
         doingSites = TRUE
         doingTiles = FALSE
-        extension = "SITES/"
     } else {
         doingSites = FALSE
         doingTiles = TRUE
-        extension = "TILES/"
     }
 
-    filesInDir <- list.files(path = paste0(analysisResultsDir, extension),
-                             pattern = "[[:digit:]].RDS", all.files = FALSE,
-                             full.names = TRUE, recursive = FALSE,
-                             ignore.case = FALSE, include.dirs = FALSE,
-                             no.. = FALSE)
+    ## Get maximum number of files and create a incrementing sequence using
+    ## the "by" parameter
+    filesInDir <- list.files(path = paste0(analysisResultsDir, toupper(type),
+                            "/"),
+                            pattern = "[[:digit:]].RDS", all.files = FALSE,
+                            full.names = TRUE, recursive = FALSE,
+                            ignore.case = FALSE, include.dirs = FALSE,
+                            no.. = FALSE)
 
     nbFiles <- length(filesInDir)
-    seqFiles <- c(seq(by, nbFiles, by), nbFiles)
+    seqFiles <- unique(c(seq(by, nbFiles, by), nbFiles))
 
-    final <- data.frame(NBR_PERMUTATIONS = integer(), TYPE=character(),
+    ## The returned data.frame
+    final <- data.frame(NBR_PERMUTATIONS = integer(), ELEMENT = character(),
+                            TYPE = character(), ANALYSIS = character(),
+                            POSITION = integer(),
                             SIGNIFICANT_LEVEL = numeric(),
                             stringsAsFactors=FALSE)
 
     for (i in seqFiles) {
+        ## Load data associated to the selected number of files
         data <- loadAllRDSResults(analysisResultsDir = analysisResultsDir,
                     permutationResultsDir = permutationResultsDir,
-                    doingSites = doingSites, doingTiles = doingTiles, maxID = i)
+                    doingSites = doingSites, doingTiles = doingTiles,
+                    maxID = i)
 
+        ## Extract info
         info <- extractInfo(allResults = data, type = type,
                             inter = inter, position)
 
+        ## Calculate significant level
         result <- calculateSignificantLevel(info)
+
+        ## Create data.frame using extracted information
         temp <- data.frame(NBR_PERMUTATIONS = rep(i, 2),
-                    TYPE=c("HYPER", "HYPO"),
+                    ELEMENT = rep(toupper(type), 2), ANALYSIS = rep(inter, 2),
+                    POSITION = rep(position, 2), TYPE=c("HYPER", "HYPO"),
                     SIGNIFICANT_LEVEL = c(result$HYPER, result$HYPO),
                     stringsAsFactors=FALSE)
 
+        ## Add the information to the returned data.frame
         final <- rbind(final, temp)
     }
 
+    ## The final data.frame containing significant levels for all entries
+    ## of the inccrementing sequence
+    return(final)
+}
+
+
+#' @title Generate a graph showing the convergence for a permutation analysis
+#'
+#' @description  Generate a graph showing the convergence for a permutation
+#' analysis using observed and permuted results.
+#'
+#' @param dataFrameConvergence a \code{data.frame} containing the
+#' significant levels at different number of cycles (total number of
+#' permuted data analysed).  The
+#' \code{data.frame} must have 6 columns : "NBR_PERMUTATIONS", "ELEMENT".
+#' "ANALYSIS", "POSITION", "TYPE" and "SIGNIFICANT_LEVEL". The "ELEMENT" can
+#' be either "SITES" or "TILES".
+#' The "TYPE" can be either "HYPER" or "HYPO".
+#'
+#' @examples
+#'
+#' ## Get the name of the directory where files are stored
+#' filesDir <- system.file("extdata", "TEST", package="methylInheritance")
+#'
+#' ## Extract convergenc information for F1 and F2 and F3
+#' data <- loadConvergenceData(analysisResultsDir = filesDir,
+#'     permutationResultsDir = filesDir, type="sites", inter="iAll", position=1,
+#'     by=1)
+#'
+#' ## Create convergence graph
+#' plotConvergenceGraph(data)
+#'
+#' @author Astrid Deschenes, Pascal Belleau
+#' @importFrom ggplot2 ggplot geom_point geom_line facet_grid aes xlab ylab
+#' @export
+plotConvergenceGraph <- function(dataFrameConvergence) {
+
     NBR_PERMUTATIONS <- NULL
     SIGNIFICANT_LEVEL <- NULL
-    ggplot(data=final, aes(x=NBR_PERMUTATIONS, y=SIGNIFICANT_LEVEL)) +
-        geom_point(color='blue', size=2) +
+    ggplot(data=dataFrameConvergence, aes(x=NBR_PERMUTATIONS,
+        y=SIGNIFICANT_LEVEL)) + geom_point(color='blue', size=2) +
         geom_line(color='blue', linetype = "dashed", size=1) +
-            facet_grid(.~TYPE) + ylab("Significant Level") +
-            xlab("Number of permutations")
+        facet_grid(TYPE ~ .) + ylab("Significant Level") +
+        xlab("Number of permutations")
 }

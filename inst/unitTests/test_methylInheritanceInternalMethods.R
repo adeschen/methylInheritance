@@ -12,6 +12,8 @@ METHYL_OBJ_FILE <- system.file("extdata", "methylObj_001.RDS",
 
 METHYL_OBJ <- readRDS(METHYL_OBJ_FILE)
 
+data(methylInheritanceResults)
+
 ###########################################################
 ## runOnePermutationOnAllGenerations() function
 ###########################################################
@@ -104,6 +106,39 @@ test.isInterGenerationResults_true <- function() {
                       "- Function should return TRUE")
 
     checkTrue(obs, msg = message)
+}
+
+
+###########################################################
+## validateExtractInfo() function
+###########################################################
+
+test.validateExtractInfo_position_zero <- function() {
+    obs <- tryCatch(methylInheritance:::validateExtractInfo(
+        allResults = methylInheritanceResults, type = "sites",
+        inter = "i2", position = 0),
+        error=conditionMessage)
+
+    exp <- "position must be a positive integer"
+
+    message <- paste0("test.validateExtractInfo_position_zero() - ",
+                      "Zero position value did not generated expected message.")
+
+    checkEquals(obs, exp, message)
+}
+
+test.validateExtractInfo_allResults_vector <- function() {
+    obs <- tryCatch(methylInheritance:::validateExtractInfo(
+        allResults = c(1,2,3), type = "sites",
+        inter = "i2", position = 1),
+        error=conditionMessage)
+
+    exp <- "allResults must be of class \"methylInheritanceAllResults\""
+
+    message <- paste0("test.validateExtractInfo_allResults_vector() - ",
+                      "allResults vector did not generated expected message.")
+
+    checkEquals(obs, exp, message)
 }
 
 ###########################################################

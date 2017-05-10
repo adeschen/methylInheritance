@@ -8,16 +8,16 @@
 validateMergePermutationAndObservation(permutationResults, observationResults)
 }
 \arguments{
-\item{observationResults}{a \code{list} with 1 entry called
-\code{OBSERVATION}. The \code{OBSERVATION} entry is a \code{list} containing
-the result obtained
-with the observed dataset (not shuffled).}
-
-\item{@param}{permutationResults a \code{list} with 1 entry called
+\item{permutationResults}{a \code{list} with 1 entry called
 \code{PERMUTATION}. The  \code{PERMUTATION} entry is a \code{list} with
 a number of entries corresponding
 to the number of permutations that have been processed. Each entry contains
 the result of one permutation.}
+
+\item{observationResults}{a \code{list} with 1 entry called
+\code{OBSERVATION}. The \code{OBSERVATION} entry is a \code{list} containing
+the result obtained
+with the observed dataset (not shuffled).}
 }
 \value{
 \code{0} indicating that all parameters validations have been
