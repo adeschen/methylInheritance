@@ -1163,8 +1163,8 @@ runOnePermutationOnAllGenerations <- function(id,
                 calculateDiffMeth(meth.tiles, mc.cores = nbrCoresDiffMeth))
 
             permutationList[["TILES"]][[i]] <- suppressWarnings(
-                getMethylDiff(allTiles, difference = minMethDiff,
-                              qvalue = qvalue))
+                    getMethylDiff(allTiles, difference = minMethDiff,
+                        qvalue = qvalue))
         }
     }
 
@@ -1378,14 +1378,14 @@ saveInterGenerationResults <- function(outputDir, permutationID,
 #' @author Astrid Deschenes, Pascal Belleau
 #' @keywords internal
 isInterGenerationResults <- function(outputDir, permutationID,
-                                     type = c("sites", "tiles")) {
+                                        type = c("sites", "tiles")) {
 
     if (permutationID != 0) {
         result <- file.exists(paste0(outputDir,  toupper(type), "/",
                         toupper(type), "_permutation_", permutationID, ".RDS"))
     } else {
         result <- file.exists(paste0(outputDir, toupper(type), "/",
-                                     toupper(type), "_observed_results.RDS"))
+                                    toupper(type), "_observed_results.RDS"))
     }
 
     return(result)
@@ -1428,14 +1428,14 @@ isInterGenerationResults <- function(outputDir, permutationID,
 #' @author Astrid Deschenes, Pascal Belleau
 #' @keywords internal
 readInterGenerationResults <- function(outputDir, permutationID,
-                                     type = c("sites", "tiles")) {
+                                        type = c("sites", "tiles")) {
 
     if (permutationID != 0) {
         result <- readRDS(file = paste0(outputDir,  toupper(type), "/",
                     toupper(type), "_permutation_", permutationID, ".RDS"))
     } else {
         result <- readRDS(file = paste0(outputDir, toupper(type), "/",
-                                     toupper(type), "_observed_results.RDS"))
+                                    toupper(type), "_observed_results.RDS"))
     }
 
     return(result)

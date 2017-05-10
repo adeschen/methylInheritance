@@ -318,3 +318,30 @@ test.plotGraph_good_01 <- function() {
     checkEquals(class(obs[[1]]), "list", msg = message)
     checkEquals(class(obs[[2]]), "data.frame", msg = message)
 }
+
+
+###########################################################
+## plotConvergenceGraph() function
+###########################################################
+
+# Test result when all parameters are good
+test.plotConvergenceGraph_good_01 <- function() {
+
+    filesDir <- system.file("extdata", "TEST", package="methylInheritance")
+
+    ##Extract convergenc information for F1 and F2 and F3
+    data <- loadConvergenceData(analysisResultsDir = filesDir,
+            permutationResultsDir = filesDir, type = "sites", inter = "iAll",
+            position = 1, by = 1)
+
+    ## Create convergence graph
+    obs <- plotConvergenceGraph(data)
+
+    message <- paste0(" test.plotConvergenceGraph_good_01() ",
+                      "- Valid parameters for plotGraph did not generated expected results.")
+
+    checkTrue("ggplot" %in% class(obs), msg = message)
+    checkEquals(class(obs[[1]]), "data.frame", msg = message)
+    checkEquals(class(obs[[2]]), "list", msg = message)
+
+}

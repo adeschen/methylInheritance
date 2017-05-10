@@ -12,8 +12,10 @@ significant levels at different number of cycles (total number of
 permuted data analysed).  The
 \code{data.frame} must have 6 columns : "NBR_PERMUTATIONS", "ELEMENT".
 "ANALYSIS", "POSITION", "TYPE" and "SIGNIFICANT_LEVEL". The "ELEMENT" can
-be either "SITES" or "TILES".
-The "TYPE" can be either "HYPER" or "HYPO".}
+be either "SITES" or "TILES". The "TYPE" can be either "HYPER" or "HYPO".}
+}
+\value{
+a \code{ggplot} object.
 }
 \description{
 Generate a graph showing the convergence for a permutation
@@ -26,8 +28,8 @@ filesDir <- system.file("extdata", "TEST", package="methylInheritance")
 
 ## Extract convergenc information for F1 and F2 and F3
 data <- loadConvergenceData(analysisResultsDir = filesDir,
-    permutationResultsDir = filesDir, type="sites", inter="iAll", position=1,
-    by=1)
+    permutationResultsDir = filesDir, type = "sites", inter = "iAll",
+    position = 1, by = 1)
 
 ## Create convergence graph
 plotConvergenceGraph(data)

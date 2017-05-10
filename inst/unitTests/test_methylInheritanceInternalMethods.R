@@ -127,6 +127,20 @@ test.validateExtractInfo_position_zero <- function() {
     checkEquals(obs, exp, message)
 }
 
+test.validateExtractInfo_position_string <- function() {
+    obs <- tryCatch(methylInheritance:::validateExtractInfo(
+        allResults = methylInheritanceResults, type = "sites",
+        inter = "i2", position = "hi"),
+        error=conditionMessage)
+
+    exp <- "position must be a positive integer"
+
+    message <- paste0("test.validateExtractInfo_position_string() - ",
+                      "Zero position value did not generated expected message.")
+
+    checkEquals(obs, exp, message)
+}
+
 test.validateExtractInfo_allResults_vector <- function() {
     obs <- tryCatch(methylInheritance:::validateExtractInfo(
         allResults = c(1,2,3), type = "sites",
@@ -137,6 +151,34 @@ test.validateExtractInfo_allResults_vector <- function() {
 
     message <- paste0("test.validateExtractInfo_allResults_vector() - ",
                       "allResults vector did not generated expected message.")
+
+    checkEquals(obs, exp, message)
+}
+
+test.validateExtractInfo_type_wrong <- function() {
+    obs <- tryCatch(methylInheritance:::validateExtractInfo(
+        allResults = methylInheritanceResults, type = "toto",
+        inter = "i2", position = 1),
+        error=conditionMessage)
+
+    exp <- "allResults must have an element called \"TOTO\" in its \"OBSERVATION\" list"
+
+    message <- paste0("test.validateExtractInfo_type_wrong() - ",
+                      "Wrong type did not generated expected message.")
+
+    checkEquals(obs, exp, message)
+}
+
+test.validateExtractInfo_type_wrong <- function() {
+    obs <- tryCatch(methylInheritance:::validateExtractInfo(
+        allResults = methylInheritanceResults, type = "sites",
+        inter = "hi", position = 1),
+        error=conditionMessage)
+
+    exp <- "allResults must have an element called \"hi\" in the \"SITES\" list present in its \"OBSERVATION\" list"
+
+    message <- paste0("test.validateExtractInfo_type_wrong() - ",
+                      "Wrong inter did not generated expected message.")
 
     checkEquals(obs, exp, message)
 }

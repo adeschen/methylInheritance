@@ -575,7 +575,7 @@ loadAllRDSResults <- function(analysisResultsDir,
     if (!is.na(maxID)) {
         rxRange <- suppressWarnings(number_range(1, maxID))
         newRange <- gsub(pattern = "\\?\\:", replacement = "",
-                         toString(rxRange))
+                            toString(rxRange))
         filePattern <- paste0("[^[:digit:]]", newRange,  ".RDS")
     } else {
         filePattern <- "[[:digit:]].RDS"
@@ -1110,11 +1110,9 @@ loadConvergenceData <- function(analysisResultsDir,
     ## Get maximum number of files and create a incrementing sequence using
     ## the "by" parameter
     filesInDir <- list.files(path = paste0(analysisResultsDir, toupper(type),
-                            "/"),
-                            pattern = "[[:digit:]].RDS", all.files = FALSE,
-                            full.names = TRUE, recursive = FALSE,
-                            ignore.case = FALSE, include.dirs = FALSE,
-                            no.. = FALSE)
+                        "/"), pattern = "[[:digit:]].RDS", all.files = FALSE,
+                        full.names = TRUE, recursive = FALSE,
+                        ignore.case = FALSE, include.dirs = FALSE, no.. = FALSE)
 
     nbFiles <- length(filesInDir)
     seqFiles <- unique(c(seq(by, nbFiles, by), nbFiles))
@@ -1143,16 +1141,16 @@ loadConvergenceData <- function(analysisResultsDir,
         ## Create data.frame using extracted information
         temp <- data.frame(NBR_PERMUTATIONS = rep(i, 2),
                     ELEMENT = rep(toupper(type), 2), ANALYSIS = rep(inter, 2),
-                    POSITION = rep(position, 2), TYPE=c("HYPER", "HYPO"),
+                    POSITION = rep(position, 2), TYPE = c("HYPER", "HYPO"),
                     SIGNIFICANT_LEVEL = c(result$HYPER, result$HYPO),
-                    stringsAsFactors=FALSE)
+                    stringsAsFactors = FALSE)
 
         ## Add the information to the returned data.frame
         final <- rbind(final, temp)
     }
 
     ## The final data.frame containing significant levels for all entries
-    ## of the inccrementing sequence
+    ## of the incrementing sequence of number of permutations
     return(final)
 }
 
@@ -1167,8 +1165,9 @@ loadConvergenceData <- function(analysisResultsDir,
 #' permuted data analysed).  The
 #' \code{data.frame} must have 6 columns : "NBR_PERMUTATIONS", "ELEMENT".
 #' "ANALYSIS", "POSITION", "TYPE" and "SIGNIFICANT_LEVEL". The "ELEMENT" can
-#' be either "SITES" or "TILES".
-#' The "TYPE" can be either "HYPER" or "HYPO".
+#' be either "SITES" or "TILES". The "TYPE" can be either "HYPER" or "HYPO".
+#'
+#' @return a \code{ggplot} object.
 #'
 #' @examples
 #'
@@ -1177,8 +1176,8 @@ loadConvergenceData <- function(analysisResultsDir,
 #'
 #' ## Extract convergenc information for F1 and F2 and F3
 #' data <- loadConvergenceData(analysisResultsDir = filesDir,
-#'     permutationResultsDir = filesDir, type="sites", inter="iAll", position=1,
-#'     by=1)
+#'     permutationResultsDir = filesDir, type = "sites", inter = "iAll",
+#'     position = 1, by = 1)
 #'
 #' ## Create convergence graph
 #' plotConvergenceGraph(data)
@@ -1188,11 +1187,15 @@ loadConvergenceData <- function(analysisResultsDir,
 #' @export
 plotConvergenceGraph <- function(dataFrameConvergence) {
 
+    ## Create graph
     NBR_PERMUTATIONS <- NULL
     SIGNIFICANT_LEVEL <- NULL
-    ggplot(data=dataFrameConvergence, aes(x=NBR_PERMUTATIONS,
-        y=SIGNIFICANT_LEVEL)) + geom_point(color='blue', size=2) +
-        geom_line(color='blue', linetype = "dashed", size=1) +
+    graph <- ggplot(data=dataFrameConvergence, aes(x=NBR_PERMUTATIONS,
+        y=SIGNIFICANT_LEVEL)) + geom_point(color = 'blue', size = 2) +
+        geom_line(color='blue', linetype = "dashed", size = 1) +
         facet_grid(TYPE ~ .) + ylab("Significant Level") +
         xlab("Number of permutations")
+
+    ## Return graph
+    return(graph)
 }
