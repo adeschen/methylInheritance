@@ -183,6 +183,94 @@ test.validateExtractInfo_type_wrong <- function() {
     checkEquals(obs, exp, message)
 }
 
+test.validateExtractInfo_position_too_high <- function() {
+    obs <- tryCatch(methylInheritance:::validateExtractInfo(
+        allResults = methylInheritanceResults, type = "sites",
+        inter = "i2", position = 4),
+        error=conditionMessage)
+
+    exp <- "position must correspond to a valid entry in the \"allResults$OBSERVATION[[SITES]][[i2]]\""
+
+    message <- paste0("test.validateExtractInfo_position_too_high() - ",
+                      "Too high position value did not generated expected message.")
+
+    checkEquals(obs, exp, message)
+}
+
+test.validateExtractInfo_allResults_no_permutation <- function() {
+    g<-list()
+    g[["OBSERVATION"]] <- methylInheritanceResults$OBSERVATION
+    class(g)<-"methylInheritanceAllResults"
+
+    obs <- tryCatch(methylInheritance:::validateExtractInfo(
+        allResults = g, type = "sites",
+        inter = "i2", position = 1),
+        error=conditionMessage)
+
+    exp <- "allResults must have an element called \"PERMUTATION\""
+
+    message <- paste0("test.validateExtractInfo_allResults_no_permutation() - ",
+                      "allResult without permutation value did not generated expected message.")
+
+    checkEquals(obs, exp, message)
+}
+
+###########################################################
+## validateLoadConvergenceData() function
+###########################################################
+
+test.validateLoadConvergenceData_integer_analysisDir <- function() {
+    obs <- tryCatch(methylInheritance:::validateLoadConvergenceData(analysisResultsDir = 33,
+            permutationResultsDir = "./", position = 1, by = 2),
+            error=conditionMessage)
+
+    exp <- "analysisResultsDir must be a character string"
+
+    message <- paste0("test.validateLoadConvergenceData_integer_analysisDir() - ",
+                      "Integer as analysis directory did not generated expected message.")
+
+    checkEquals(obs, exp, message)
+}
+
+test.validateLoadConvergenceData_integer_permutationDir <- function() {
+    obs <- tryCatch(methylInheritance:::validateLoadConvergenceData(analysisResultsDir = "./",
+                    permutationResultsDir = 44, position = 1, by = 2),
+                    error=conditionMessage)
+
+    exp <- "permutationResultsDir must be a character string"
+
+    message <- paste0("test.validateLoadConvergenceData_integer_permutationDir() - ",
+                      "Integer as permutation directory did not generated expected message.")
+
+    checkEquals(obs, exp, message)
+}
+
+test.validateLoadConvergenceData_position_zero <- function() {
+    obs <- tryCatch(methylInheritance:::validateLoadConvergenceData(analysisResultsDir = "./",
+                        permutationResultsDir = "./", position = 0, by = 2),
+                    error=conditionMessage)
+
+    exp <- "position must be a positive integer"
+
+    message <- paste0("test.validateLoadConvergenceData_position_zero() - ",
+                      "Zero as position did not generated expected message.")
+
+    checkEquals(obs, exp, message)
+}
+
+test.validateLoadConvergenceData_by_zero <- function() {
+    obs <- tryCatch(methylInheritance:::validateLoadConvergenceData(analysisResultsDir = "./",
+                permutationResultsDir = "./", position = 1, by = 0),
+                error=conditionMessage)
+
+    exp <- "by must be a positive integer"
+
+    message <- paste0("test.validateLoadConvergenceData_by_zero() - ",
+                      "Zero as by did not generated expected message.")
+
+    checkEquals(obs, exp, message)
+}
+
 ###########################################################
 ## calculateSignificantLevel() function
 ###########################################################

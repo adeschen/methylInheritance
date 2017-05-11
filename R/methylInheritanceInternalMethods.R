@@ -475,7 +475,7 @@ validateExtractInfo <- function(allResults, type, inter, position) {
 
     if (position > length(allResults$OBSERVATION[[toupper(type)]][[inter]])) {
         stop(paste0("position must correspond to a valid entry in the \"",
-            "allResults$OBSERVATION[[", toupper(type), "]][[", inter, "]]"))
+            "allResults$OBSERVATION[[", toupper(type), "]][[", inter, "]]\""))
     }
 
     if (is.null(allResults$PERMUTATION)) {
