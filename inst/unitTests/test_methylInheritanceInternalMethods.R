@@ -7,6 +7,9 @@
 ## Test the methylInheritanceInternalMethods functions
 ###################################################
 
+
+library("GenomicRanges")
+
 METHYL_OBJ_FILE <- system.file("extdata", "methylObj_001.RDS",
                                 package = "methylInheritance")
 
@@ -215,6 +218,41 @@ test.validateExtractInfo_allResults_no_permutation <- function() {
     checkEquals(obs, exp, message)
 }
 
+test.validateExtractInfo_allResults_no_observation <- function() {
+    g<-list()
+    g[["PERMUTATION"]] <- methylInheritanceResults$OBSERVATION
+    class(g)<-"methylInheritanceAllResults"
+
+    obs <- tryCatch(methylInheritance:::validateExtractInfo(
+        allResults = g, type = "sites",
+        inter = "i2", position = 1),
+        error=conditionMessage)
+
+    exp <- "allResults must have an element called \"OBSERVATION\""
+
+    message <- paste0("test.validateExtractInfo_allResults_no_observation() - ",
+                      "allResult without observation value did not generated expected message.")
+
+    checkEquals(obs, exp, message)
+}
+
+test.validateExtractInfo_allResults_not_list <- function() {
+    g<-vector()
+    class(g)<-"methylInheritanceAllResults"
+
+    obs <- tryCatch(methylInheritance:::validateExtractInfo(
+        allResults = g, type = "sites",
+        inter = "i2", position = 1),
+        error=conditionMessage)
+
+    exp <- "allResults must be a list"
+
+    message <- paste0("test.validateExtractInfo_allResults_not_list() - ",
+                      "allResult not list did not generated expected message.")
+
+    checkEquals(obs, exp, message)
+}
+
 ###########################################################
 ## validateLoadConvergenceData() function
 ###########################################################
@@ -293,4 +331,122 @@ test.calculateSignificantLevel_true <- function() {
     exp <- list(HYPER=1.0, HYPO=(2.0/4.0))
 
     checkEquals(obs, exp, msg = message)
+}
+
+###########################################################
+## readInterGenerationResults() function
+###########################################################
+
+test.readInterGenerationResults_good_01 <- function() {
+
+    filesDir <- system.file("extdata", "TEST", package="methylInheritance")
+
+    ## Read DMS intergenerational results for the observed data
+    obs <- methylInheritance:::readInterGenerationResults(outputDir =
+            paste0(filesDir, "/"), 0, "sites")
+
+    message <- paste0("test.readInterGenerationResults_good_01() ",
+                      "- Function did not return expected values")
+
+    iAll_1 <- GenomicRanges::GRanges(seqnames = rep("S", 4),
+                           ranges = IRanges::IRanges(start = c(30222185, 15048832, 22963194, 23499048),
+                                                     end = c(30222185, 15048832, 22963194, 23499048)),
+                           strand = rep("+", 4),
+                           typeDiff = c(1, rep(-1, 3)))
+
+    i2_2 <- GenomicRanges::GRanges(seqnames = rep("S", 22),
+                                   ranges = IRanges::IRanges(start = c(97481, 572272, 3281006, 11121503, 19260516,
+                                                                       19445653, 22874019, 27232572, 30222185, 35929511,
+                                                                       6085769,  8045209, 10355001, 11147625, 15048832,
+                                                                       15438496, 22745004, 22899924, 22963194, 23499048,
+                                                                       28622167, 34611139),
+                                                             end = c(97481, 572272, 3281006, 11121503, 19260516,
+                                                                     19445653, 22874019, 27232572, 30222185, 35929511,
+                                                                     6085769,  8045209, 10355001, 11147625, 15048832,
+                                                                     15438496, 22745004, 22899924, 22963194, 23499048,
+                                                                     28622167, 34611139)),
+                                   strand = rep("+", 22),
+                                   typeDiff = c(rep(1, 10), rep(-1, 12)))
+
+    i2_1 <- GenomicRanges::GRanges(seqnames = rep("S", 36),
+                                   ranges = IRanges::IRanges(start = c(570115, 2573229, 5063112, 8247138, 8765627, 8791494,
+                                                                       9955639, 11667875, 19095767, 26225126, 26798489, 27089337,
+                                                                       27188724, 27236909, 27421271, 30222185, 30786437, 31364173,
+                                                                       31396094, 33611091, 33886929,  3139258, 14391040, 15048832,
+                                                                       15438613, 16630377, 17795264, 18396852, 22963194, 23499048,
+                                                                       23499106, 23499111, 27019812, 30204193, 30746773, 35827911),
+                                                             end = c(570115, 2573229, 5063112, 8247138, 8765627, 8791494,
+                                                                     9955639, 11667875, 19095767, 26225126, 26798489, 27089337,
+                                                                     27188724, 27236909, 27421271, 30222185, 30786437, 31364173,
+                                                                     31396094, 33611091, 33886929,  3139258, 14391040, 15048832,
+                                                                     15438613, 16630377, 17795264, 18396852, 22963194, 23499048,
+                                                                     23499106, 23499111, 27019812, 30204193, 30746773, 35827911)),
+                                   strand = rep("+", 36),
+                                   typeDiff = c(rep(1, 21), rep(-1, 15)))
+
+    exp <- list("i2" = list(i2_1, i2_2), "iAll" = list(iAll_1))
+
+    checkEquals(obs, exp, msg = message)
+}
+
+
+###########################################################
+## formatInputMethylData() function
+###########################################################
+
+test.formatInputMethylData_good_01 <- function() {
+
+    initGR_01 <- list()
+    initGR_01[[1]] <- new("methylRaw", data.frame(chr = rep("S", 3),
+                                                start = c(1005, 1011, 1017), end = c(1005, 1011, 1017),
+                                                strand = strand(rep("+", 3)), coverage = c(71, 90, 95),
+                                                numCs = c(0, 1, 1), numTs = c(71, 89, 94)), sample.id = "F1_1_C",
+                        assembly = "RNOR_5.0", context = "Cpg", resolution = 'base')
+    initGR_01[[2]] <- new("methylRaw", data.frame(chr = rep("S", 3),
+                                                start = c(1006, 1011, 1017), end = c(1006, 1011, 1017),
+                                                strand = strand(rep("+", 3)), coverage = c(93, 92, 93),
+                                                numCs = c(1, 4, 0), numTs = c(92, 88, 93)), sample.id = "F1_2_C",
+                        assembly = "RNOR_5.0", context = "Cpg", resolution = 'base')
+
+    initGR_02 <- list()
+    initGR_02[[1]] <- new("methylRaw", data.frame(chr = rep("S", 3),
+                                                start = c(1007, 1011, 1017), end = c(1007, 1011, 1017),
+                                                strand = strand(rep("+", 3)), coverage = c(90, 85, 79),
+                                                numCs = c(0, 0, 1), numTs = c(90, 85, 78)), sample.id = "F2_1_C",
+                        assembly = "RNOR_5.0", context = "Cpg", resolution = 'base')
+    initGR_02[[2]] <- new("methylRaw", data.frame(chr = rep("S", 3),
+                                                start = c(1008, 1011, 1017), end = c(1008, 1011, 1017),
+                                                strand = strand(rep("+", 3)), coverage = c(73, 93, 78),
+                                                numCs = c(0, 2, 0), numTs = c(73, 91, 78)), sample.id = "F2_2_C",
+                        assembly = "RNOR_5.0", context = "Cpg", resolution = 'base')
+
+    initGR_03 <- list()
+    initGR_03[[1]] <- new("methylRaw", data.frame(chr = rep("S", 3),
+                                                start = c(1009, 1011, 1017), end = c(1009, 1011, 1017),
+                                                strand = strand(rep("+", 3)), coverage = c(80, 73, 84),
+                                                numCs = c(0, 0, 1), numTs = c(80, 73, 83)), sample.id = "F3_1_C",
+                        assembly = "RNOR_5.0", context = "Cpg", resolution = 'base')
+    initGR_03[[2]] <- new("methylRaw", data.frame(chr = rep("S", 3),
+                                                start = c(1010, 1011, 1017), end = c(1010, 1011, 1017),
+                                                strand = strand(rep("+", 3)), coverage = c(77, 80, 94),
+                                                numCs = c(0, 2, 2), numTs = c(77, 78, 92)), sample.id = "F3_2_C",
+                        assembly = "RNOR_5.0", context = "Cpg", resolution = 'base')
+
+    initGR <- list()
+    initGR[[1]] <- new("methylRawList", initGR_01, treatment = c(0, 1))
+    initGR[[2]] <- new("methylRawList", initGR_02, treatment = c(0, 1))
+    initGR[[3]] <- new("methylRawList", initGR_03, treatment = c(0, 1))
+
+    set.seed(20011)
+    obs <- methylInheritance:::formatInputMethylData(initGR)
+
+    expGR <- list()
+    expGR[[1]] <- new("methylRawList", list(initGR_03[[2]], initGR_02[[2]]), treatment = c(0, 1))
+    expGR[[2]] <- new("methylRawList", list(initGR_01[[1]], initGR_03[[1]]), treatment = c(0, 1))
+    expGR[[3]] <- new("methylRawList", list(initGR_01[[2]], initGR_02[[1]]), treatment = c(0, 1))
+
+    message <- paste0("test.formatInputMethylData_good_01() ",
+                      "- Function did not return expected values")
+
+    checkEquals(obs, expGR, message)
 }
