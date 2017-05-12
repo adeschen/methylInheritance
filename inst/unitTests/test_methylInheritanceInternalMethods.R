@@ -389,6 +389,52 @@ test.readInterGenerationResults_good_01 <- function() {
     checkEquals(obs, exp, msg = message)
 }
 
+test.readInterGenerationResults_good_02 <- function() {
+
+    filesDir <- system.file("extdata", "TEST", package="methylInheritance")
+
+    ## Read DMS intergenerational results for the observed data
+    obs <- methylInheritance:::readInterGenerationResults(outputDir =
+                                                              paste0(filesDir, "/"), 1, "sites")
+
+    message <- paste0("test.readInterGenerationResults_good_02() ",
+                      "- Function did not return expected values")
+
+    iAll_1 <- GenomicRanges::GRanges(seqnames = rep("S", 5),
+                                     ranges = IRanges::IRanges(start = c(17191066, 17424070, 1130005, 22786110, 26615081),
+                                                               end = c(17191066, 17424070, 1130005, 22786110, 26615081)),
+                                     strand = rep("+", 5),
+                                     typeDiff = c(1, 1, rep(-1, 3)))
+
+    i2_2 <- GenomicRanges::GRanges(seqnames = rep("S", 18),
+                                   ranges = IRanges::IRanges(start = c(5507460,  8045221, 17191066, 17424070, 32510128,
+                                                                       32911751, 33071323,  1130005,  5826332,  8045207,
+                                                                       17804285, 18396726, 19869520, 21672484, 22786110,
+                                                                       26615081, 32216298, 32216478),
+                                                             end = c(5507460,  8045221, 17191066, 17424070, 32510128,
+                                                                     32911751, 33071323,  1130005,  5826332,  8045207,
+                                                                     17804285, 18396726, 19869520, 21672484, 22786110,
+                                                                     26615081, 32216298, 32216478)),
+                                   strand = rep("+", 18),
+                                   typeDiff = c(rep(1, 7), rep(-1, 11)))
+
+    i2_1 <- GenomicRanges::GRanges(seqnames = rep("S", 15),
+                                   ranges = IRanges::IRanges(start = c(3401344, 17191066, 17424070, 24135743,
+                                                                       27019812,  1130005,  1345775,  2573229,
+                                                                       6717075, 18926407, 19260516, 22786110,
+                                                                       23655774, 26615081, 33278578),
+                                                             end = c(3401344, 17191066, 17424070, 24135743,
+                                                                     27019812,  1130005,  1345775,  2573229,
+                                                                     6717075, 18926407, 19260516, 22786110,
+                                                                     23655774, 26615081, 33278578)),
+                                   strand = rep("+", 15),
+                                   typeDiff = c(rep(1, 5), rep(-1, 10)))
+
+    exp <- list("i2" = list(i2_1, i2_2), "iAll" = list(iAll_1))
+
+    checkEquals(obs, exp, msg = message)
+}
+
 
 ###########################################################
 ## formatInputMethylData() function
