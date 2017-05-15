@@ -540,3 +540,85 @@ test.getGRangesFromMethylDiff_good_01 <- function() {
 }
 
 
+###########################################################
+## interGeneration() function
+###########################################################
+
+test.interGeneration_good_01 <- function() {
+    permutationResultsFile <- system.file("extdata", "permutationResultsForSites.RDS", package="methylInheritance")
+    permutationResults <- readRDS(permutationResultsFile)
+
+    resultsGR <- methylInheritance:::getGRangesFromMethylDiff(methDiff = permutationResults, pDiff = 10,
+                                                    qvalue = 0.01, type = "hypo")
+
+    obs <- methylInheritance:::interGeneration(resultsGR)
+
+    exp <- list()
+    exp[["i2"]] <- list()
+    exp[["iAll"]] <- list()
+
+    exp[["i2"]][[1]] <- GRanges(seqnames = rep("S", 15), ranges = IRanges(start = c(3139258, 14391040, 15048832, 15438613, 16630377,
+                                                                               17795264, 18396852, 22963194, 23499048, 23499106,
+                                                                               23499111, 27019812, 30204193, 30746773, 35827911),
+                                                                end = c(3139258, 14391040, 15048832, 15438613, 16630377,
+                                                                         17795264, 18396852, 22963194, 23499048, 23499106,
+                                                                         23499111, 27019812, 30204193, 30746773, 35827911)),
+                        strand = rep("+", 15), typeDiff = rep(-1, 15))
+
+    exp[["i2"]][[2]] <- GRanges(seqnames = rep("S", 12), ranges = IRanges(start = c(6085769, 8045209, 10355001, 11147625,
+                                                                                    15048832, 15438496, 22745004, 22899924,
+                                                                                    22963194, 23499048, 28622167, 34611139),
+                                                    end = c(6085769, 8045209, 10355001, 11147625,
+                                                            15048832, 15438496, 22745004, 22899924,
+                                                            22963194, 23499048, 28622167, 34611139)), strand = rep("+", 12), typeDiff = rep(-1, 12))
+
+    exp[["iAll"]][[1]] <- GRanges(seqnames = rep("S", 3), ranges = IRanges(start = c(15048832, 22963194, 23499048),
+                                                                 end = c(15048832, 22963194, 23499048)),
+                                                            strand = rep("+", 3), typeDiff = rep(-1, 3))
+
+
+    message <- paste0("test.interGeneration_good_01() ",
+                      "- Function did not return expected values")
+
+    checkEquals(obs, exp)
+}
+
+
+test.interGeneration_good_02 <- function() {
+    permutationResultsFile <- system.file("extdata", "permutationResultsForSites.RDS", package="methylInheritance")
+    permutationResults <- readRDS(permutationResultsFile)
+
+    resultsGR <- methylInheritance:::getGRangesFromMethylDiff(methDiff = permutationResults, pDiff = 11,
+                                                              qvalue = 0.01, type = "hyper")
+
+    obs <- methylInheritance:::interGeneration(resultsGR)
+
+    exp <- list()
+    exp[["i2"]] <- list()
+    exp[["iAll"]] <- list()
+
+    exp[["i2"]][[1]] <- GRanges(seqnames = rep("S", 14), ranges = IRanges(start = c(570115, 2573229, 5063112, 8247138, 8791494,
+                                                                                    9955639, 26798489, 27089337, 27188724, 27236909,
+                                                                                    30222185, 30786437, 33611091, 33886929),
+                                                                          end = c(570115, 2573229, 5063112, 8247138, 8791494,
+                                                                                  9955639, 26798489, 27089337, 27188724, 27236909,
+                                                                                  30222185, 30786437, 33611091, 33886929)),
+                                strand = rep("+", 14), typeDiff = rep(1, 14))
+
+    exp[["i2"]][[2]] <- GRanges(seqnames = rep("S", 10), ranges = IRanges(start = c(97481, 572272, 3281006, 11121503, 19260516,
+                                                                                    19445653, 22874019, 27232572, 30222185, 35929511),
+                                                                          end = c(97481, 572272, 3281006, 11121503, 19260516,
+                                                                                  19445653, 22874019, 27232572, 30222185, 35929511)),
+                                strand = rep("+", 10), typeDiff = rep(1, 10))
+
+    exp[["iAll"]][[1]] <- GRanges(seqnames = rep("S", 1), ranges = IRanges(start = c(30222185),
+                                                                           end = c(30222185)),
+                                  strand = rep("+", 1), typeDiff = rep(1, 1))
+
+
+    message <- paste0("test.interGeneration_good_02() ",
+                      "- Function did not return expected values")
+
+    checkEquals(obs, exp)
+}
+
