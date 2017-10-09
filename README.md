@@ -17,9 +17,17 @@ can be dismissed.
 If you use this package for a publication, we would ask you to cite the 
 following:
 
-> Astrid Deschênes, Pascal Belleau and Arnaud Droit (2016). methylInheritance: Permutation-Based Analysis associating Conserved Differentially Methylated Elements from One Generation to the Next to a Treatment Effect. R package version 0.99.0.
+> Astrid Deschênes, Pascal Belleau and Arnaud Droit (2016). methylInheritance: Permutation-Based Analysis associating Conserved Differentially Methylated Elements from One Generation to the Next to a Treatment Effect. R package version 0.99.0. DOI: 10.18129/B9.bioc.methylInheritance
 
 > Akalin A, Kormaksson M, Li S, Garrett-Bakelman FE, Figueroa ME, Melnick A and Mason CE (2012). “methylKit: a comprehensive R package for the analysis of genome-wide DNA methylation profiles.” Genome Biology, 13(10), pp. R87. 
+
+
+## Bioconductor Package ##
+
+[![Bioconductor Time](http://bioconductor.org/shields/years-in-bioc/methylInheritance.svg)](http://bioconductor.org/packages/release/bioc/html/methylInheritance.html "Bioconductor status")
+
+methylInheritance is now an official package of [Bioconductor](http://bioconductor.org/). The current release can be directly downloaded from their website:
+[Current release](http://bioconductor.org/packages/methylInheritance)
 
 
 ## Authors ##
@@ -27,9 +35,6 @@ following:
 [Astrid Desch&ecirc;nes](http://ca.linkedin.com/in/astriddeschenes "Astrid Desch&ecirc;nes"), 
 [Pascal Belleau](http://ca.linkedin.com/in/pascalbelleau "Pascal Belleau")
 and [Arnaud Droit](http://ca.linkedin.com/in/drarnaud "Arnaud Droit").
-
-See [Arnaud Droit Lab](http://bioinformatique.ulaval.ca "Arnaud Droit Lab") 
-website.
 
 
 ## License ##
