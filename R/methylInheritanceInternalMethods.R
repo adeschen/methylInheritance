@@ -1168,10 +1168,16 @@ runOnePermutationOnAllGenerations <- function(id,
         }
     }
 
-    ## Save all results per generation in RDS file when specified
-    if (!is.null(outputDir) && saveInfoByGeneration) {
-        saveRDS(object = permutationList, file = paste0(outputDir,
-                        "InfoByGeneration/DMEByGeneration_", id, ".RDS"))
+    ## Save all sites results per generation in RDS file when specified
+    if (!is.null(outputDir) && saveInfoByGeneration && doSites && !readySites) {
+        saveRDS(object = permutationList[["SITES"]], file = paste0(outputDir,
+                        "InfoByGeneration/DMEByGeneration_sites_", id, ".RDS"))
+    }
+
+    ## Save all tiles results per generation in RDS file when specified
+    if (!is.null(outputDir) && saveInfoByGeneration && doTiles && !readyTiles) {
+        saveRDS(object = permutationList[["TILES"]], file = paste0(outputDir,
+                        "InfoByGeneration/DMEByGeneration_tiles_", id, ".RDS"))
     }
 
     permutationFinal <- list()
