@@ -32,9 +32,8 @@ retrieving differentially methylated bases type="sites"; for
 differentially methylated regions type="tiles". Default: "both".}
 
 \item{outputDir}{a string, the name of the directory that will contain
-the results of the permutation or \code{NULL}. If the directory does not
-exist, it will be created. When \code{NULL}, the results of the permutation
-are not saved. Default: \code{NULL}.}
+the results of the permutation. If the directory does not
+exist, it will be created.}
 
 \item{nbrCoresDiffMeth}{a positive integer, the number of cores to use for
 parallel differential methylation calculations.Parameter used for both
@@ -91,8 +90,8 @@ permutations that don't have a RDS result final are run.}
 \item{saveInfoByGeneration}{a \code{logical}, when \code{TRUE}, the
 information about differentially methylated sites and tiles for each
 generation is saved in a RDS file. The information is saved in a different
-file for each permutation. The files are only saved when the
-\code{outputDir} is not \code{NULL}.}
+file for each permutation. The files are = saved in the
+\code{outputDir}.}
 }
 \value{
 a \code{list} containing the following elements:

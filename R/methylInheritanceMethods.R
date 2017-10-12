@@ -383,6 +383,7 @@ runPermutation <- function(methylKitData,
 #' runObservation(methylKitData = samplesForTransgenerationalAnalysis,
 #'     outputDir = "test", type = "sites", vSeed = 221)
 #'
+#' load
 #' @author Astrid Deschenes, Pascal Belleau
 #' @export
 runObservation <- function(methylKitData,

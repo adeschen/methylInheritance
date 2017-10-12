@@ -123,6 +123,7 @@ data(samplesForTransgenerationalAnalysis)
 runObservation(methylKitData = samplesForTransgenerationalAnalysis,
     outputDir = "test", type = "sites", vSeed = 221)
 
+load
 }
 \seealso{
 \code{\link{mergePermutationAndObservation}}  for detail
