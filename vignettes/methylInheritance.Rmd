@@ -113,7 +113,7 @@ All those steps have been encoded in the
 
 A dataset containing methylation data (6 cases and 6 controls) over three 
 generations has been generated using the 
-`r Rpackage("methylInheritanceSim")` package.
+`r Rpackage("methInheritSim")` package.
 
 ```{r caseStudy01, warning=FALSE, message=FALSE, collapse=TRUE}
 ## Load dataset containing information over three generations

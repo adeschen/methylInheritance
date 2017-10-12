@@ -18,7 +18,7 @@ Author@R: c(person("Astrid", "Deschênes", email="adeschen@hotmail.com",
 Depends: R (>= 3.4)
 Imports: methylKit, BiocParallel, GenomicRanges, IRanges, S4Vectors,
         methods, parallel, ggplot2, gridExtra, rebus
-Suggests: BiocStyle, BiocGenerics, knitr, rmarkdown, RUnit
+Suggests: BiocStyle, BiocGenerics, knitr, rmarkdown, RUnit, methInheritSim
 Encoding: UTF-8
 License: Artistic-2.0
 VignetteBuilder: knitr
