@@ -136,7 +136,7 @@ NULL
 #'
 #' ## Run a permutation analysis
 #' runObservation(methylKitData = demoForTransgenerationalAnalysis,
-#'     type = "tiles", vSeed = 2001)
+#'     outputDir = "test_demo", type = "tiles", vSeed = 2001)
 #'
 NULL
 

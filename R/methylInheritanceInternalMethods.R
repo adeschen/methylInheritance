@@ -103,7 +103,7 @@
 #' ## The function returns 0 when all paramaters are valid
 #' methylInheritance:::validateRunPermutation(
 #'     methylKitData = samplesForTransgenerationalAnalysis, type = "sites",
-#'     outputDir = NULL, runObservedAnalysis = TRUE,
+#'     outputDir = "test", runObservedAnalysis = TRUE,
 #'     nbrPermutations = 10000, nbrCores = 1,
 #'     nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 25, qvalue = 0.01,
 #'     maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
@@ -112,7 +112,7 @@
 #'
 #' ## The function raises an error when at least one paramater is not valid
 #' \dontrun{methylInheritance:::validateRunPermutation(
-#'     methylKitData = "HI",type = "tiles", outputDir = NULL,
+#'     methylKitData = "HI", type = "tiles", outputDir = "test",
 #'     runObservedAnalysis = FALSE, nbrPermutations = 10000, nbrCores = 1,
 #'     nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 25, qvalue = 0.01,
 #'     maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
@@ -268,7 +268,7 @@ validateRunPermutation <- function(methylKitData,
 #' ## The function returns 0 when all paramaters are valid
 #' methylInheritance:::validateRunObservation(
 #'     methylKitData = samplesForTransgenerationalAnalysis, type = "sites",
-#'     outputDir = NULL, nbrCoresDiffMeth = 1, minReads = 10,
+#'     outputDir = "test", nbrCoresDiffMeth = 1, minReads = 10,
 #'     minMethDiff = 25, qvalue = 0.01,
 #'     maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
 #'     tileSize = 1000, stepSize = 500, vSeed = 12, restartCalculation = TRUE,
@@ -277,8 +277,8 @@ validateRunPermutation <- function(methylKitData,
 #' ## The function raises an error when at least one paramater is not valid
 #' \dontrun{methylInheritance:::validateRunObservation(
 #'     methylKitData = samplesForTransgenerationalAnalysis,
-#'     type = "tiles", outputDir = NULL, nbrCoresDiffMeth = 1, minReads = "HI",
-#'     minMethDiff = 25, qvalue = 0.01,
+#'     type = "tiles", outputDir = "test_02", nbrCoresDiffMeth = 1,
+#'     minReads = "HI", minMethDiff = 25, qvalue = 0.01,
 #'     maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
 #'     tileSize = 1000, stepSize = 500, vSeed = 12, restartCalculation = FALSE,
 #'     saveInfoByGeneration = FALSE)}
@@ -313,8 +313,8 @@ validateRunObservation <- function(methylKitData,
     }
 
     ## Validate that the output_dir is an not empty string
-    if (!is.null(outputDir) && !is.character(outputDir)) {
-        stop("output_dir must be a character string or NULL")
+    if (!is.character(outputDir)) {
+        stop("output_dir must be a character string")
     }
 
     ## Validate that nbrCoresDiffMeth is an positive integer

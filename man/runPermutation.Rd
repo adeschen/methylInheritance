@@ -5,11 +5,12 @@
 \title{Run all permutations on the specified multi-generational dataset}
 \usage{
 runPermutation(methylKitData, type = c("both", "sites", "tiles"),
-  outputDir = NULL, runObservationAnalysis = TRUE, nbrPermutations = 1000,
-  nbrCores = 1, nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 10,
-  qvalue = 0.01, maxPercReads = 99.9, destrand = FALSE,
-  minCovBasesForTiles = 0, tileSize = 1000, stepSize = 1000, vSeed = -1,
-  restartCalculation = FALSE, saveInfoByGeneration = FALSE)
+  outputDir = "output", runObservationAnalysis = TRUE,
+  nbrPermutations = 1000, nbrCores = 1, nbrCoresDiffMeth = 1,
+  minReads = 10, minMethDiff = 10, qvalue = 0.01, maxPercReads = 99.9,
+  destrand = FALSE, minCovBasesForTiles = 0, tileSize = 1000,
+  stepSize = 1000, vSeed = -1, restartCalculation = FALSE,
+  saveInfoByGeneration = FALSE)
 }
 \arguments{
 \item{methylKitData}{a \code{list} of \code{methylRawList} entries or the
@@ -28,9 +29,8 @@ retrieving differentially methylated bases type="sites"; for
 differentially methylated regions type="tiles". Default: "both".}
 
 \item{outputDir}{a string, the name of the directory that will contain
-the results of the permutation or \code{NULL}. If the directory does not
-exist, it will be created. When \code{NULL}, the results of the permutation
-are not saved. Default: \code{NULL}.}
+the results of the permutation. If the directory does not
+exist, it will be created. Default: \code{"output"}.}
 
 \item{runObservationAnalysis}{a \code{logical}, when
 \code{runObservationAnalysis} = \code{TRUE}, a CpG analysis on the
@@ -108,11 +108,7 @@ file for each permutation. The files are only saved when the
 \code{outputDir} is not \code{NULL}.}
 }
 \value{
-a \code{list} of class \code{methylInheritanceAllResults} when
-\code{runObservationAnalysis} = \code{TRUE}. Otherwise return a \code{list}
-that contains all the permutation results. The \code{list} is
-identical to the \code{PERMUTATION} section of the
-\code{methylInheritanceAllResults} object.
+\code{0}.
 }
 \description{
 Run a permutation analysis, based on Monte Carlo sampling,
@@ -125,7 +121,7 @@ The multi-generational dataset or the name of the RDS file that contains the
 dataset can be used as input.
 
 The observation analysis can also be run (optional). All permutation
-results can also be saved in RDS files (optional).
+results are saved in RDS files.
 }
 \examples{
 

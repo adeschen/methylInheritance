@@ -10,7 +10,7 @@
 #' dataset can be used as input.
 #'
 #' The observation analysis can also be run (optional). All permutation
-#' results can also be saved in RDS files (optional).
+#' results are saved in RDS files.
 #'
 #' @param methylKitData a \code{list} of \code{methylRawList} entries or the
 #' name of the RDS file containing the \code{list}. Each
@@ -28,9 +28,8 @@
 #' differentially methylated regions type="tiles". Default: "both".
 #'
 #' @param outputDir a string, the name of the directory that will contain
-#' the results of the permutation or \code{NULL}. If the directory does not
-#' exist, it will be created. When \code{NULL}, the results of the permutation
-#' are not saved. Default: \code{NULL}.
+#' the results of the permutation. If the directory does not
+#' exist, it will be created. Default: \code{"output"}.
 #'
 #' @param runObservationAnalysis a \code{logical}, when
 #' \code{runObservationAnalysis} = \code{TRUE}, a CpG analysis on the
@@ -107,11 +106,7 @@
 #' file for each permutation. The files are only saved when the
 #' \code{outputDir} is not \code{NULL}.
 #'
-#' @return a \code{list} of class \code{methylInheritanceAllResults} when
-#' \code{runObservationAnalysis} = \code{TRUE}. Otherwise return a \code{list}
-#' that contains all the permutation results. The \code{list} is
-#' identical to the \code{PERMUTATION} section of the
-#' \code{methylInheritanceAllResults} object.
+#' @return \code{0}.
 #'
 #' @seealso \code{\link{mergePermutationAndObservation}} for detail
 #' description, in the Value section, of the
@@ -146,7 +141,7 @@
 #' @export
 runPermutation <- function(methylKitData,
                             type=c("both", "sites", "tiles"),
-                            outputDir=NULL,
+                            outputDir="output",
                             runObservationAnalysis=TRUE,
                             nbrPermutations=1000,
                             nbrCores=1,
@@ -199,19 +194,7 @@ runPermutation <- function(methylKitData,
     RNGkind("L'Ecuyer-CMRG")
     set.seed(vSeed)
 
-    # ## Extract information
-    # nbGenerations <- length(methylKitData)
-    # nbSamplesByGeneration <- sapply(methylKitData, length)
-    # nbSamples  <- sum(nbSamplesByGeneration)
-    # allSamples <- unlist(methylKitData, recursive = FALSE)
-    #
-    # ## Create all permutations
-    # permutationSamples <- t(replicate(nbrPermutations, sample(1:nbSamples)))
-    # permWithID <- cbind(matrix(1:nbrPermutations, ncol = 1),
-    #                         permutationSamples)
-
-    # redoList <- list()
-
+    ## Create directory for result files
     if (!is.null(outputDir)) {
         createOutputDir(outputDir,
                         doingSites = any(type %in% c("sites", "both")),
@@ -221,7 +204,6 @@ runPermutation <- function(methylKitData,
 
     ## Call observation analysis
     if (runObservationAnalysis) {
-        # result <-
         runObservation(methylKitData = methylKitData,
                                 type = type,
                                 outputDir = outputDir,
@@ -237,8 +219,6 @@ runPermutation <- function(methylKitData,
                                 vSeed = vSeed,
                                 restartCalculation = restartCalculation,
                                 saveInfoByGeneration = saveInfoByGeneration)
-    } else {
-        # result <- list()
     }
 
     ## Upgrade seed
@@ -266,7 +246,6 @@ runPermutation <- function(methylKitData,
                         mc.cores = nbrCores,
                         mc.preschedule = TRUE)
     } else {
-        #permutationResults <-
         lapply(seq_len(nbrPermutations), FUN =
                                         runOnePermutationOnAllGenerations,
                                 methylInfoForAllGenerations = methylKitData,
@@ -284,12 +263,6 @@ runPermutation <- function(methylKitData,
                                 restartCalculation = restartCalculation,
                                 saveInfoByGeneration = saveInfoByGeneration)
     }
-
-    # result[["PERMUTATION"]] <- permutationResults
-    #
-    # if (runObservationAnalysis) {
-    #     class(result)<-"methylInheritanceAllResults"
-    # }
 
     return(0)
 }
@@ -408,7 +381,7 @@ runPermutation <- function(methylKitData,
 #'
 #' ## Run an observation analysis
 #' runObservation(methylKitData = samplesForTransgenerationalAnalysis,
-#'     type = "sites", vSeed = 221)
+#'     outputDir = "test", type = "sites", vSeed = 221)
 #'
 #' @author Astrid Deschenes, Pascal Belleau
 #' @export
@@ -474,7 +447,7 @@ runObservation <- function(methylKitData,
     }
 
     ## Extract information
-    observed <- runOnePermutationOnAllGenerations(id = 0,
+    runOnePermutationOnAllGenerations(id = 0,
                                 methylInfoForAllGenerations = methylKitData,
                                 type = type, outputDir = outputDir,
                                 nbrCoresDiffMeth = nbrCoresDiffMeth,
@@ -489,12 +462,7 @@ runObservation <- function(methylKitData,
                                 restartCalculation = restartCalculation,
                                 saveInfoByGeneration = saveInfoByGeneration)
 
-
-    ## Create final returned list
-    result <- list()
-    result[["OBSERVATION"]] <- observed
-
-    return(result)
+    return(0)
 }
 
 
@@ -508,11 +476,13 @@ runObservation <- function(methylKitData,
 #'
 #' @param analysisResultsDir a \code{character} string, the path to the
 #' directory that contains the analysis results. The path can be the same as
-#' for the \code{permutatioNResultsDir} parameter.
+#' for the \code{permutationResultsDir} parameter. When \code{NULL}, the
+#' observation results are not loaded. Default = \code{NULL}.
 #'
 #' @param permutationResultsDir a \code{character} string, the path to the
 #' directory that contains the permutation results. The path can be the same
-#' as for the \code{analysisResultsDir} parameter.
+#' as for the \code{analysisResultsDir} parameter. When \code{NULL}, the
+#' permutation results are not loaded. Default = \code{NULL}.
 #'
 #' @param doingSites a \code{logical}, the data related to differentially
 #' methylated sites are loaded when
@@ -583,58 +553,68 @@ loadAllRDSResults <- function(analysisResultsDir,
 
     ## SITES
     if (doingSites) {
-        analysisResults <- readRDS(file = paste0(analysisResultsDir,
+        if (!is.null(analysisResultsDir)) {
+            analysisResults <- readRDS(file = paste0(analysisResultsDir,
                                         "SITES/SITES_observed_results.RDS"))
-        analysisStruct <- createDataStructure(interGenerationGR =
+            analysisStruct <- createDataStructure(interGenerationGR =
                                                     analysisResults)
-        result[["OBSERVATION"]][["SITES"]] <- analysisStruct
+            result[["OBSERVATION"]][["SITES"]] <- analysisStruct
+        }
 
-        filesInDir <- list.files(path = paste0(analysisResultsDir,
+        if (!is.null(permutationResultsDir)) {
+            filesInDir <- list.files(path = paste0(permutationResultsDir,
                                                                 "SITES/"),
                                 pattern = filePattern, all.files = FALSE,
                                 full.names = TRUE, recursive = FALSE,
                                 ignore.case = FALSE, include.dirs = FALSE,
                                 no.. = FALSE)
 
-        sitesPerm <- lapply(filesInDir, FUN = function(x) {readRDS(file = x)})
+            sitesPerm <- lapply(filesInDir, FUN = function(x) {
+                                                        readRDS(file = x)})
 
-        t <- lapply(sitesPerm, FUN = function(x) {
+            t <- lapply(sitesPerm, FUN = function(x) {
                     struct <- createDataStructure(interGenerationGR = x)
                     res <- list("SITES" = struct)
                     return(res)})
 
-        result[["PERMUTATION"]] <- t
+            result[["PERMUTATION"]] <- t
+        }
     }
 
     ## TILES
     if (doingTiles) {
-        analysisResults <- readRDS(file = paste0(permutationResultsDir,
+        if (!is.null(analysisResultsDir)) {
+            analysisResults <- readRDS(file = paste0(analysisResultsDir,
                                         "TILES/TILES_observed_results.RDS"))
-        analysisStruct <- createDataStructure(interGenerationGR =
+            analysisStruct <- createDataStructure(interGenerationGR =
                                                     analysisResults)
-        result[["OBSERVATION"]][["TILES"]] <- analysisStruct
+            result[["OBSERVATION"]][["TILES"]] <- analysisStruct
+        }
 
-        filesInDir <- list.files(path = paste0(permutationResultsDir,
+        if (!is.null(permutationResultsDir)) {
+            filesInDir <- list.files(path = paste0(permutationResultsDir,
                                                             "TILES/"),
                                 pattern = filePattern, all.files = FALSE,
                                 full.names = TRUE, recursive = FALSE,
                                 ignore.case = FALSE, include.dirs = FALSE,
                                 no.. = FALSE)
 
-        tilesPerm <- lapply(filesInDir, FUN = function(x) {readRDS(file = x)})
+            tilesPerm <- lapply(filesInDir, FUN = function(x) {
+                                                    readRDS(file = x)})
 
-        t <- lapply(tilesPerm, FUN = function(x) {
+            t <- lapply(tilesPerm, FUN = function(x) {
                     struct <- createDataStructure(interGenerationGR = x)
                     res <- list("TILES" = struct)
                     return(res)})
-        if (!doingSites) {
-            result[["PERMUTATION"]] <- t
-        } else {
-            for (i in 1:length(result[["PERMUTATION"]])) {
-                result[["PERMUTATION"]][[i]]$TILES <- t[[i]]$TILES
+
+            if (!doingSites) {
+                result[["PERMUTATION"]] <- t
+            } else {
+                for (i in 1:length(result[["PERMUTATION"]])) {
+                    result[["PERMUTATION"]][[i]]$TILES <- t[[i]]$TILES
+                }
             }
         }
-
     }
 
     class(result)<-"methylInheritanceAllResults"

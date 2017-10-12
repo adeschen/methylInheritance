@@ -152,17 +152,15 @@ getTreatment(demoForTransgenerationalAnalysis[[3]])
 The observation analysis can be run on all generations using the
 *runObservation()* function.
 
-The observation results can optionally be stored in a RDS file. To store the
-results into a RDS file, the *outputDir* parameter must be given a directory
-path.
+The observation results are stored in a RDS file. The *outputDir* parameter 
+must be given a directory path.
 
 ```{r caseStudy02, warning=FALSE, message=FALSE, collapse=TRUE, cache=TRUE}
 ## The observation analysis is only done on differentially methylated sites
-observationResult <- runObservation(methylKitData = 
-                                        demoForTransgenerationalAnalysis, 
+runObservation(methylKitData = demoForTransgenerationalAnalysis, 
                         type = "sites",     # Only sites
-                        outputDir = NULL,   # RDS files only created when a 
-                                            # path is given
+                        outputDir = "demo_01",   # RDS result files are saved 
+                                                 # in the directory
                         nbrCores = 1,       # Number of cores used 
                         minReads = 10,      # Minimum read coverage
                         minMethDiff = 10,   # Minimum difference in methylation 
@@ -170,8 +168,16 @@ observationResult <- runObservation(methylKitData =
                         qvalue = 0.01,
                         vSeed = 2101)       # Ensure reproducible results
 
-## Only one entry, containing all results, is created for the sites
-observationResult$OBSERVATION$SITES
+## The results can be retrived using loadAllRDSResults() method
+observedResults <- loadAllRDSResults(
+                    analysisResultsDir = "demo_01/",  # Directory containing
+                                                      # the observation
+                                                      # results
+                    permutationResultsDir = NULL, 
+                    doingSites = TRUE, 
+                    doingTiles = FALSE)
+
+observedResults
 ```
 
 
@@ -184,20 +190,18 @@ The observation and the permutation analysis can be run together by
 setting the *runObservationAnalysis = TRUE* in the
 *runPermutation()* function.
 
-All permutations can also be, optionally, saved in RDS files. To store the
-results into RDS files, the *outputDir* parameter must be given a directory
-path.
+All permutations are saved in RDS files. The *outputDir* parameter
+must be given a directory path.
 
 At last, the name of the RDS file that contains the methylKit object can also
 be used as an argument to the *runPermutation()* function.
 
 ```{r caseStudy03, warning=FALSE, message=FALSE, collapse=TRUE, cache=TRUE}
 ## The permutation analysis is only done on differentially methylated sites
-permutationResult <- runPermutation(
-                        methylKitData = demoForTransgenerationalAnalysis, # multi-generational dataset
+runPermutation(methylKitData = demoForTransgenerationalAnalysis, # multi-generational dataset
                         type = "sites",     # Only sites
-                        outputDir = NULL,   # RDS files only created when a 
-                                            # path is given
+                        outputDir = "demo_02",   # RDS permutation files are 
+                                                 # saved in the directory
                         runObservationAnalysis = FALSE,
                         nbrCores = 1,           # Number of cores used
                         nbrPermutations = 2,    # Should be much higher for a
@@ -208,13 +212,16 @@ permutationResult <- runPermutation(
                         qvalue = 0.01,
                         vSeed = 2101)         # Ensure reproducible results
 
-## The length of the PERMUTATION entry should correspond to the number 
-## of permutations
-#length(permutationResult$PERMUTATION)
+## The results can be retrived using loadAllRDSResults() method
+permutationResults <- loadAllRDSResults(
+                    analysisResultsDir = NULL, 
+                    permutationResultsDir = "demo_02",   # Directory containing
+                                                    # the permutation
+                                                    # results
+                    doingSites = TRUE, 
+                    doingTiles = FALSE)
 
-## Each entry in PERMUTATION correspond to the result of one permutation
-## THe results of the second permutation
-#permutationResult$PERMUTATION[[2]]$SITES
+permutationResults
 ```
 
 

@@ -42,6 +42,8 @@ print.methylInheritanceAllResults <- function(x, ...) {
 
     isSites <- FALSE
 
+    result <- NULL
+
     ## Extract info about sites when present
     if (!is.null(x$OBSERVATION$SITES)) {
         tt <- unlist(x$OBSERVATION$SITES)
@@ -81,6 +83,10 @@ print.methylInheritanceAllResults <- function(x, ...) {
     cat("Number of Generations: ", nbGenerations, "\n")
     cat("Number of Permutations: ", nbPermutations , "\n\n")
     cat("Observation Results: \n")
-    print.data.frame(result)
+    if (!is.null(result)) {
+        print.data.frame(result)
+    } else {
+        cat("\tNo observation result.")
+    }
     invisible(x)
 }

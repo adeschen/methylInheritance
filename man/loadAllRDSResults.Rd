@@ -11,11 +11,13 @@ loadAllRDSResults(analysisResultsDir, permutationResultsDir,
 \arguments{
 \item{analysisResultsDir}{a \code{character} string, the path to the
 directory that contains the analysis results. The path can be the same as
-for the \code{permutatioNResultsDir} parameter.}
+for the \code{permutationResultsDir} parameter. When \code{NULL}, the
+observation results are not loaded. Default = \code{NULL}.}
 
 \item{permutationResultsDir}{a \code{character} string, the path to the
 directory that contains the permutation results. The path can be the same
-as for the \code{analysisResultsDir} parameter.}
+as for the \code{analysisResultsDir} parameter. When \code{NULL}, the
+permutation results are not loaded. Default = \code{NULL}.}
 
 \item{doingSites}{a \code{logical}, the data related to differentially
 methylated sites are loaded when

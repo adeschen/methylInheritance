@@ -105,7 +105,7 @@ data(samplesForTransgenerationalAnalysis)
 ## The function returns 0 when all paramaters are valid
 methylInheritance:::validateRunObservation(
     methylKitData = samplesForTransgenerationalAnalysis, type = "sites",
-    outputDir = NULL, nbrCoresDiffMeth = 1, minReads = 10,
+    outputDir = "test", nbrCoresDiffMeth = 1, minReads = 10,
     minMethDiff = 25, qvalue = 0.01,
     maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
     tileSize = 1000, stepSize = 500, vSeed = 12, restartCalculation = TRUE,
@@ -114,8 +114,8 @@ methylInheritance:::validateRunObservation(
 ## The function raises an error when at least one paramater is not valid
 \dontrun{methylInheritance:::validateRunObservation(
     methylKitData = samplesForTransgenerationalAnalysis,
-    type = "tiles", outputDir = NULL, nbrCoresDiffMeth = 1, minReads = "HI",
-    minMethDiff = 25, qvalue = 0.01,
+    type = "tiles", outputDir = "test_02", nbrCoresDiffMeth = 1,
+    minReads = "HI", minMethDiff = 25, qvalue = 0.01,
     maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
     tileSize = 1000, stepSize = 500, vSeed = 12, restartCalculation = FALSE,
     saveInfoByGeneration = FALSE)}

@@ -17,6 +17,14 @@ METHYL_OBJ <- readRDS(METHYL_OBJ_FILE)
 
 data(methylInheritanceResults)
 
+
+.tearDown <- function() {
+    if (dir.exists("./test_01")) {
+        unlink("./test_01", recursive = TRUE, force = TRUE)
+    }
+}
+
+
 ###########################################################
 ## runOnePermutationOnAllGenerations() function
 ###########################################################

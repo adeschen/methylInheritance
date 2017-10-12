@@ -115,7 +115,7 @@ data(samplesForTransgenerationalAnalysis)
 ## The function returns 0 when all paramaters are valid
 methylInheritance:::validateRunPermutation(
     methylKitData = samplesForTransgenerationalAnalysis, type = "sites",
-    outputDir = NULL, runObservedAnalysis = TRUE,
+    outputDir = "test", runObservedAnalysis = TRUE,
     nbrPermutations = 10000, nbrCores = 1,
     nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 25, qvalue = 0.01,
     maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
@@ -124,7 +124,7 @@ methylInheritance:::validateRunPermutation(
 
 ## The function raises an error when at least one paramater is not valid
 \dontrun{methylInheritance:::validateRunPermutation(
-    methylKitData = "HI",type = "tiles", outputDir = NULL,
+    methylKitData = "HI", type = "tiles", outputDir = "test",
     runObservedAnalysis = FALSE, nbrPermutations = 10000, nbrCores = 1,
     nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 25, qvalue = 0.01,
     maxPercReads = 99.9, destrand = TRUE, minCovBasesForTiles = 10,
