@@ -1,0 +1,13 @@
+CHANGES IN VERSION 1.1.1
+------------------------
+
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o Functions runObservation() and runPermutation() don't return the result anymore. The results are saved in RDS files. The results can be loaded through the loadAllRDSResults() function.
+    o New plotConvergence() function enable visualization of convergence
+    o New "saveInfoByGeneration" parameter which generates RDS files containing information about each generation for each permutation
+
+
+BUG FIXES AND IMPROVEMENTS
+
+    o Major changes in parallel processing to limit memory consumption
