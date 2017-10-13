@@ -87,18 +87,16 @@ is used. Default: \code{-1}.}
 
 \item{restartCalculation}{a \code{logical}, when \code{TRUE}, only
 permutations that don't have a RDS result final are run. Useful
-to restart a permutation analysis that has been interrupted.}
+to restart a permutation analysis that has been interrupted. Beware that
+the parameters have to be identical except for this one.}
 
 \item{saveInfoByGeneration}{a \code{logical}, when \code{TRUE}, the
 information about differentially methylated sites and tiles for each
-generation is saved in a RDS file. The files are only saved when the
-\code{outputDir} is not \code{NULL}.}
+generation is saved in a RDS file. The files are saved in the directory
+specified by the \code{outputDir} parameter.}
 }
 \value{
-a \code{list}
-that contains the result of the observation analysis. The \code{list} is
-identical to the \code{OBSERVATION} section of the
-\code{methylInheritanceAllResults} object.
+\code{0}.
 }
 \description{
 Run a differential methylation analysis on each generation

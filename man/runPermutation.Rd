@@ -99,13 +99,14 @@ is used. Default: \code{-1}.}
 
 \item{restartCalculation}{a \code{logical}, when \code{TRUE}, only
 permutations that don't have an associated RDS result file are run. Useful
-to restart a permutation analysis that has been interrupted.}
+to restart a permutation analysis that has been interrupted. Beware that
+the parameters have to be identical except for this one.}
 
 \item{saveInfoByGeneration}{a \code{logical}, when \code{TRUE}, the
 information about differentially methylated sites and tiles for each
 generation is saved in a RDS file. The information is saved in a different
-file for each permutation. The files are only saved when the
-\code{outputDir} is not \code{NULL}.}
+file for each permutation. The files are saved in the directory specified
+by the \code{outputDir} parameter.}
 }
 \value{
 \code{0}.
