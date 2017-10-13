@@ -17,7 +17,6 @@ METHYL_OBJ <- readRDS(METHYL_OBJ_FILE)
 
 data(methylInheritanceResults)
 
-
 .tearDown <- function() {
     if (dir.exists("test_001")) {
         unlink("test_001", recursive = TRUE, force = TRUE)

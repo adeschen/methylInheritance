@@ -16,6 +16,12 @@ TEST_DIR <- system.file("extdata", "TEST", package = "methylInheritance")
 
 data("methylInheritanceResults")
 
+.tearDown <- function() {
+    if (dir.exists("test_002")) {
+        unlink("test_002", recursive = TRUE, force = TRUE)
+    }
+}
+
 ###########################################################
 ## runPermutation() function
 ###########################################################
@@ -23,7 +29,7 @@ data("methylInheritanceResults")
 ## Test when methylKitData is not a valid RDS file name
 test.runPermutation_methylKitData_not_valid_RDS <- function() {
     obs <- tryCatch(runPermutation(
-        methylKitData = "HI",  outputDir = NULL,
+        methylKitData = "HI",  outputDir = "test_002",
         nbrPermutations = 2, nbrCores = 1, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
         maxPercReads = 99.9, destrand = FALSE, minCovBasesForTiles = 2,
@@ -39,48 +45,60 @@ test.runPermutation_methylKitData_not_valid_RDS <- function() {
 }
 
 ## Test when all parameters valid
-# test.runPermutation_good_001 <- function() {
-#     obs <- runPermutation(methylKitData = METHYL_OBJ_FILE_01, runObservationAnalysis = FALSE,
-#                     type = "both", nbrPermutations = 2, minReads = 5, minMethDiff = 5,
-#                     vSeed = 2021)
-#     exp <- list()
-#     exp[["PERMUTATION"]] <- list()
-#     exp[["PERMUTATION"]][[1]] <- list()
-#     exp[["PERMUTATION"]][[1]][["SITES"]] <- list()
-#     exp[["PERMUTATION"]][[1]][["SITES"]][["i2"]] <- list()
-#     exp[["PERMUTATION"]][[1]][["SITES"]][["i2"]][["HYPER"]] <- list(0,0)
-#     exp[["PERMUTATION"]][[1]][["SITES"]][["i2"]][["HYPO"]] <- list(1,0)
-#     exp[["PERMUTATION"]][[1]][["SITES"]][["iAll"]] <- list()
-#     exp[["PERMUTATION"]][[1]][["SITES"]][["iAll"]][["HYPER"]] <- list(0)
-#     exp[["PERMUTATION"]][[1]][["SITES"]][["iAll"]][["HYPO"]] <- list(0)
-#     exp[["PERMUTATION"]][[1]][["TILES"]] <- list()
-#     exp[["PERMUTATION"]][[1]][["TILES"]][["i2"]] <- list()
-#     exp[["PERMUTATION"]][[1]][["TILES"]][["i2"]][["HYPER"]] <- list(0,0)
-#     exp[["PERMUTATION"]][[1]][["TILES"]][["i2"]][["HYPO"]] <- list(0,0)
-#     exp[["PERMUTATION"]][[1]][["TILES"]][["iAll"]] <- list()
-#     exp[["PERMUTATION"]][[1]][["TILES"]][["iAll"]][["HYPER"]] <- list(0)
-#     exp[["PERMUTATION"]][[1]][["TILES"]][["iAll"]][["HYPO"]] <- list(0)
-#     exp[["PERMUTATION"]][[2]] <- list()
-#     exp[["PERMUTATION"]][[2]][["SITES"]] <- list()
-#     exp[["PERMUTATION"]][[2]][["SITES"]][["i2"]] <- list()
-#     exp[["PERMUTATION"]][[2]][["SITES"]][["i2"]][["HYPER"]] <- list(0,0)
-#     exp[["PERMUTATION"]][[2]][["SITES"]][["i2"]][["HYPO"]] <- list(0,1)
-#     exp[["PERMUTATION"]][[2]][["SITES"]][["iAll"]] <- list()
-#     exp[["PERMUTATION"]][[2]][["SITES"]][["iAll"]][["HYPER"]] <- list(0)
-#     exp[["PERMUTATION"]][[2]][["SITES"]][["iAll"]][["HYPO"]] <- list(0)
-#     exp[["PERMUTATION"]][[2]][["TILES"]] <- list()
-#     exp[["PERMUTATION"]][[2]][["TILES"]][["i2"]] <- list()
-#     exp[["PERMUTATION"]][[2]][["TILES"]][["i2"]][["HYPER"]] <- list(0,0)
-#     exp[["PERMUTATION"]][[2]][["TILES"]][["i2"]][["HYPO"]] <- list(0,0)
-#     exp[["PERMUTATION"]][[2]][["TILES"]][["iAll"]] <- list()
-#     exp[["PERMUTATION"]][[2]][["TILES"]][["iAll"]][["HYPER"]] <- list(0)
-#     exp[["PERMUTATION"]][[2]][["TILES"]][["iAll"]][["HYPO"]] <- list(0)
-#
-#     message <- paste0(" test.runPermutation_good_001() ",
-#                       "- Valid parameters did not generated expected message.")
-#
-#     checkEquals(obs, exp, msg = message)
-# }
+test.runPermutation_good_001 <- function() {
+
+    if (!dir.exists("test_002")) {
+        dir.create("test_002/SITES/", recursive = TRUE)
+        dir.create("test_002/TILES/", recursive = TRUE)
+    }
+
+    obs <- runPermutation(methylKitData = METHYL_OBJ_FILE_01, runObservationAnalysis = FALSE,
+                    type = "both", nbrPermutations = 2, minReads = 5, minMethDiff = 5,
+                    outputDir = "test_002", vSeed = 2000)
+
+    obsV <- methylInheritance::loadAllRDSResults(permutationResultsDir = "test_002",
+                                                analysisResultsDir = NULL, doingSites = TRUE,
+                                                doingTiles = TRUE)
+
+    exp <- list()
+    exp[["PERMUTATION"]] <- list()
+    exp[["PERMUTATION"]][[1]] <- list()
+    exp[["PERMUTATION"]][[1]][["SITES"]] <- list()
+    exp[["PERMUTATION"]][[1]][["SITES"]][["i2"]] <- list()
+    exp[["PERMUTATION"]][[1]][["SITES"]][["i2"]][["HYPER"]] <- list(0,0)
+    exp[["PERMUTATION"]][[1]][["SITES"]][["i2"]][["HYPO"]] <- list(0,1)
+    exp[["PERMUTATION"]][[1]][["SITES"]][["iAll"]] <- list()
+    exp[["PERMUTATION"]][[1]][["SITES"]][["iAll"]][["HYPER"]] <- list(0)
+    exp[["PERMUTATION"]][[1]][["SITES"]][["iAll"]][["HYPO"]] <- list(0)
+    exp[["PERMUTATION"]][[1]][["TILES"]] <- list()
+    exp[["PERMUTATION"]][[1]][["TILES"]][["i2"]] <- list()
+    exp[["PERMUTATION"]][[1]][["TILES"]][["i2"]][["HYPER"]] <- list(0,0)
+    exp[["PERMUTATION"]][[1]][["TILES"]][["i2"]][["HYPO"]] <- list(0,0)
+    exp[["PERMUTATION"]][[1]][["TILES"]][["iAll"]] <- list()
+    exp[["PERMUTATION"]][[1]][["TILES"]][["iAll"]][["HYPER"]] <- list(0)
+    exp[["PERMUTATION"]][[1]][["TILES"]][["iAll"]][["HYPO"]] <- list(0)
+    exp[["PERMUTATION"]][[2]] <- list()
+    exp[["PERMUTATION"]][[2]][["SITES"]] <- list()
+    exp[["PERMUTATION"]][[2]][["SITES"]][["i2"]] <- list()
+    exp[["PERMUTATION"]][[2]][["SITES"]][["i2"]][["HYPER"]] <- list(0,0)
+    exp[["PERMUTATION"]][[2]][["SITES"]][["i2"]][["HYPO"]] <- list(0,0)
+    exp[["PERMUTATION"]][[2]][["SITES"]][["iAll"]] <- list()
+    exp[["PERMUTATION"]][[2]][["SITES"]][["iAll"]][["HYPER"]] <- list(0)
+    exp[["PERMUTATION"]][[2]][["SITES"]][["iAll"]][["HYPO"]] <- list(0)
+    exp[["PERMUTATION"]][[2]][["TILES"]] <- list()
+    exp[["PERMUTATION"]][[2]][["TILES"]][["i2"]] <- list()
+    exp[["PERMUTATION"]][[2]][["TILES"]][["i2"]][["HYPER"]] <- list(0,0)
+    exp[["PERMUTATION"]][[2]][["TILES"]][["i2"]][["HYPO"]] <- list(0,0)
+    exp[["PERMUTATION"]][[2]][["TILES"]][["iAll"]] <- list()
+    exp[["PERMUTATION"]][[2]][["TILES"]][["iAll"]][["HYPER"]] <- list(0)
+    exp[["PERMUTATION"]][[2]][["TILES"]][["iAll"]][["HYPO"]] <- list(0)
+
+    message <- paste0(" test.runPermutation_good_001() ",
+                      "- Valid parameters did not generated expected message.")
+
+    checkEquals(obs, 0, msg = message)
+    checkEquals(obsV$PERMUTATION, exp$PERMUTATION, msg = message)
+}
 
 
 ###########################################################
@@ -105,30 +123,38 @@ test.runObservation_methylKitData_not_valid <- function() {
 }
 
 ## Test when all parameters valid
-# test.runObservation_good_001 <- function() {
-#     obs <- tryCatch(runObservation(
-#         methylKitData = METHYL_OBJ_FILE_01, type = "sites",
-#         outputDir = NULL, nbrCoresDiffMeth = 1,
-#         minReads = 10, minMethDiff = 5, qvalue = 0.05,
-#         maxPercReads = 99.9, destrand = FALSE, minCovBasesForTiles = 2,
-#         tileSize = 1000, stepSize = 100, vSeed = 200),
-#         error=conditionMessage)
-#
-#     exp <- list()
-#     exp[["OBSERVATION"]] <- list()
-#     exp[["OBSERVATION"]][["SITES"]] <- list()
-#     exp[["OBSERVATION"]][["SITES"]][["i2"]] <- list()
-#     exp[["OBSERVATION"]][["SITES"]][["i2"]][["HYPER"]] <- list(0,0)
-#     exp[["OBSERVATION"]][["SITES"]][["i2"]][["HYPO"]] <- list(3,3)
-#     exp[["OBSERVATION"]][["SITES"]][["iAll"]] <- list()
-#     exp[["OBSERVATION"]][["SITES"]][["iAll"]][["HYPER"]] <- list(0)
-#     exp[["OBSERVATION"]][["SITES"]][["iAll"]][["HYPO"]] <- list(2)
-#
-#     message <- paste0(" test.runObservation_good_001() ",
-#                       "- All valid parameters did not generated expected result.")
-#
-#     checkEquals(obs, exp, msg = message)
-# }
+test.runObservation_good_001 <- function() {
+
+    if (!dir.exists("test_002")) {
+        dir.create("test_002/SITES/", recursive = TRUE)
+    }
+
+    obs <- runObservation(
+        methylKitData = METHYL_OBJ_FILE_01, type = "sites",
+        outputDir = "test_002", nbrCoresDiffMeth = 1,
+        minReads = 10, minMethDiff = 5, qvalue = 0.05,
+        maxPercReads = 99.9, destrand = FALSE, minCovBasesForTiles = 2,
+        tileSize = 1000, stepSize = 100, vSeed = 200, saveInfoByGeneration = FALSE)
+
+    obsV <- methylInheritance::loadAllRDSResults(permutationResultsDir = NULL,
+                                                 analysisResultsDir = "test_002")
+
+    exp <- list()
+    exp[["OBSERVATION"]] <- list()
+    exp[["OBSERVATION"]][["SITES"]] <- list()
+    exp[["OBSERVATION"]][["SITES"]][["i2"]] <- list()
+    exp[["OBSERVATION"]][["SITES"]][["i2"]][["HYPER"]] <- list(0,0)
+    exp[["OBSERVATION"]][["SITES"]][["i2"]][["HYPO"]] <- list(3,3)
+    exp[["OBSERVATION"]][["SITES"]][["iAll"]] <- list()
+    exp[["OBSERVATION"]][["SITES"]][["iAll"]][["HYPER"]] <- list(0)
+    exp[["OBSERVATION"]][["SITES"]][["iAll"]][["HYPO"]] <- list(2)
+
+    message <- paste0(" test.runObservation_good_001() ",
+                      "- All valid parameters did not generated expected result.")
+
+    checkEquals(obs, 0, msg = message)
+    checkEquals(obsV$OBSERVATION, exp$OBSERVATION, msg = message)
+}
 
 
 ###########################################################

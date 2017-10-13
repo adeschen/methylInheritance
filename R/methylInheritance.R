@@ -138,6 +138,16 @@ NULL
 #' runObservation(methylKitData = demoForTransgenerationalAnalysis,
 #'     outputDir = "test_demo", type = "tiles", vSeed = 2001)
 #'
+#' ## Get results
+#' result <- loadAllRDSResults(analysisResultsDir = "test_demo",
+#'     permutationResultsDir = NULL, doingSites = FALSE,
+#'     doingTiles = TRUE)
+#'
+#' ## Remove result directory
+#' if (dir.exists("test_demo")) {
+#'     unlink("test_demo", recursive = TRUE)
+#' }
+#'
 NULL
 
 
