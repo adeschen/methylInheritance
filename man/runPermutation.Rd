@@ -131,8 +131,18 @@ data(samplesForTransgenerationalAnalysis)
 ## Run a permutation analysis using the methylKit dataset
 ## A real analysis would require a much higher number of permutations
 runPermutation(methylKitData = samplesForTransgenerationalAnalysis,
-    runObservationAnalysis = FALSE, type = "sites", nbrPermutations = 2,
-    vSeed = 221)
+    outputDir = "test_01", runObservationAnalysis = FALSE, type = "sites",
+    nbrPermutations = 2, vSeed = 221)
+
+## Get results
+results_01 <- loadAllRDSResults(analysisResultsDir = NULL,
+    permutationResultsDir = "test_01", doingSites = TRUE,
+    doingTiles = FALSE)
+
+## Remove results directory
+if (dir.exists("test_01")) {
+    unlink("test_01", recursive = TRUE, force = TRUE)
+}
 
 ## Path to a methylKit RDS file
 methylFile <- system.file("extdata", "methylObj_001.RDS",
@@ -141,8 +151,18 @@ methylFile <- system.file("extdata", "methylObj_001.RDS",
 ## Run a permutation analysis using RDS file name
 ## A real analysis would require a much higher number of permutations
 runPermutation(methylKitData = methylFile, type = "tiles",
-    nbrPermutations = 2, minCovBasesForTiles = 10, vSeed = 2001)
+    outputDir = "test_02", nbrPermutations = 2, minCovBasesForTiles = 10,
+    vSeed = 2001)
 
+## Get results
+results_02 <- loadAllRDSResults(analysisResultsDir = NULL,
+    permutationResultsDir = "test_02", doingSites = FALSE,
+    doingTiles = TRUE)
+
+## Remove results directory
+if (dir.exists("test_02")) {
+    unlink("test_02", recursive = TRUE, force = TRUE)
+}
 
 }
 \seealso{

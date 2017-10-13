@@ -51,6 +51,12 @@ filesDir <- system.file("extdata", "TEST", package="methylInheritance")
 results <- loadAllRDSResults(analysisResultsDir = filesDir,
     permutationResultsDir = filesDir, doingSites = TRUE, doingTiles = TRUE)
 
+## Print the observation results
+results
+
+## Access the results for the first permutation only for sites
+results$PERMUTATION[[1]]$SITES
+
 }
 \seealso{
 \code{\link{mergePermutationAndObservation}} for detail

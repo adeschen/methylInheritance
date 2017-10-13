@@ -6,7 +6,7 @@
 dataset}
 \usage{
 runObservation(methylKitData, type = c("both", "sites", "tiles"),
-  outputDir = NULL, nbrCoresDiffMeth = 1, minReads = 10,
+  outputDir = "output", nbrCoresDiffMeth = 1, minReads = 10,
   minMethDiff = 10, qvalue = 0.01, maxPercReads = 99.9,
   destrand = FALSE, minCovBasesForTiles = 0, tileSize = 1000,
   stepSize = 1000, vSeed = -1, restartCalculation = FALSE,
@@ -28,9 +28,8 @@ retrieving differentially methylated bases type="sites"; for
 differentially methylated regions type="tiles". Default: "both".}
 
 \item{outputDir}{a string, the name of the directory that will contain
-the results of the permutation or \code{NULL}. If the directory does not
-exist, it will be created. When \code{NULL}, the results of the permutation
-are not saved. Default: \code{NULL}.}
+the results of the analysis. If the directory does not
+exist, it will be created. Default: \code{"output"}.}
 
 \item{nbrCoresDiffMeth}{a positive \code{integer}, the number of cores
 to use for parallel differential methylation calculations.The parameter is
@@ -123,7 +122,18 @@ data(samplesForTransgenerationalAnalysis)
 runObservation(methylKitData = samplesForTransgenerationalAnalysis,
     outputDir = "test", type = "sites", vSeed = 221)
 
-load
+## Load the results
+results <- loadAllRDSResults(analysisResultsDir = "test",
+    permutationResultsDir = NULL, doingSites = TRUE, doingTiles = FALSE)
+
+## Print the results
+results
+
+## Remove directory
+if (dir.exists("test")) {
+    unlink("test", recursive = TRUE, force = FALSE)
+}
+
 }
 \seealso{
 \code{\link{mergePermutationAndObservation}}  for detail

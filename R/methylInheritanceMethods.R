@@ -121,8 +121,18 @@
 #' ## Run a permutation analysis using the methylKit dataset
 #' ## A real analysis would require a much higher number of permutations
 #' runPermutation(methylKitData = samplesForTransgenerationalAnalysis,
-#'     runObservationAnalysis = FALSE, type = "sites", nbrPermutations = 2,
-#'     vSeed = 221)
+#'     outputDir = "test_01", runObservationAnalysis = FALSE, type = "sites",
+#'     nbrPermutations = 2, vSeed = 221)
+#'
+#' ## Get results
+#' results_01 <- loadAllRDSResults(analysisResultsDir = NULL,
+#'     permutationResultsDir = "test_01", doingSites = TRUE,
+#'     doingTiles = FALSE)
+#'
+#' ## Remove results directory
+#' if (dir.exists("test_01")) {
+#'     unlink("test_01", recursive = TRUE, force = TRUE)
+#' }
 #'
 #' ## Path to a methylKit RDS file
 #' methylFile <- system.file("extdata", "methylObj_001.RDS",
@@ -131,8 +141,18 @@
 #' ## Run a permutation analysis using RDS file name
 #' ## A real analysis would require a much higher number of permutations
 #' runPermutation(methylKitData = methylFile, type = "tiles",
-#'     nbrPermutations = 2, minCovBasesForTiles = 10, vSeed = 2001)
+#'     outputDir = "test_02", nbrPermutations = 2, minCovBasesForTiles = 10,
+#'     vSeed = 2001)
 #'
+#' ## Get results
+#' results_02 <- loadAllRDSResults(analysisResultsDir = NULL,
+#'     permutationResultsDir = "test_02", doingSites = FALSE,
+#'     doingTiles = TRUE)
+#'
+#' ## Remove results directory
+#' if (dir.exists("test_02")) {
+#'     unlink("test_02", recursive = TRUE, force = TRUE)
+#' }
 #'
 #' @author Astrid Deschenes, Pascal Belleau
 #' @importFrom BiocParallel bplapply MulticoreParam SnowParam bptry bpok
@@ -298,9 +318,8 @@ runPermutation <- function(methylKitData,
 #' differentially methylated regions type="tiles". Default: "both".
 #'
 #' @param outputDir a string, the name of the directory that will contain
-#' the results of the permutation or \code{NULL}. If the directory does not
-#' exist, it will be created. When \code{NULL}, the results of the permutation
-#' are not saved. Default: \code{NULL}.
+#' the results of the analysis. If the directory does not
+#' exist, it will be created. Default: \code{"output"}.
 #'
 #' @param nbrCoresDiffMeth a positive \code{integer}, the number of cores
 #' to use for parallel differential methylation calculations.The parameter is
@@ -383,12 +402,23 @@ runPermutation <- function(methylKitData,
 #' runObservation(methylKitData = samplesForTransgenerationalAnalysis,
 #'     outputDir = "test", type = "sites", vSeed = 221)
 #'
-#' load
+#' ## Load the results
+#' results <- loadAllRDSResults(analysisResultsDir = "test",
+#'     permutationResultsDir = NULL, doingSites = TRUE, doingTiles = FALSE)
+#'
+#' ## Print the results
+#' results
+#'
+#' ## Remove directory
+#' if (dir.exists("test")) {
+#'     unlink("test", recursive = TRUE, force = FALSE)
+#' }
+#'
 #' @author Astrid Deschenes, Pascal Belleau
 #' @export
 runObservation <- function(methylKitData,
                                     type=c("both", "sites", "tiles"),
-                                    outputDir=NULL,
+                                    outputDir="output",
                                     nbrCoresDiffMeth=1,
                                     minReads=10,
                                     minMethDiff=10,
@@ -513,6 +543,12 @@ runObservation <- function(methylKitData,
 #' ## Load information from files
 #' results <- loadAllRDSResults(analysisResultsDir = filesDir,
 #'     permutationResultsDir = filesDir, doingSites = TRUE, doingTiles = TRUE)
+#'
+#' ## Print the observation results
+#' results
+#'
+#' ## Access the results for the first permutation only for sites
+#' results$PERMUTATION[[1]]$SITES
 #'
 #' @author Astrid Deschenes, Pascal Belleau
 #' @importFrom rebus number_range
