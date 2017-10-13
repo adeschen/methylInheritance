@@ -19,8 +19,8 @@ data(methylInheritanceResults)
 
 
 .tearDown <- function() {
-    if (dir.exists("./test_01")) {
-        unlink("./test_01", recursive = TRUE, force = TRUE)
+    if (dir.exists("test_001")) {
+        unlink("test_001", recursive = TRUE, force = TRUE)
     }
 }
 
@@ -30,39 +30,46 @@ data(methylInheritanceResults)
 ###########################################################
 
 ## Test sites when all parameters are valid
-# test.validateRunPermutationUsingMethylKitInfo_sites_good_01 <- function() {
-#     ## Extract information
-#     set.seed(111)
-#     allSamples <- sample(unlist(METHYL_OBJ, recursive = FALSE), 36, replace = F)
-#     treatment <- c(0,0,0,0,0,0,1,1,1,1,1,1)
-#     sampleList01 <- new("methylRawList", allSamples[1:12],
-#                         treatment = treatment)
-#     sampleList02 <- new("methylRawList", allSamples[13:24],
-#                         treatment = treatment)
-#     sampleList03 <- new("methylRawList", allSamples[25:36],
-#                         treatment = treatment)
-#     input <- list(sampleList01, sampleList02, sampleList03)
-#
-#     obs <- tryCatch(methylInheritance:::runOnePermutationOnAllGenerations(
-#         id = 1, methylInfoForAllGenerations = input, outputDir = NULL, type = "sites",
-#         nbrCoresDiffMeth = 1,
-#         minReads = 10, minMethDiff = 10, qvalue = 0.05,
-#         maxPercReads = 99.9, destrand = FALSE, minCovBasesForTiles = 2,
-#         tileSize = 1000, stepSize = 100, restartCalculation = FALSE),
-#         error=conditionMessage)
-#
-#     exp <- list()
-#     exp[["SITES"]] <- list()
-#     exp[["SITES"]][["i2"]] <- list()
-#     exp[["SITES"]][["i2"]][["HYPER"]] <- list(1,0)
-#     exp[["SITES"]][["i2"]][["HYPO"]]  <- list(0,0)
-#     exp[["SITES"]][["iAll"]][["HYPER"]]  <- list(0)
-#     exp[["SITES"]][["iAll"]][["HYPO"]]   <- list(0)
-#
-#     message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_sites_good_01() ",
-#                     "- Valid parameters did not generated expected results.")
-#     checkEquals(obs, exp, msg = message)
-# }
+test.validateRunPermutationUsingMethylKitInfo_sites_good_01 <- function() {
+    ## Extract information
+    set.seed(111)
+    allSamples <- sample(unlist(METHYL_OBJ, recursive = FALSE), 36, replace = F)
+    treatment <- c(0,0,0,0,0,0,1,1,1,1,1,1)
+    sampleList01 <- new("methylRawList", allSamples[1:12],
+                        treatment = treatment)
+    sampleList02 <- new("methylRawList", allSamples[13:24],
+                        treatment = treatment)
+    sampleList03 <- new("methylRawList", allSamples[25:36],
+                        treatment = treatment)
+    input <- list(sampleList01, sampleList02, sampleList03)
+
+    if (!dir.exists("test_001")) {
+        dir.create("test_001/SITES/", recursive = TRUE)
+    }
+
+    obs <- methylInheritance:::runOnePermutationOnAllGenerations(
+        id = 1, methylInfoForAllGenerations = input, outputDir = "test_001/", type = "sites",
+        nbrCoresDiffMeth = 1,
+        minReads = 10, minMethDiff = 10, qvalue = 0.05,
+        maxPercReads = 99.9, destrand = FALSE, minCovBasesForTiles = 2,
+        tileSize = 1000, stepSize = 100, restartCalculation = FALSE, saveInfoByGeneration = FALSE)
+
+    exp <- list()
+    exp[["SITES"]] <- list()
+    exp[["SITES"]][["i2"]] <- list()
+    exp[["SITES"]][["i2"]][["HYPER"]] <- list(1,0)
+    exp[["SITES"]][["i2"]][["HYPO"]]  <- list(0,0)
+    exp[["SITES"]][["iAll"]][["HYPER"]]  <- list(0)
+    exp[["SITES"]][["iAll"]][["HYPO"]]   <- list(0)
+
+    obsV <- methylInheritance::loadAllRDSResults(permutationResultsDir = "test_001", analysisResultsDir = NULL)
+
+    message <- paste0(" test.validateRunPermutationUsingMethylKitInfo_sites_good_01() ",
+                    "- Valid parameters did not generated expected results.")
+
+    checkEquals(obs, 0, msg = message)
+    checkEquals(obsV$PERMUTATION[[1]], exp, msg = message)
+}
 
 ## Test tiles when all parameters are valid
 # test.validateRunPermutationUsingMethylKitInfo_tiles_good_01 <- function() {
