@@ -400,7 +400,9 @@ test.readInterGenerationResults_good_01 <- function() {
 
     exp <- list("i2" = list(i2_1, i2_2), "iAll" = list(iAll_1))
 
-    checkEquals(obs, exp, msg = message)
+    checkEquals(as.data.frame(i2_1), as.data.frame(exp$i2[[1]]), msg = message)
+    checkEquals(as.data.frame(i2_2), as.data.frame(exp$i2[[2]]), msg = message)
+    checkEquals(as.data.frame(iAll_1), as.data.frame(exp$iAll[[1]]), msg = message)
 }
 
 test.readInterGenerationResults_good_02 <- function() {
@@ -446,7 +448,9 @@ test.readInterGenerationResults_good_02 <- function() {
 
     exp <- list("i2" = list(i2_1, i2_2), "iAll" = list(iAll_1))
 
-    checkEquals(obs, exp, msg = message)
+    checkEquals(as.data.frame(i2_1), as.data.frame(exp$i2[[1]]), msg = message)
+    checkEquals(as.data.frame(i2_2), as.data.frame(exp$i2[[2]]), msg = message)
+    checkEquals(as.data.frame(iAll_1), as.data.frame(exp$iAll[[1]]), msg = message)
 }
 
 
