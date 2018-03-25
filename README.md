@@ -29,6 +29,11 @@ following:
 methylInheritance is now an official package of [Bioconductor](http://bioconductor.org/). The current release can be directly downloaded from their website:
 [Current release](http://bioconductor.org/packages/methylInheritance)
 
+## Description of Package Functionality ##
+
+The vignette of the methylInheritance package, which is a document that provides a task-oriented description of the package functionality, is available on Bioconductor website:
+[methylInheritance vignette](https://bioconductor.org/packages/release/bioc/vignettes/methylInheritance/inst/doc/methylInheritance.html)
+
 
 ## Authors ##
 
