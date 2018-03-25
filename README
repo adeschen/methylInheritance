@@ -1,0 +1,68 @@
+Conserved Differentially Methylated Elements from One Generation
+to the Next: Inheritance versus Randomness
+================================================================
+
+Authors
+-------
+
+Astrid Deschenes, Pascal Belleau and Arnaud Droit
+
+
+Description
+-----------
+
+The methylInheritance package implements a permutation analysis,
+based on Monte Carlo sampling, for testing the hypothesis that
+the number of conserved differentially methylated elements,
+between several generations, is associated to an effect inherited
+from a treatment and that stochastic effect can be dismissed.
+
+The methylInheritance package is an official package of
+Bioconductor.
+
+
+Installation
+------------
+
+We strongly suggest to install the methylInheritance package
+through Bioconductor:
+
+http://bioconductor.org/packages/methylInheritance/
+
+However, it is also possible to install the current github
+version, through the help of the CRAN devtools package.
+
+library(devtools)
+install_github("adeschen/methylInheritance")
+
+In addition, older versions of the package are available on
+GitHub:
+
+https://github.com/adeschen/methylInheritance/releases
+
+
+Description of Package Functionality
+------------------------------------
+
+The vignette of the methylInheritance package, which is a
+document that provides a task-oriented description of the package
+functionality, is available on Bioconductor website:
+https://bioconductor.org/packages/release/bioc/vignettes/methylInheritance/inst/doc/methylInheritance.html
+
+
+License
+-------
+
+This package and the underlying methylInheritance code are
+distributed under the Artistic license 2.0. You are free to use
+and redistribute this software.
+
+For more information on Artistic 2.0 License see:
+http://opensource.org/licenses/Artistic-2.0
+
+
+Bugs/Feature requests
+---------------------
+
+If you have any bugs or feature requests,
+[let us know](https://github.com/adeschen/methylInheritance/issues).
