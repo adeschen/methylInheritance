@@ -17,7 +17,7 @@ can be dismissed.
 If you use this package for a publication, we would ask you to cite the 
 following:
 
-> Astrid Deschênes, Pascal Belleau and Arnaud Droit (2016). methylInheritance: Permutation-Based Analysis associating Conserved Differentially Methylated Elements from One Generation to the Next to a Treatment Effect. R package version 0.99.0. DOI: 10.18129/B9.bioc.methylInheritance
+> Pascal Belleau, Astrid Deschênes, Marie-Pier Scott-Boyer, Mathieu Dalvai, Janice Bailey and Arnaud Droit (2018). Inferring and modeling inheritance of differentially methylated changes across multiple generations. Nucleic Acids Research. gky362. DOI: https://doi.org/10.1093/nar/gky362
 
 > Akalin A, Kormaksson M, Li S, Garrett-Bakelman FE, Figueroa ME, Melnick A and Mason CE (2012). “methylKit: a comprehensive R package for the analysis of genome-wide DNA methylation profiles.” Genome Biology, 13(10), pp. R87. 
 
