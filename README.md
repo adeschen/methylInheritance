@@ -12,14 +12,13 @@ elements, between several generations, is
 associated to an effect inherited from a treatment and that stochastic effect 
 can be dismissed. 
 
+
 ## Citing ##
 
 If you use this package for a publication, we would ask you to cite the 
 following:
 
 > Pascal Belleau, Astrid Deschênes, Marie-Pier Scott-Boyer, Mathieu Dalvai, Janice Bailey and Arnaud Droit (2018). Inferring and modeling inheritance of differentially methylated changes across multiple generations. Nucleic Acids Research. gky362. DOI: https://doi.org/10.1093/nar/gky362
-
-> Akalin A, Kormaksson M, Li S, Garrett-Bakelman FE, Figueroa ME, Melnick A and Mason CE (2012). “methylKit: a comprehensive R package for the analysis of genome-wide DNA methylation profiles.” Genome Biology, 13(10), pp. R87. 
 
 
 ## Bioconductor Package ##
@@ -28,6 +27,7 @@ following:
 
 methylInheritance is now an official package of [Bioconductor](http://bioconductor.org/). The current release can be directly downloaded from their website:
 [Current release](http://bioconductor.org/packages/methylInheritance)
+
 
 ## Description of Package Functionality ##
 
