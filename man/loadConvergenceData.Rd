@@ -5,7 +5,8 @@
 \title{Load convergence information from RDS files}
 \usage{
 loadConvergenceData(analysisResultsDir, permutationResultsDir,
-  type = c("sites", "tiles"), inter = c("i2", "iAll"), position, by = 100)
+  type = c("sites", "tiles"), inter = c("i2", "iAll"), position,
+  by = 100)
 }
 \arguments{
 \item{analysisResultsDir}{a \code{character} string, the path to the

@@ -5,7 +5,8 @@
 \title{Verify if a specific file containing intergenerational results
 exists or not.}
 \usage{
-isInterGenerationResults(outputDir, permutationID, type = c("sites", "tiles"))
+isInterGenerationResults(outputDir, permutationID, type = c("sites",
+  "tiles"))
 }
 \arguments{
 \item{outputDir}{a string of \code{character}, the name of the directory

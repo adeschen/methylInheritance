@@ -6,8 +6,9 @@
 \code{\link{runObservation}} function}
 \usage{
 validateRunObservation(methylKitData, type, outputDir, nbrCoresDiffMeth,
-  minReads, minMethDiff, qvalue, maxPercReads, destrand, minCovBasesForTiles,
-  tileSize, stepSize, vSeed, restartCalculation, saveInfoByGeneration)
+  minReads, minMethDiff, qvalue, maxPercReads, destrand,
+  minCovBasesForTiles, tileSize, stepSize, vSeed, restartCalculation,
+  saveInfoByGeneration)
 }
 \arguments{
 \item{methylKitData}{a \code{list} of \code{methylRawList} entries or the

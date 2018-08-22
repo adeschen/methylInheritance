@@ -5,7 +5,8 @@
 \title{Validation of some parameters of the
 \code{\link{mergePermutationAndObservation}} function}
 \usage{
-validateMergePermutationAndObservation(permutationResults, observationResults)
+validateMergePermutationAndObservation(permutationResults,
+  observationResults)
 }
 \arguments{
 \item{permutationResults}{a \code{list} with 1 entry called
