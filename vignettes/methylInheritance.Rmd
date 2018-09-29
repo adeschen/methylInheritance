@@ -1,12 +1,12 @@
 ---
-title: "Conserved Differentially Methylated Elements from One Generation to the Next: Inheritance versus Randomness"
+title: "Inferring inheritance of differentially methylated changes across multiple generations"
 author: Astrid Deschênes, Pascal Belleau and Arnaud Droit 
 output:
   BiocStyle::html_document:
     toc: true
 bibliography: biblio.bibtex
 vignette: >
-  %\VignetteIndexEntry{Permutation-Based Analysis associating Conserved Differentially Methylated Elements from One Generation to the Next to a Treatment Effect}
+  %\VignetteIndexEntry{Permutation-Based Analysis associating Conserved Differentially Methylated Elements Across Multiple Generations to a Treatment Effect}
   %\VignettePackage{methylInheritance}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
