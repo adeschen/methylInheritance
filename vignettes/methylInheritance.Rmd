@@ -239,15 +239,15 @@ The observation and permutation results can be merged using the
 
 ```{r caseStudy04, warning=FALSE, message=FALSE, collapse=TRUE, cache=TRUE}
 ## Merge observation and permutation results
-#allResults <- mergePermutationAndObservation(permutationResults = 
-#                                                    permutationResult,
-#                                    observationResults = observationResult)
-#allResults
+allResults <- mergePermutationAndObservation(permutationResults = 
+                                                    permutationResults,
+                                    observationResults = observedResults)
+allResults
 ```
 
 ```{r remove01, warning=FALSE, message=FALSE, echo=FALSE, cache=FALSE}
-rm(permutationResult)
-rm(observationResult)
+rm(permutationResults)
+rm(observedResults)
 ```
 
 When observation and permutation analysis have been run together using the
@@ -280,10 +280,10 @@ F1 and F2 and F3 and F4, etc..)
 
 ```{r caseStudy05, warning=FALSE, message=FALSE, collapse=TRUE, cache=FALSE}
 ## Conserved differentially methylated sites between F1 and F2 generations
-#F1_and_F2_results <- extractInfo(allResults = allResults, type = "sites", 
-#                                    inter = "i2", position = 1)
+F1_and_F2_results <- extractInfo(allResults = allResults, type = "sites", 
+                                    inter = "i2", position = 1)
 
-#head(F1_and_F2_results)
+head(F1_and_F2_results)
 ```
 
 
