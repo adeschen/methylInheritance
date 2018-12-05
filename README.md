@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/adeschen/methylInheritance.svg?branch=master)](https://travis-ci.org/adeschen/methylInheritance)
 [![codecov](https://codecov.io/gh/adeschen/methylInheritance/branch/master/graph/badge.svg)](https://codecov.io/gh/adeschen/methylInheritance)
-
+[![License: Artistic-2.0](https://img.shields.io/badge/License-Artistic%202.0-0298c3.svg)](https://opensource.org/licenses/Artistic-2.0)
 
 ## Conserved Differentially Methylated Elements from One Generation to the Next: Inheritance versus Randomness
 
