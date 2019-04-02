@@ -14,7 +14,7 @@ Author@R: c(person("Astrid", "Deschênes", email="adeschen@hotmail.com",
         email="pascal.belleau@crchuq.ulaval.ca", role=c("aut")),
         person("Arnaud", "Droit",
         email="arnaud.droit@crchuq.ulaval.ca", role=c("aut")))
-Depends: R (>= 3.4)
+Depends: R (>= 3.5)
 Imports: methylKit, BiocParallel, GenomicRanges, IRanges, S4Vectors,
         methods, parallel, ggplot2, gridExtra, rebus
 Suggests: BiocStyle, BiocGenerics, knitr, rmarkdown, RUnit, methInheritSim

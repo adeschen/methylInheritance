@@ -56,8 +56,8 @@ test.validateRunPermutationUsingMethylKitInfo_sites_good_01 <- function() {
     exp <- list()
     exp[["SITES"]] <- list()
     exp[["SITES"]][["i2"]] <- list()
-    exp[["SITES"]][["i2"]][["HYPER"]] <- list(1,0)
-    exp[["SITES"]][["i2"]][["HYPO"]]  <- list(0,0)
+    exp[["SITES"]][["i2"]][["HYPER"]] <- list(0,0)
+    exp[["SITES"]][["i2"]][["HYPO"]]  <- list(3,0)
     exp[["SITES"]][["iAll"]][["HYPER"]]  <- list(0)
     exp[["SITES"]][["iAll"]][["HYPO"]]   <- list(0)
 
@@ -505,9 +505,9 @@ test.formatInputMethylData_good_01 <- function() {
     obs <- methylInheritance:::formatInputMethylData(initGR)
 
     expGR <- list()
-    expGR[[1]] <- new("methylRawList", list(initGR_03[[2]], initGR_02[[2]]), treatment = c(0, 1))
-    expGR[[2]] <- new("methylRawList", list(initGR_01[[1]], initGR_03[[1]]), treatment = c(0, 1))
-    expGR[[3]] <- new("methylRawList", list(initGR_01[[2]], initGR_02[[1]]), treatment = c(0, 1))
+    expGR[[1]] <- new("methylRawList", list(initGR_01[[1]], initGR_02[[2]]), treatment = c(0, 1))
+    expGR[[2]] <- new("methylRawList", list(initGR_02[[1]], initGR_03[[2]]), treatment = c(0, 1))
+    expGR[[3]] <- new("methylRawList", list(initGR_03[[1]], initGR_01[[2]]), treatment = c(0, 1))
 
     message <- paste0("test.formatInputMethylData_good_01() ",
                       "- Function did not return expected values")
