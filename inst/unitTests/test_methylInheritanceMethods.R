@@ -367,8 +367,8 @@ test.plotConvergenceGraph_good_01 <- function() {
                       "- Valid parameters for plotGraph did not generated expected results.")
 
     checkTrue("ggplot" %in% class(obs), msg = message)
-    checkEquals(class(obs[[1]]), "data.frame", msg = message)
-    checkEquals(class(obs[[2]]), "list", msg = message)
+    checkTrue(is(obs[[1]], "data.frame"), msg = message)
+    checkTrue(is(obs[[2]], "list"), msg = message)
 
 }
 
@@ -433,7 +433,7 @@ test.loadConvergenceData_two_different_directories <- function() {
     message <- paste0(" test.loadConvergenceData_two_different_directories() ",
                       "- Using two different directories for observation and permutation with loadConvergenceData did not generated expected results.")
 
-    checkEquals(class(data), "data.frame", msg = message)
+    checkTrue(is(data, "data.frame"), msg = message)
     checkEquals(data , expected, msg = message)
 }
 

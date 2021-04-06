@@ -32,7 +32,8 @@ data(methylInheritanceResults)
 test.validateRunPermutationUsingMethylKitInfo_sites_good_01 <- function() {
     ## Extract information
     set.seed(111)
-    allSamples <- sample(unlist(METHYL_OBJ, recursive = FALSE), 36, replace = F)
+    allSamples <- sample(unlist(METHYL_OBJ, recursive = FALSE), 36,
+                            replace = FALSE)
     treatment <- c(0,0,0,0,0,0,1,1,1,1,1,1)
     sampleList01 <- new("methylRawList", allSamples[1:12],
                         treatment = treatment)
