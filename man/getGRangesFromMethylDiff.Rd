@@ -5,8 +5,12 @@
 \title{Transform results from a CpG site or region analysis done on mutliple
 generations into a \code{list} of \code{GRanges} objects}
 \usage{
-getGRangesFromMethylDiff(methDiff, pDiff, qvalue, type = c("all",
-  "hyper", "hypo"))
+getGRangesFromMethylDiff(
+  methDiff,
+  pDiff,
+  qvalue,
+  type = c("all", "hyper", "hypo")
+)
 }
 \arguments{
 \item{methDiff}{a \code{list} of S4 \code{methylDiff} class objects, each

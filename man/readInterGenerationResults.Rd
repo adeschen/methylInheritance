@@ -5,8 +5,11 @@
 \title{Read and return intergenerational results contained in a
 RDS file}
 \usage{
-readInterGenerationResults(outputDir, permutationID, type = c("sites",
-  "tiles"))
+readInterGenerationResults(
+  outputDir,
+  permutationID,
+  type = c("sites", "tiles")
+)
 }
 \arguments{
 \item{outputDir}{a string of \code{character}, the name of the directory

@@ -27,4 +27,4 @@ biocViews: BiologicalQuestion, Epigenetics, DNAMethylation,
         DifferentialMethylation, MethylSeq, Software, ImmunoOncology,
         StatisticalMethod, WholeGenome, Sequencing
 Maintainer: Astrid Deschenes <adeschen@hotmail.com>
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1

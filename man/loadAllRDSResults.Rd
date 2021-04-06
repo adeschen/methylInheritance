@@ -5,8 +5,13 @@
 \title{Load all RDS files created by the permutation  and observation
 analysis}
 \usage{
-loadAllRDSResults(analysisResultsDir, permutationResultsDir,
-  doingSites = TRUE, doingTiles = FALSE, maxID = NA)
+loadAllRDSResults(
+  analysisResultsDir,
+  permutationResultsDir,
+  doingSites = TRUE,
+  doingTiles = FALSE,
+  maxID = NA
+)
 }
 \arguments{
 \item{analysisResultsDir}{a \code{character} string, the path to the

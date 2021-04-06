@@ -6,8 +6,12 @@
 The anaysis can come from observed or shuffled dataset. Each case is
 saved with a different extension.}
 \usage{
-saveInterGenerationResults(outputDir, permutationID, type = c("sites",
-  "tiles"), interGenerationResult)
+saveInterGenerationResults(
+  outputDir,
+  permutationID,
+  type = c("sites", "tiles"),
+  interGenerationResult
+)
 }
 \arguments{
 \item{outputDir}{a string of \code{character}, the name of the directory

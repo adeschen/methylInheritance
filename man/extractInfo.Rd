@@ -5,8 +5,12 @@
 \title{Extract the information specific to a subsection of the permutation
 analysis}
 \usage{
-extractInfo(allResults, type = c("sites", "tiles"), inter = c("i2",
-  "iAll"), position = 1)
+extractInfo(
+  allResults,
+  type = c("sites", "tiles"),
+  inter = c("i2", "iAll"),
+  position = 1
+)
 }
 \arguments{
 \item{allResults}{a \code{list} of class \code{methylInheritanceAllResults}

@@ -5,8 +5,12 @@
 \title{Create directories that will contained the results of the
 permutations in RDS format}
 \usage{
-createOutputDir(outputDir, doingSites = TRUE, doingTiles = FALSE,
-  saveInfoByGeneration)
+createOutputDir(
+  outputDir,
+  doingSites = TRUE,
+  doingTiles = FALSE,
+  saveInfoByGeneration
+)
 }
 \arguments{
 \item{outputDir}{a string of \code{character}, the name of the main

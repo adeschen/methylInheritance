@@ -5,8 +5,12 @@
 \title{Validation of some parameters of the
 \code{\link{loadConvergenceData}} function}
 \usage{
-validateLoadConvergenceData(analysisResultsDir, permutationResultsDir,
-  position, by)
+validateLoadConvergenceData(
+  analysisResultsDir,
+  permutationResultsDir,
+  position,
+  by
+)
 }
 \arguments{
 \item{analysisResultsDir}{a \code{character} string, the path to the

@@ -5,12 +5,23 @@
 \title{Run the analysis on one permutation dataset, including all
 generations, using \code{methylKit} package}
 \usage{
-runOnePermutationOnAllGenerations(id, methylInfoForAllGenerations,
-  type = c("both", "sites", "tiles"), outputDir = NULL,
-  nbrCoresDiffMeth = 1, minReads = 10, minMethDiff = 10,
-  qvalue = 0.01, maxPercReads = 99.9, destrand = FALSE,
-  minCovBasesForTiles = 0, tileSize = 1000, stepSize = 1000,
-  restartCalculation, saveInfoByGeneration)
+runOnePermutationOnAllGenerations(
+  id,
+  methylInfoForAllGenerations,
+  type = c("both", "sites", "tiles"),
+  outputDir = NULL,
+  nbrCoresDiffMeth = 1,
+  minReads = 10,
+  minMethDiff = 10,
+  qvalue = 0.01,
+  maxPercReads = 99.9,
+  destrand = FALSE,
+  minCovBasesForTiles = 0,
+  tileSize = 1000,
+  stepSize = 1000,
+  restartCalculation,
+  saveInfoByGeneration
+)
 }
 \arguments{
 \item{id}{an \code{integer}, the unique identification of the permutation.

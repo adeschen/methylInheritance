@@ -5,7 +5,8 @@
 \alias{methylInheritanceResults}
 \title{All observed and permutation results formatted in a
 \code{methylInheritanceResults} class (for demo purpose).}
-\format{a \code{list} of class \code{methylInheritanceAllResults}
+\format{
+a \code{list} of class \code{methylInheritanceAllResults}
 containing the following elements:
 \itemize{
 \item \code{OBSERVATION} a \code{list} containing:
@@ -131,7 +132,8 @@ generations.
 }
 }
 }
-}}
+}
+}
 \usage{
 data(methylInheritanceResults)
 }

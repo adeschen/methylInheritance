@@ -5,12 +5,23 @@
 \title{Run a differential methylation analysis on multi-generational
 dataset}
 \usage{
-runObservation(methylKitData, type = c("both", "sites", "tiles"),
-  outputDir = "output", nbrCoresDiffMeth = 1, minReads = 10,
-  minMethDiff = 10, qvalue = 0.01, maxPercReads = 99.9,
-  destrand = FALSE, minCovBasesForTiles = 0, tileSize = 1000,
-  stepSize = 1000, vSeed = -1, restartCalculation = FALSE,
-  saveInfoByGeneration = FALSE)
+runObservation(
+  methylKitData,
+  type = c("both", "sites", "tiles"),
+  outputDir = "output",
+  nbrCoresDiffMeth = 1,
+  minReads = 10,
+  minMethDiff = 10,
+  qvalue = 0.01,
+  maxPercReads = 99.9,
+  destrand = FALSE,
+  minCovBasesForTiles = 0,
+  tileSize = 1000,
+  stepSize = 1000,
+  vSeed = -1,
+  restartCalculation = FALSE,
+  saveInfoByGeneration = FALSE
+)
 }
 \arguments{
 \item{methylKitData}{a \code{list} of \code{methylRawList} entries or the

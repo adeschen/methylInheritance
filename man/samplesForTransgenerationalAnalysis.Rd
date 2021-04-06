@@ -5,11 +5,13 @@
 \alias{samplesForTransgenerationalAnalysis}
 \title{All samples information, formated by \code{methylKit}, in a
 \code{methylRawList} format (for demo purpose).}
-\format{A \code{list} containing three \code{methylRawList} objects. Each
+\format{
+A \code{list} containing three \code{methylRawList} objects. Each
 \code{methylRawList} contains the information for one generation
 (first entry = first generation, etc..). Each sample information is
 stored in a \code{methylRaw} object. There is \code{methylRaw} objects
-(6 controls and 6 cases) in each generation.}
+(6 controls and 6 cases) in each generation.
+}
 \usage{
 data(samplesForTransgenerationalAnalysis)
 }

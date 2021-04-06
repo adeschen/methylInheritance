@@ -4,10 +4,26 @@
 \alias{validateRunPermutation}
 \title{Parameters validation for the \code{\link{runPermutation}} function}
 \usage{
-validateRunPermutation(methylKitData, type, outputDir, runObservedAnalysis,
-  nbrPermutations, nbrCores, nbrCoresDiffMeth, minReads, minMethDiff,
-  qvalue, maxPercReads, destrand, minCovBasesForTiles, tileSize, stepSize,
-  vSeed, restartCalculation, saveInfoByGeneration)
+validateRunPermutation(
+  methylKitData,
+  type,
+  outputDir,
+  runObservedAnalysis,
+  nbrPermutations,
+  nbrCores,
+  nbrCoresDiffMeth,
+  minReads,
+  minMethDiff,
+  qvalue,
+  maxPercReads,
+  destrand,
+  minCovBasesForTiles,
+  tileSize,
+  stepSize,
+  vSeed,
+  restartCalculation,
+  saveInfoByGeneration
+)
 }
 \arguments{
 \item{methylKitData}{a \code{list} of \code{methylRawList} entries or the

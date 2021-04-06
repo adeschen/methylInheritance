@@ -4,13 +4,26 @@
 \alias{runPermutation}
 \title{Run all permutations on the specified multi-generational dataset}
 \usage{
-runPermutation(methylKitData, type = c("both", "sites", "tiles"),
-  outputDir = "output", runObservationAnalysis = TRUE,
-  nbrPermutations = 1000, nbrCores = 1, nbrCoresDiffMeth = 1,
-  minReads = 10, minMethDiff = 10, qvalue = 0.01,
-  maxPercReads = 99.9, destrand = FALSE, minCovBasesForTiles = 0,
-  tileSize = 1000, stepSize = 1000, vSeed = -1,
-  restartCalculation = FALSE, saveInfoByGeneration = FALSE)
+runPermutation(
+  methylKitData,
+  type = c("both", "sites", "tiles"),
+  outputDir = "output",
+  runObservationAnalysis = TRUE,
+  nbrPermutations = 1000,
+  nbrCores = 1,
+  nbrCoresDiffMeth = 1,
+  minReads = 10,
+  minMethDiff = 10,
+  qvalue = 0.01,
+  maxPercReads = 99.9,
+  destrand = FALSE,
+  minCovBasesForTiles = 0,
+  tileSize = 1000,
+  stepSize = 1000,
+  vSeed = -1,
+  restartCalculation = FALSE,
+  saveInfoByGeneration = FALSE
+)
 }
 \arguments{
 \item{methylKitData}{a \code{list} of \code{methylRawList} entries or the
