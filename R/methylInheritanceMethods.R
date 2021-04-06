@@ -646,7 +646,7 @@ loadAllRDSResults <- function(analysisResultsDir,
             if (!doingSites) {
                 result[["PERMUTATION"]] <- t
             } else {
-                for (i in 1:length(result[["PERMUTATION"]])) {
+                for (i in seq_len(length(result[["PERMUTATION"]]))) {
                     result[["PERMUTATION"]][[i]]$TILES <- t[[i]]$TILES
                 }
             }
@@ -943,7 +943,7 @@ extractInfo <- function(allResults, type=c("sites", "tiles"),
                                             real[["HYPER"]][[position]]),
                                 SOURCE=c("OBSERVATION", "OBSERVATION"))
 
-    for (i in 1:length(allResults[["PERMUTATION"]])) {
+    for (i in seq_len(length(allResults[["PERMUTATION"]]))) {
         permutation <- allResults[["PERMUTATION"]][[i]][[type]][[inter]]
         dataConserved <- rbind(dataConserved,
                                 data.frame(TYPE=c("HYPO", "HYPER"),

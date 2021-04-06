@@ -707,7 +707,7 @@ getGRangesFromMethylDiff <- function(methDiff, pDiff, qvalue,
 
     ## Transform each methylDiff object present in the list to a
     ## GRanges object
-    methDiffK <- lapply(1:length(methDiff), FUN = function(i, methDiff,
+    methDiffK <- lapply(seq_len(length(methDiff)), FUN = function(i, methDiff,
                                                     pDiff, qCut, typeD) {
         methK <- getMethylDiff(methDiff[[i]], difference = pDiff,
                                 qvalue = qCut, type = typeD)
@@ -1102,7 +1102,7 @@ runOnePermutationOnAllGenerations <- function(id,
         readySites <- isInterGenerationResults(outputDir, id, "sites")
     }
 
-    for (i in 1:nbrGenerations) {
+    for (i in seq_len(nbrGenerations)) {
 
         allSamplesForOneGeneration <- methylRawForAllGenerations[[i]]
 
@@ -1584,7 +1584,7 @@ formatInputMethylData <- function(methylKitData) {
     ## related to the same permutation analysis
     permutationList <- list()
     start <- 1
-    for (j in 1:nbGenerations) {
+    for (j in seq_len(nbGenerations)) {
         end <- start + nbSamplesByGeneration[j] - 1
         samplePos <- permutationSample[start:end]
         treatment <- methylKitData[[j]]@treatment
