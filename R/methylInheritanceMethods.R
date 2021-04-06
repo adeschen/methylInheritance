@@ -1125,7 +1125,7 @@ loadConvergenceData <- function(analysisResultsDir,
 
     ## Get maximum number of files and create a incrementing sequence using
     ## the "by" parameter
-    filesInDir <- list.files(path = paste0(analysisResultsDir, toupper(type),
+    filesInDir <- list.files(path = paste0(permutationResultsDir, toupper(type),
                         "/"), pattern = "[[:digit:]].RDS", all.files = FALSE,
                         full.names = TRUE, recursive = FALSE,
                         ignore.case = FALSE, include.dirs = FALSE, no.. = FALSE)

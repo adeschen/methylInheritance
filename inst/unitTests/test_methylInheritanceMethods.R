@@ -371,3 +371,97 @@ test.plotConvergenceGraph_good_01 <- function() {
     checkEquals(class(obs[[2]]), "list", msg = message)
 
 }
+
+
+###########################################################
+## loadConvergenceData() function
+###########################################################
+
+# Test result when all parameters are good
+test.loadConvergenceData_good_01 <- function() {
+
+    filesDir <- system.file("extdata", "TEST", package="methylInheritance")
+    ##Extract convergence information for F1 and F2 and F3
+    data <- loadConvergenceData(analysisResultsDir = filesDir,
+                                permutationResultsDir = filesDir,
+                                type = "sites", inter = "iAll",
+                                position = 1, by = 1)
+
+    expected <- data.frame(NBR_PERMUTATIONS=c(1,1,2,2,3,3),
+                    ELEMENT=rep("SITES", 6), ANALYSIS=rep("iAll", 6),
+                    POSITION=rep(1, 6), TYPE=rep(c("HYPER", "HYPO"), 3),
+                    SIGNIFICANT_LEVEL=c(1.00000000, 1.0000000, 1.0000000000,
+                        0.666666666666666666, 1.000000000, 0.50000000000000))
+
+    message <- paste0(" test.loadConvergenceData_good_01() ",
+                      "- Valid parameters for loadConvergenceData did not generated expected results.")
+
+    checkEquals(class(data), "data.frame", msg = message)
+    checkEquals(data , expected, msg = message)
+}
+
+
+# Test result when all parameters are good
+test.loadConvergenceData_two_different_directories <- function() {
+
+    permutationDir <- system.file("extdata", "TEST_01/permutations",
+                                  package="methylInheritance")
+
+    observationDir <- system.file("extdata", "TEST_01/observations",
+                                  package="methylInheritance")
+
+    ##Extract convergence information for F1 and F2 and F3
+    data <- loadConvergenceData(analysisResultsDir = observationDir,
+                                permutationResultsDir = permutationDir,
+                                type = "sites", inter = "iAll",
+                                position = 1, by = 1)
+
+    expected <- data.frame(NBR_PERMUTATIONS=c(1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10),
+                           ELEMENT=rep("SITES", 20), ANALYSIS=rep("iAll", 20),
+                           POSITION=rep(1, 20), TYPE=rep(c("HYPER", "HYPO"), 10),
+                           SIGNIFICANT_LEVEL=c(1.00000000000000000000, 0.50000000000000000000,
+                                               0.66666666666666662966, 0.66666666666666662966,
+                                               0.75000000000000000000, 0.50000000000000000000,
+                                               0.80000000000000004441, 0.40000000000000002220,
+                                               0.83333333333333337034, 0.33333333333333331483,
+                                               0.71428571428571430157, 0.42857142857142854764,
+                                               0.75000000000000000000, 0.37500000000000000000,
+                                               0.77777777777777779011, 0.33333333333333331483,
+                                               0.80000000000000004441, 0.29999999999999998890,
+                                               0.72727272727272729291, 0.27272727272727270709))
+
+    message <- paste0(" test.loadConvergenceData_two_different_directories() ",
+                      "- Using two different directories for observation and permutation with loadConvergenceData did not generated expected results.")
+
+    checkEquals(class(data), "data.frame", msg = message)
+    checkEquals(data , expected, msg = message)
+}
+
+
+# Test result when all parameters are good
+test.loadConvergenceData_two_different_directories_by_5 <- function() {
+
+    permutationDir <- system.file("extdata", "TEST_01/permutations",
+                                  package="methylInheritance")
+
+    observationDir <- system.file("extdata", "TEST_01/observations",
+                                  package="methylInheritance")
+
+    ##Extract convergence information for F1 and F2 and F3
+    data <- loadConvergenceData(analysisResultsDir = observationDir,
+                                permutationResultsDir = permutationDir,
+                                type = "sites", inter = "iAll",
+                                position = 1, by = 5)
+
+    expected <- data.frame(NBR_PERMUTATIONS=c(5,5,10,10),
+                           ELEMENT=rep("SITES", 4), ANALYSIS=rep("iAll", 4),
+                           POSITION=rep(1, 4), TYPE=rep(c("HYPER", "HYPO"), 2),
+                           SIGNIFICANT_LEVEL=c(0.83333333333333337034, 0.33333333333333331483,
+                                               0.72727272727272729291, 0.27272727272727270709))
+
+    message <- paste0(" test.loadConvergenceData_two_different_directories() ",
+                      "- Using two different directories for observation and permutation with loadConvergenceData did not generated expected results.")
+
+    checkEquals(class(data), "data.frame", msg = message)
+    checkEquals(data , expected, msg = message)
+}
