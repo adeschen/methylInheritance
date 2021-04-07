@@ -1,6 +1,6 @@
 Package: methylInheritance
-Version: 1.15.0
-Date: 2016-10-25
+Version: 1.15.1
+Date: 2021-04-06
 Title: Permutation-Based Analysis associating Conserved Differentially 
         Methylated Elements Across Multiple Generations to a Treatment Effect
 Description: Permutation analysis, based on Monte Carlo sampling, for
@@ -8,10 +8,10 @@ Description: Permutation analysis, based on Monte Carlo sampling, for
         differentially methylated elements, between several
         generations, is associated to an effect inherited from a
         treatment and that stochastic effect can be dismissed.
-Author: Astrid Deschênes, Pascal Belleau and Arnaud Droit
-Author@R: c(person("Astrid", "Deschênes", email="adeschen@hotmail.com",
-        role=c("cre","aut")), person("Pascal", "Belleau",
-        email="pascal.belleau@crchuq.ulaval.ca", role=c("aut")),
+Authors@R: c(person("Astrid", "Deschênes", email="adeschen@hotmail.com",
+        role=c("cre","aut"), comment = c(ORCID = "0000-0001-7846-6749")), 
+        person("Pascal", "Belleau", email="pascal_belleau@hotmail.com", 
+        role=c("aut"), comment = c(ORCID = "0000-0002-0802-1071")),
         person("Arnaud", "Droit",
         email="arnaud.droit@crchuq.ulaval.ca", role=c("aut")))
 Depends: R (>= 3.5)
@@ -26,5 +26,4 @@ VignetteBuilder: knitr
 biocViews: BiologicalQuestion, Epigenetics, DNAMethylation,
         DifferentialMethylation, MethylSeq, Software, ImmunoOncology,
         StatisticalMethod, WholeGenome, Sequencing
-Maintainer: Astrid Deschenes <adeschen@hotmail.com>
 RoxygenNote: 7.1.1

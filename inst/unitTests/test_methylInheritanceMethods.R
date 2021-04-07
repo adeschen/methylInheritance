@@ -8,11 +8,11 @@
 ###################################################
 
 METHYL_OBJ_FILE_01 <- system.file("extdata", "methylObj_001.RDS",
-                                    package = "methylInheritance")
+                                    package="methylInheritance")
 
 METHYL_OBJ_01 <- readRDS(METHYL_OBJ_FILE_01)
 
-TEST_DIR <- system.file("extdata", "TEST", package = "methylInheritance")
+TEST_DIR <- system.file("extdata", "TEST", package="methylInheritance")
 
 data("methylInheritanceResults")
 
@@ -41,15 +41,15 @@ test.runPermutation_methylKitData_not_valid_RDS <- function() {
     message <- paste0(" test.runPermutation_methylKitData_not_valid_RDS() ",
                       "- Not valid file for methylKitData did not generated expected message.")
 
-    checkEquals(obs, exp, msg = message)
+    checkEquals(obs, exp, msg=message)
 }
 
 ## Test when all parameters valid
 test.runPermutation_good_001 <- function() {
 
     if (!dir.exists("test_002")) {
-        dir.create("test_002/SITES/", recursive = TRUE)
-        dir.create("test_002/TILES/", recursive = TRUE)
+        dir.create("test_002/SITES/", recursive=TRUE)
+        dir.create("test_002/TILES/", recursive=TRUE)
     }
 
     obs <- runPermutation(methylKitData = METHYL_OBJ_FILE_01, runObservationAnalysis = FALSE,
@@ -119,25 +119,26 @@ test.runObservation_methylKitData_not_valid <- function() {
     message <- paste0(" test.runObservation_methylKitData_not_valid() ",
                       "- Not valid file for methylKitData did not generated expected message.")
 
-    checkEquals(obs, exp, msg = message)
+    checkEquals(obs, exp, msg=message)
 }
 
 ## Test when all parameters valid
 test.runObservation_good_001 <- function() {
 
     if (!dir.exists("test_002")) {
-        dir.create("test_002/SITES/", recursive = TRUE)
+        dir.create("test_002/SITES/", recursive=TRUE)
     }
 
     obs <- runObservation(
-        methylKitData = METHYL_OBJ_FILE_01, type = "sites",
-        outputDir = "test_002", nbrCoresDiffMeth = 1,
-        minReads = 10, minMethDiff = 5, qvalue = 0.05,
-        maxPercReads = 99.9, destrand = FALSE, minCovBasesForTiles = 2,
-        tileSize = 1000, stepSize = 100, vSeed = 200, saveInfoByGeneration = FALSE)
+        methylKitData=METHYL_OBJ_FILE_01, type="sites",
+        outputDir="test_002", nbrCoresDiffMeth=1,
+        minReads=10, minMethDiff=5, qvalue = 0.05,
+        maxPercReads=99.9, destrand=FALSE, minCovBasesForTiles=2,
+        tileSize=1000, stepSize=100, vSeed=200,
+        saveInfoByGeneration=FALSE)
 
-    obsV <- methylInheritance::loadAllRDSResults(permutationResultsDir = NULL,
-                                                 analysisResultsDir = "test_002")
+    obsV <- methylInheritance::loadAllRDSResults(permutationResultsDir=NULL,
+                                            analysisResultsDir="test_002")
 
     exp <- list()
     exp[["OBSERVATION"]] <- list()
@@ -152,8 +153,8 @@ test.runObservation_good_001 <- function() {
     message <- paste0(" test.runObservation_good_001() ",
                       "- All valid parameters did not generated expected result.")
 
-    checkEquals(obs, 0, msg = message)
-    checkEquals(obsV$OBSERVATION, exp$OBSERVATION, msg = message)
+    checkEquals(obs, 0, msg=message)
+    checkEquals(obsV$OBSERVATION, exp$OBSERVATION, msg=message)
 }
 
 
@@ -176,7 +177,7 @@ test.extractInfo_good_01 <- function() {
     message <- paste0(" test.extractInfo_good_01() ",
                       "- Valid parameters for formatForGraph did not generated expected results.")
 
-    checkEquals(obs, exp, msg = message)
+    checkEquals(obs, exp, msg=message)
 }
 
 
@@ -231,7 +232,7 @@ test.loadAllRDSResults_good_01 <- function() {
                         "- Valid parameters for loadAllRDSResults() ",
                         "did not generated expected results.")
 
-    checkEquals(obs, exp, msg = message)
+    checkEquals(obs, exp, msg=message)
 }
 
 
@@ -270,7 +271,7 @@ test.mergePermutationAndObservation_permutation_not_list <- function() {
     message <- paste0(" test.mergePermutationAndObservation_permutation_not_list() ",
                       "- Not a list for permutationResults did not generated expected results.")
 
-    checkEquals(obs, exp, msg = message)
+    checkEquals(obs, exp, msg=message)
 }
 
 ## Test result when all parameters are good
@@ -322,7 +323,7 @@ test.mergePermutationAndObservation_good_01 <- function() {
                       "- Valid parameters for mergePermutationAndObservation() ",
                       "did not generated expected results.")
 
-    checkEquals(obs, exp, msg = message)
+    checkEquals(obs, exp, msg=message)
 }
 
 ###########################################################
@@ -340,9 +341,9 @@ test.plotGraph_good_01 <- function() {
     message <- paste0(" test.plotGraph_good_01() ",
                       "- Valid parameters for plotGraph did not generated expected results.")
 
-    checkTrue("gtable" %in% class(obs), msg = message)
-    checkEquals(class(obs[[1]]), "list", msg = message)
-    checkEquals(class(obs[[2]]), "data.frame", msg = message)
+    checkTrue(is(obs, "gtable"), msg=message)
+    checkTrue(is(obs[[1]], "list"), msg=message)
+    checkTrue(is(obs[[2]], "data.frame"), msg=message)
 }
 
 
@@ -366,9 +367,9 @@ test.plotConvergenceGraph_good_01 <- function() {
     message <- paste0(" test.plotConvergenceGraph_good_01() ",
                       "- Valid parameters for plotGraph did not generated expected results.")
 
-    checkTrue("ggplot" %in% class(obs), msg = message)
-    checkTrue(is(obs[[1]], "data.frame"), msg = message)
-    checkTrue(is(obs[[2]], "list"), msg = message)
+    checkTrue(is(obs, "ggplot"), msg=message)
+    checkTrue(is(obs[[1]], "data.frame"), msg=message)
+    checkTrue(is(obs[[2]], "list"), msg=message)
 
 }
 
@@ -396,7 +397,7 @@ test.loadConvergenceData_good_01 <- function() {
     message <- paste0(" test.loadConvergenceData_good_01() ",
                       "- Valid parameters for loadConvergenceData did not generated expected results.")
 
-    checkEquals(class(data), "data.frame", msg = message)
+    checkTrue(is(data, "data.frame"), msg = message)
     checkEquals(data , expected, msg = message)
 }
 
@@ -456,12 +457,14 @@ test.loadConvergenceData_two_different_directories_by_5 <- function() {
     expected <- data.frame(NBR_PERMUTATIONS=c(5,5,10,10),
                            ELEMENT=rep("SITES", 4), ANALYSIS=rep("iAll", 4),
                            POSITION=rep(1, 4), TYPE=rep(c("HYPER", "HYPO"), 2),
-                           SIGNIFICANT_LEVEL=c(0.83333333333333337034, 0.33333333333333331483,
-                                               0.72727272727272729291, 0.27272727272727270709))
+                           SIGNIFICANT_LEVEL=c(0.83333333333333337034,
+                                               0.33333333333333331483,
+                                               0.72727272727272729291,
+                                               0.27272727272727270709))
 
     message <- paste0(" test.loadConvergenceData_two_different_directories() ",
                       "- Using two different directories for observation and permutation with loadConvergenceData did not generated expected results.")
 
-    checkEquals(class(data), "data.frame", msg = message)
-    checkEquals(data , expected, msg = message)
+    checkTrue(is(data, "data.frame"), msg=message)
+    checkEquals(data , expected, msg=message)
 }

@@ -1,9 +1,18 @@
+CHANGES IN VERSION 1.15.1
+------------------------
+
+BUG FIXES AND IMPROVEMENTS
+
+    o Fix bug causing problem when using loadConvergenceData() with a different directory for the observation file and the permutation files.
+
+
 CHANGES IN VERSION 1.5.1
 ------------------------
 
 SIGNIFICANT USER-VISIBLE CHANGES
 
     o New citation referring to the associated published article in Nucleic Acids Research.
+
 
 CHANGES IN VERSION 1.1.1
 ------------------------

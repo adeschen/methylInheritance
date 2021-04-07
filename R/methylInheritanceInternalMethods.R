@@ -285,6 +285,7 @@ validateRunPermutation <- function(methylKitData,
 #'
 #' @author Astrid Deschenes
 #' @importFrom S4Vectors isSingleInteger isSingleNumber
+#' @importFrom methods is
 #' @keywords internal
 validateRunObservation <- function(methylKitData,
                                     type, outputDir,
@@ -305,7 +306,7 @@ validateRunObservation <- function(methylKitData,
     }
 
     ## Validate that methylKitData is a list of methylRawList
-    if (class(methylKitData) != "list" ||
+    if (!is(methylKitData, "list") ||
             !all(sapply(methylKitData, class) == "methylRawList")) {
         stop(paste0("methylKitData must be a list containing ",
                     "\"methylRawList\" entries; each entry must contain ",
@@ -443,6 +444,7 @@ validateRunObservation <- function(methylKitData,
 #'
 #' @author Astrid Deschenes
 #' @importFrom S4Vectors isSingleInteger isSingleNumber
+#' @importFrom methods is
 #' @keywords internal
 validateExtractInfo <- function(allResults, type, inter, position) {
 
@@ -450,7 +452,7 @@ validateExtractInfo <- function(allResults, type, inter, position) {
         stop("position must be a positive integer")
     }
 
-    if (!"methylInheritanceAllResults" %in% class(allResults)) {
+    if (!is(allResults, "methylInheritanceAllResults")) {
         stop("allResults must be of class \"methylInheritanceAllResults\"")
     }
 
