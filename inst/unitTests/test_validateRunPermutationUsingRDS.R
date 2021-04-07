@@ -8,7 +8,7 @@
 ###################################################
 
 METHYL_OBJ_FILE <- system.file("extdata", "methylObj_001.RDS",
-                                package = "methylInheritance")
+                                package="methylInheritance")
 
 METHYL_OBJ <- readRDS(METHYL_OBJ_FILE)
 
@@ -34,7 +34,7 @@ test.validateRunPermutation_methylKitData_number <- function() {
     message <- paste0(" test.validateRunPermutation_methylKitData_number() ",
                 "- Not valid methylKitData did not generated expected message.")
 
-    checkEquals(obs, exp, msg = message)
+    checkEquals(obs, exp, msg=message)
 }
 
 ## Test when methylKitData is a list of integers
@@ -56,7 +56,7 @@ test.validateRunPermutation_methylKitData_list_of_int <- function() {
     message <- paste0(" test.validateRunPermutation_methylKitData_list_of_int() ",
                       "- Not valid methylKitData did not generated expected message.")
 
-    checkEquals(obs, exp, msg = message)
+    checkEquals(obs, exp, msg=message)
 }
 
 ## Test when outputDir is a number
@@ -76,7 +76,7 @@ test.validateRunPermutation_outputDir_as_number <- function() {
     message <- paste0(" test.validateRunPermutation_outputDir_as_number() ",
                       "- Not valid outputDir did not generated expected message.")
 
-    checkEquals(obs, exp, msg = message)
+    checkEquals(obs, exp, msg=message)
 }
 
 ## Test when runObservedAnalysis is a string
@@ -96,7 +96,7 @@ test.validateRunPermutation_runObservedAnalysis_string <- function() {
     message <- paste0(" test.validateRunPermutation_runObservedAnalysis_string() ",
                       "- Not valid runObservedAnalysis did not generated expected message.")
 
-    checkEquals(obs, exp, msg = message)
+    checkEquals(obs, exp, msg=message)
 }
 
 ## Test when nbrPermutations is a string
@@ -157,7 +157,7 @@ test.validateRunPermutation_nbrCores_negative <- function() {
                       "- Not valid nbrCores did not generated expected message.")
 
 
-    checkEquals(obs, exp, msg = message)
+    checkEquals(obs, exp, msg=message)
 }
 
 ## Test when nbrCoresDiffMeth is zero

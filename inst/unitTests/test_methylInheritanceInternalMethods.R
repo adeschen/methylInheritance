@@ -132,6 +132,7 @@ test.isInterGenerationResults_true <- function() {
 ###########################################################
 
 test.validateExtractInfo_position_zero <- function() {
+
     obs <- tryCatch(methylInheritance:::validateExtractInfo(
         allResults = methylInheritanceResults, type = "sites",
         inter = "i2", position = 0),
@@ -146,6 +147,7 @@ test.validateExtractInfo_position_zero <- function() {
 }
 
 test.validateExtractInfo_position_string <- function() {
+
     obs <- tryCatch(methylInheritance:::validateExtractInfo(
         allResults = methylInheritanceResults, type = "sites",
         inter = "i2", position = "hi"),
@@ -160,6 +162,7 @@ test.validateExtractInfo_position_string <- function() {
 }
 
 test.validateExtractInfo_allResults_vector <- function() {
+
     obs <- tryCatch(methylInheritance:::validateExtractInfo(
         allResults = c(1,2,3), type = "sites",
         inter = "i2", position = 1),
@@ -174,6 +177,7 @@ test.validateExtractInfo_allResults_vector <- function() {
 }
 
 test.validateExtractInfo_type_wrong <- function() {
+
     obs <- tryCatch(methylInheritance:::validateExtractInfo(
         allResults = methylInheritanceResults, type = "toto",
         inter = "i2", position = 1),
@@ -188,6 +192,7 @@ test.validateExtractInfo_type_wrong <- function() {
 }
 
 test.validateExtractInfo_type_wrong <- function() {
+
     obs <- tryCatch(methylInheritance:::validateExtractInfo(
         allResults = methylInheritanceResults, type = "sites",
         inter = "hi", position = 1),
@@ -202,6 +207,7 @@ test.validateExtractInfo_type_wrong <- function() {
 }
 
 test.validateExtractInfo_position_too_high <- function() {
+
     obs <- tryCatch(methylInheritance:::validateExtractInfo(
         allResults = methylInheritanceResults, type = "sites",
         inter = "i2", position = 4),
@@ -273,6 +279,7 @@ test.validateExtractInfo_allResults_not_list <- function() {
 ###########################################################
 
 test.validateLoadConvergenceData_integer_analysisDir <- function() {
+
     obs <- tryCatch(methylInheritance:::validateLoadConvergenceData(analysisResultsDir = 33,
             permutationResultsDir = "./", position = 1, by = 2),
             error=conditionMessage)
@@ -564,6 +571,7 @@ test.getGRangesFromMethylDiff_good_01 <- function() {
 ###########################################################
 
 test.interGeneration_good_01 <- function() {
+
     permutationResultsFile <- system.file("extdata", "permutationResultsForSites.RDS", package="methylInheritance")
     permutationResults <- readRDS(permutationResultsFile)
 
@@ -604,6 +612,7 @@ test.interGeneration_good_01 <- function() {
 
 
 test.interGeneration_good_02 <- function() {
+
     permutationResultsFile <- system.file("extdata", "permutationResultsForSites.RDS", package="methylInheritance")
     permutationResults <- readRDS(permutationResultsFile)
 

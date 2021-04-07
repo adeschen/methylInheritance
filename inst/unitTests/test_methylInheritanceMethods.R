@@ -28,6 +28,7 @@ data("methylInheritanceResults")
 
 ## Test when methylKitData is not a valid RDS file name
 test.runPermutation_methylKitData_not_valid_RDS <- function() {
+
     obs <- tryCatch(runPermutation(
         methylKitData = "HI",  outputDir = "test_002",
         nbrPermutations = 2, nbrCores = 1, nbrCoresDiffMeth = 1,
@@ -107,6 +108,7 @@ test.runPermutation_good_001 <- function() {
 
 ## Test when methylKitData is not a valid RDS file name
 test.runObservation_methylKitData_not_valid <- function() {
+
     obs <- tryCatch(runObservation(
         methylKitData = "ALLO",  outputDir = NULL, nbrCoresDiffMeth = 1,
         minReads = 10, minMethDiff = 10, qvalue = 0.05,
@@ -164,6 +166,7 @@ test.runObservation_good_001 <- function() {
 
 # Test result when all parameters are good
 test.extractInfo_good_01 <- function() {
+
     obs <- tryCatch(extractInfo(allResults = methylInheritanceResults,
                     type = "sites", inter="i2", 1),
                     error=conditionMessage)
@@ -187,6 +190,7 @@ test.extractInfo_good_01 <- function() {
 
 ## Test result when all parameters are good
 test.loadAllRDSResults_good_01 <- function() {
+
     obs <- tryCatch(loadAllRDSResults(analysisResultsDir = TEST_DIR,
                         permutationResultsDir = TEST_DIR, doingSites = TRUE,
                         doingTiles = TRUE),
@@ -259,6 +263,7 @@ test.mergePermutationAndObservation_observation_not_list <- function() {
 
 ## Test when permutationResults is not a list
 test.mergePermutationAndObservation_permutation_not_list <- function() {
+
     res <- list()
     res[["OBSERVATION"]] <- methylInheritanceResults$OBSERVATION
 
@@ -357,15 +362,16 @@ test.plotConvergenceGraph_good_01 <- function() {
     filesDir <- system.file("extdata", "TEST", package="methylInheritance")
 
     ##Extract convergenc information for F1 and F2 and F3
-    data <- loadConvergenceData(analysisResultsDir = filesDir,
-            permutationResultsDir = filesDir, type = "sites", inter = "iAll",
-            position = 1, by = 1)
+    data <- loadConvergenceData(analysisResultsDir=filesDir,
+            permutationResultsDir=filesDir, type="sites", inter="iAll",
+            position=1, by=1)
 
     ## Create convergence graph
     obs <- plotConvergenceGraph(data)
 
     message <- paste0(" test.plotConvergenceGraph_good_01() ",
-                      "- Valid parameters for plotGraph did not generated expected results.")
+                    "- Valid parameters for plotGraph did not generated ",
+                    "expected results.")
 
     checkTrue(is(obs, "ggplot"), msg=message)
     checkTrue(is(obs[[1]], "data.frame"), msg=message)
@@ -382,11 +388,12 @@ test.plotConvergenceGraph_good_01 <- function() {
 test.loadConvergenceData_good_01 <- function() {
 
     filesDir <- system.file("extdata", "TEST", package="methylInheritance")
+
     ##Extract convergence information for F1 and F2 and F3
-    data <- loadConvergenceData(analysisResultsDir = filesDir,
-                                permutationResultsDir = filesDir,
-                                type = "sites", inter = "iAll",
-                                position = 1, by = 1)
+    data <- loadConvergenceData(analysisResultsDir=filesDir,
+                                permutationResultsDir=filesDir,
+                                type="sites", inter="iAll",
+                                position=1, by=1)
 
     expected <- data.frame(NBR_PERMUTATIONS=c(1,1,2,2,3,3),
                     ELEMENT=rep("SITES", 6), ANALYSIS=rep("iAll", 6),
@@ -395,14 +402,15 @@ test.loadConvergenceData_good_01 <- function() {
                         0.666666666666666666, 1.000000000, 0.50000000000000))
 
     message <- paste0(" test.loadConvergenceData_good_01() ",
-                      "- Valid parameters for loadConvergenceData did not generated expected results.")
+                      "- Valid parameters for loadConvergenceData did not ",
+                      "generated expected results.")
 
-    checkTrue(is(data, "data.frame"), msg = message)
-    checkEquals(data , expected, msg = message)
+    checkTrue(is(data, "data.frame"), msg=message)
+    checkEquals(data , expected, msg=message)
 }
 
 
-# Test result when all parameters are good
+# Test result when all parameters are good and using 2 different directories
 test.loadConvergenceData_two_different_directories <- function() {
 
     permutationDir <- system.file("extdata", "TEST_01/permutations",
@@ -434,8 +442,8 @@ test.loadConvergenceData_two_different_directories <- function() {
     message <- paste0(" test.loadConvergenceData_two_different_directories() ",
                       "- Using two different directories for observation and permutation with loadConvergenceData did not generated expected results.")
 
-    checkTrue(is(data, "data.frame"), msg = message)
-    checkEquals(data , expected, msg = message)
+    checkTrue(is(data, "data.frame"), msg=message)
+    checkEquals(data , expected, msg=message)
 }
 
 
