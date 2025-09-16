@@ -82,8 +82,7 @@ sites and tiles analysis. Default: \code{FALSE}.}
 bases to be covered in a given tiling window. The parameter
 corresponds to the \code{cov.bases} parameter in the
 package \code{methylKit}.
-Only used when \code{doingTiles} =
-\code{TRUE}. Default: \code{0}.}
+Only used when \code{doingTiles} = \code{TRUE}. Default: \code{0}.}
 
 \item{tileSize}{a positive integer, the size of the tiling window. The
 parameter corresponds to the \code{win.size} parameter in
@@ -141,7 +140,7 @@ generations.
 }
 \item \code{TILES} Only present when \code{type} = \code{"tiles"} or
 \code{"both"}, a \code{list} containing:
-itemize{
+\itemize{
 \item\code{i2} a \code{list} containing:
 \itemize{
 \item \code{HYPER} a \code{list} of \code{integer}, the number of conserved
