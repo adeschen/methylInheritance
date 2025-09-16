@@ -45,7 +45,6 @@ jobs:
     runs-on: ${{ matrix.config.os }}
     name: ${{ matrix.config.os }} (R ${{ matrix.config.r }}) (Bioc ${{ matrix.config.bioc }})
     container: ${{ matrix.config.cont }}
-        options: --user root
     ## Environment variables unique to this job.
 
     strategy:
