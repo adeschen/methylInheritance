@@ -22,10 +22,10 @@
 #'
 #' @seealso
 #' \itemize{
-#'     \item \code{\link{runPermutation}}{ for running a
+#'     \item{\code{\link{runPermutation}}}{ for running a
 #'     permutation analysis, and optionally an observation analysis, on a
 #'     specified multi-generational dataset}
-#'     \item \code{\link{runObservation}}{ for running an
+#'     \item{\code{\link{runObservation}}}{ for running an
 #'     observation analysis on a specified multi-generational dataset}
 #' }
 #'
@@ -67,7 +67,7 @@
 #'
 #' @seealso
 #' \itemize{
-#'     \item \code{\link{runPermutation}}{ for running a
+#'     \item{\code{\link{runPermutation}}}{ for running a
 #'     permutation analysis, and optionally an observation analysis, using
 #'     multi-generational dataset}
 #' }
