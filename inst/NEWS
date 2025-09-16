@@ -1,3 +1,11 @@
+CHANGES IN VERSION 1.33.1
+------------------------
+
+BUG FIXES AND IMPROVEMENTS
+
+    o Ensure functions using ggplot2 are using update functions
+
+
 CHANGES IN VERSION 1.15.1
 ------------------------
 
