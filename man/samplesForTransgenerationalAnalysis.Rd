@@ -44,7 +44,7 @@ runPermutation(methylKitData = samplesForTransgenerationalAnalysis,
 
 }
 \seealso{
-\itemize{
+\describe{
     \item{\code{\link{runPermutation}}}{ for running a
     permutation analysis, and optionally an observation analysis, using
     multi-generational dataset}

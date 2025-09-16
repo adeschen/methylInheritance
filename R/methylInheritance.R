@@ -21,7 +21,7 @@
 #' Astrid Deschenes <adeschen@hotmail.com>
 #'
 #' @seealso
-#' \itemize{
+#' \describe{
 #'     \item{\code{\link{runPermutation}}}{ for running a
 #'     permutation analysis, and optionally an observation analysis, on a
 #'     specified multi-generational dataset}
@@ -66,7 +66,7 @@
 #' (6 controls and 6 cases) in each generation.
 #'
 #' @seealso
-#' \itemize{
+#' \describe{
 #'     \item{\code{\link{runPermutation}}}{ for running a
 #'     permutation analysis, and optionally an observation analysis, using
 #'     multi-generational dataset}
