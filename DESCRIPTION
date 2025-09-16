@@ -17,7 +17,14 @@ Authors@R: c(person("Astrid", "Deschênes", email="adeschen@hotmail.com",
 Depends: R (>= 3.5)
 Imports: methylKit, BiocParallel, GenomicRanges, IRanges, S4Vectors,
         methods, parallel, ggplot2, gridExtra, rebus
-Suggests: BiocStyle, BiocGenerics, knitr, rmarkdown, RUnit, methInheritSim
+Suggests: 
+    BiocStyle,
+    BiocGenerics,
+    knitr,
+    rmarkdown,
+    RUnit,
+    methInheritSim,
+    testthat (>= 3.0.0)
 Encoding: UTF-8
 License: Artistic-2.0
 URL: https://github.com/adeschen/methylInheritance
@@ -26,4 +33,4 @@ VignetteBuilder: knitr
 biocViews: BiologicalQuestion, Epigenetics, DNAMethylation,
         DifferentialMethylation, MethylSeq, Software, ImmunoOncology,
         StatisticalMethod, WholeGenome, Sequencing
-RoxygenNote: 7.1.1
+RoxygenNote: 7.3.3

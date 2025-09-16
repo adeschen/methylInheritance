@@ -13,12 +13,13 @@ that will contain
 the results of the permutation. The name should end with a slash. The
 directory should already exists.}
 
-\item{permutationID}{an \code{integer}, the identifiant of the permutation.
+\item{permutationID}{an \code{integer}, the identifier of the permutation.
 When the \code{permutationID} = \code{0}, the results are considered as the
 observed results and are saved in a file with the "_observed_results.RDS"
 extension. When the \code{permutationID} != \code{0}, the results are
 considered as permutation results and are saved in a file with the
-"_permutation_{permutationID}.RDS" extension.}
+"_permutation_permutationID.RDS" extension where permutationID is the
+identifier of the permutation.}
 
 \item{type}{One of the \code{"sites"} or \code{"tiles"} strings. Specifies
 the type of differentially methylated elements should be saved.

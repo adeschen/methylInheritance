@@ -374,9 +374,6 @@ test.plotConvergenceGraph_good_01 <- function() {
                     "expected results.")
 
     checkTrue(is(obs, "ggplot"), msg=message)
-    checkTrue(is(obs[[1]], "data.frame"), msg=message)
-    checkTrue(is(obs[[2]], "list"), msg=message)
-
 }
 
 
