@@ -290,7 +290,7 @@ extractInfo(allResults = methylInheritanceResults,
 }
 \seealso{
 \itemize{
-    \item \code{\link{extractInfo}} {for extracting the
+    \item \code{\link{extractInfo}}{ for extracting the
     information specific to a subsection of the permutation analysis}
 }
 }

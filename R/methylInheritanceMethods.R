@@ -997,7 +997,7 @@ plotGraph <- function(formatForGraphDataFrame) {
     # Columns names : TYPE (HYPER or HYPO), RESULT (nbr conseved sites),
     # SOURCE (OBSERVED or PERMUTATION)
     p <- ggplot(data=formatForGraphDataFrame,
-                    aes(x=formatForGraphDataFrame$RESULT)) +
+                    aes(x=RESULT)) +
                     geom_histogram(col="blue", fill="lightblue",
                                     binwidth=2, alpha = .2) +
         labs(title = "") +
@@ -1207,8 +1207,8 @@ plotConvergenceGraph <- function(dataFrameConvergence) {
     NBR_PERMUTATIONS <- NULL
     SIGNIFICANT_LEVEL <- NULL
     graph <- ggplot(data=dataFrameConvergence, aes(x=NBR_PERMUTATIONS,
-        y=SIGNIFICANT_LEVEL)) + geom_point(color = 'blue', size = 2) +
-        geom_line(color='blue', linetype = "dashed", size = 1) +
+        y=SIGNIFICANT_LEVEL)) + geom_point(color = 'blue', size=2) +
+        geom_line(color='blue', linetype = "dashed", linewidth=1) +
         facet_grid(TYPE ~ .) + ylab("Significant Level") +
         xlab("Number of permutations")
 

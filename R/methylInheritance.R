@@ -8,7 +8,6 @@
 #' several generations, is associated to an effect inherited from a treatment
 #' and that stochastic effect can be dismissed.
 #'
-#' @docType package
 #'
 #' @name methylInheritance-package
 #'
@@ -23,15 +22,18 @@
 #'
 #' @seealso
 #' \itemize{
-#'     \item \code{\link{runPermutation}} {for running a
+#'     \item \code{\link{runPermutation}}{ for running a
 #'     permutation analysis, and optionally an observation analysis, on a
 #'     specified multi-generational dataset}
-#'     \item \code{\link{runObservation}} {for running an
+#'     \item \code{\link{runObservation}}{ for running an
 #'     observation analysis on a specified multi-generational dataset}
 #' }
 #'
+#' @return methylInheritance
+#' @encoding UTF-8
 #' @keywords package
-NULL
+#' @keywords internal
+"_PACKAGE"
 
 #' All samples information, formated by \code{methylKit}, in a
 #' \code{methylRawList} format (for demo purpose).
@@ -65,7 +67,7 @@ NULL
 #'
 #' @seealso
 #' \itemize{
-#'     \item \code{\link{runPermutation}} {for running a
+#'     \item \code{\link{runPermutation}}{ for running a
 #'     permutation analysis, and optionally an observation analysis, using
 #'     multi-generational dataset}
 #' }
@@ -118,10 +120,10 @@ NULL
 #'
 #' @seealso
 #' \itemize{
-#'     \item \code{\link{runPermutation}} {for running a
+#'     \item \code{\link{runPermutation}}{ for running a
 #'     permutation analysis, and optionally an observation analysis,
 #'     using multi-generational dataset}
-#'     \item \code{\link{runObservation}} {for running an
+#'     \item \code{\link{runObservation}}{ for running an
 #'     observation analysis using methylKit info entry}
 #' }
 #'
@@ -426,7 +428,7 @@ NULL
 #'
 #' @seealso
 #' \itemize{
-#'     \item \code{\link{extractInfo}} {for extracting the
+#'     \item \code{\link{extractInfo}}{ for extracting the
 #'     information specific to a subsection of the permutation analysis}
 #' }
 #'
