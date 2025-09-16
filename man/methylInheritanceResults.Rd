@@ -160,7 +160,7 @@ The first element represents the intersection of the first and second
 generations; the second element, the intersection of the second and third
 generations.
 }
-\item\code{iAll} a \code{list} containing:
+\item \code{iAll} a \code{list} containing:
 \itemize{
 \item \code{HYPER} a \code{list} of \code{integer} with 1 entry,
 the number of conserved
@@ -173,7 +173,7 @@ consecutive generations.
 }
 \item \code{TILES} a \code{list} containing:
 \itemize{
-\item\code{i2} a \code{list} containing:
+\item \code{i2} a \code{list} containing:
 \itemize{
 \item \code{HYPER} a \code{list} of \code{integer} with 2 entries,
 the number of conserved
@@ -290,7 +290,7 @@ extractInfo(allResults = methylInheritanceResults,
 }
 \seealso{
 \itemize{
-    \item \code{\link{extractInfo}}{ for extracting the
+    \item{\code{\link{extractInfo}}}{ for extracting the
     information specific to a subsection of the permutation analysis}
 }
 }

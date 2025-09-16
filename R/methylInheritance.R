@@ -120,10 +120,10 @@ NULL
 #'
 #' @seealso
 #' \itemize{
-#'     \item \code{\link{runPermutation}}{ for running a
+#'     \item{\code{\link{runPermutation}}}{ for running a
 #'     permutation analysis, and optionally an observation analysis,
 #'     using multi-generational dataset}
-#'     \item \code{\link{runObservation}}{ for running an
+#'     \item{\code{\link{runObservation}}}{ for running an
 #'     observation analysis using methylKit info entry}
 #' }
 #'
@@ -319,9 +319,9 @@ NULL
 #' generations; the second element, the intersection of the second and third
 #' generations.
 #' }
-#' \item\code{iAll} a \code{list} containing:
+#' \item \code{iAll} a \code{list} containing:
 #' \itemize{
-#'\item \code{HYPER} a \code{list} of \code{integer} with 1 entry,
+#' \item \code{HYPER} a \code{list} of \code{integer} with 1 entry,
 #'the number of conserved
 #' hyper differentially methylated sites between the three consecutive
 #' generations.
@@ -332,7 +332,7 @@ NULL
 #' }
 #' \item \code{TILES} a \code{list} containing:
 #' \itemize{
-#' \item\code{i2} a \code{list} containing:
+#' \item \code{i2} a \code{list} containing:
 #' \itemize{
 #' \item \code{HYPER} a \code{list} of \code{integer} with 2 entries,
 #' the number of conserved
@@ -428,7 +428,7 @@ NULL
 #'
 #' @seealso
 #' \itemize{
-#'     \item \code{\link{extractInfo}}{ for extracting the
+#'     \item{\code{\link{extractInfo}}}{ for extracting the
 #'     information specific to a subsection of the permutation analysis}
 #' }
 #'
