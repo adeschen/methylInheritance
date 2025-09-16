@@ -61,7 +61,6 @@ jobs:
       RSPM: ${{ matrix.config.rspm }}
       NOT_CRAN: true
       TZ: UTC
-      R_LIBS_USER: tempdir/Library
       _R_CHECK_SYSTEM_CLOCK_: FALSE
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
