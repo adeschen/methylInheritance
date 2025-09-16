@@ -120,10 +120,10 @@ NULL
 #'
 #' @seealso
 #' \itemize{
-#'     \item{\code{\link{runPermutation}}}{ for running a
+#'     \item{\link{runPermutation}}{ for running a
 #'     permutation analysis, and optionally an observation analysis,
 #'     using multi-generational dataset}
-#'     \item{\code{\link{runObservation}}}{ for running an
+#'     \item{\link{runObservation}}{ for running an
 #'     observation analysis using methylKit info entry}
 #' }
 #'
