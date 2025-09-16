@@ -35,25 +35,25 @@ name: R-CMD-check-bioc
 ## "/nocache" in the commit message.
 env:
   has_testthat: 'false'
-  run_covr: 'true'
-  run_pkgdown: 'false'
+  run_covr: 'false'
+  run_pkgdown: 'true'
   has_RUnit: 'true'
-  cache-version: 'cache-v4'
+  cache-version: 'cache-v9'
 
 jobs:
   build-check:
     runs-on: ${{ matrix.config.os }}
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    name: ${{ matrix.config.os }} (R ${{ matrix.config.r }}) (Bioc ${{ matrix.config.bioc }})
     container: ${{ matrix.config.cont }}
     ## Environment variables unique to this job.
 
     strategy:
       fail-fast: false
       matrix:
-        config:
-          - { os: ubuntu-latest, r: '4.6.0', bioc: '3.22', cont: "bioconductor/bioconductor_docker:RELEASE_3_22", rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest" }
-          - { os: macOS-latest, r: '4.5.1', bioc: '3.21'}
-          - { os: windows-latest, r: '4.5.1', bioc: '3.21'}
+        config: - { os: ubuntu-devel, r: '4.6.0', bioc: '3.22', cont: "bioconductor/bioconductor_docker:RELEASE_3_22", rspm: "https://packagemanager.posit.co/cran/__linux__/jammy/latest" }
+        - { os: macOS-latest, r: '4.5.1', bioc: '3.21'}
+         - { os: windows-latest, r: '4.5.1', bioc: '3.21'}
+
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       RSPM: ${{ matrix.config.rspm }}
@@ -84,6 +84,7 @@ jobs:
         uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.config.r }}
+
 
       ## pandoc is already included in the Bioconductor docker images
       - name: Setup pandoc from r-lib
@@ -123,7 +124,6 @@ jobs:
          ## echo $sysreqs
           ## sudo -s eval "$sysreqs"
 
-
       - name: Install macOS system dependencies
         if: matrix.config.os == 'macOS-latest'
         run: |
@@ -158,7 +158,6 @@ jobs:
           BiocManager::install(version = "${{ matrix.config.bioc }}", update = FALSE, ask = FALSE)
         shell: Rscript {0}
 
-
       - name: Install dependencies pass 1
         run: |
           ## Try installing the package dependencies in steps. First the local
@@ -174,7 +173,7 @@ jobs:
         continue-on-error: true
         shell: Rscript {0}
 
-       - name: Install dependencies pass 2
+      - name: Install dependencies pass 2
         run: |
           ## Pass #2 at installing dependencies
           message(paste('****', Sys.time(), 'pass number 2 at installing dependencies: any remaining dependencies ****'))
@@ -193,15 +192,14 @@ jobs:
           BiocManager::install("BiocGenerics")
         shell: Rscript {0}
 
-
       - name: Install covr
-        if: github.ref == 'refs/heads/main' && env.run_covr == 'true' && runner.os == 'Linux'
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' && env.run_covr == 'true' && runner.os == 'Linux'
         run: |
           remotes::install_cran("covr")
         shell: Rscript {0}
 
       - name: Install pkgdown
-        if: github.ref == 'refs/heads/main' && env.run_pkgdown == 'true' && runner.os == 'Linux'
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' && env.run_pkgdown == 'true' && runner.os == 'Linux'
         run: |
           remotes::install_cran("pkgdown")
         shell: Rscript {0}
@@ -246,7 +244,7 @@ jobs:
           )
         shell: Rscript {0}
 
-       - name: Test coverage
+      - name: Test coverage
         if: github.ref == 'refs/heads/main' && env.run_covr == 'true' && runner.os == 'Linux'
         run: |
           covr::codecov()
