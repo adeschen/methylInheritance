@@ -119,11 +119,11 @@ NULL
 #' (6 controls and 6 cases) in each generation.
 #'
 #' @seealso
-#' \itemize{
-#'     \item{\link{runPermutation}}{ for running a
+#' \describe{
+#'     \item{\code{\link{runPermutation}}}{ for running a
 #'     permutation analysis, and optionally an observation analysis,
-#'     using multi-generational dataset}
-#'     \item{\link{runObservation}}{ for running an
+#'     using a multi-generational dataset}
+#'     \item{\code{\link{runObservation}}}{ for running an
 #'     observation analysis using methylKit info entry}
 #' }
 #'
@@ -427,8 +427,8 @@ NULL
 #' }
 #'
 #' @seealso
-#' \itemize{
-#'     \item \code{\link{extractInfo}}{ for extracting the
+#' \describe{
+#'     \item{\code{\link{extractInfo}}}{ for extracting the
 #'     information specific to a subsection of the permutation analysis}
 #' }
 #'
